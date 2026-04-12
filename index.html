@@ -2,81 +2,74 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1a1f0e">
 <title>GestiónAgro</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{
---o9:#1a1f0e;--o8:#2d3518;--o7:#3f4b22;--o6:#55662f;--o5:#6b803b;--o4:#8a9f5a;--o3:#a8bb7a;--o2:#c5d49e;--o1:#e2eac5;--o0:#f3f6e8;
---g5:#c49a2a;--g4:#d4ae3e;--g3:#e0c462;--g1:#faf3d8;
---r5:#c0392b;--r1:#fde8e5;--b5:#2980b9;--b1:#daeaf5;
---bg:#f7f5f0;--sf:#fff;--sa:#fafaf6;--tx:#1a1a18;--t2:#5a5a52;--bd:#e5e2d8;
---sh:0 1px 3px rgba(26,31,14,.06),0 4px 12px rgba(26,31,14,.04);
---sh2:0 4px 12px rgba(26,31,14,.08),0 12px 36px rgba(26,31,14,.06);
---rd:10px;--rs:6px;--sb:env(safe-area-inset-bottom,0px);
-}
+:root{--o9:#1a1f0e;--o8:#2d3518;--o7:#3f4b22;--o6:#55662f;--o5:#6b803b;--o4:#8a9f5a;--o3:#a8bb7a;--o1:#e2eac5;--o0:#f3f6e8;--g5:#c49a2a;--g4:#d4ae3e;--g1:#faf3d8;--r5:#c0392b;--r1:#fde8e5;--b5:#2980b9;--b1:#daeaf5;--bg:#f7f5f0;--sf:#fff;--sa:#fafaf6;--tx:#1a1a18;--t2:#5a5a52;--bd:#e5e2d8;--sh:0 1px 3px rgba(26,31,14,.06),0 4px 12px rgba(26,31,14,.04);--sh2:0 4px 12px rgba(26,31,14,.08),0 12px 36px rgba(26,31,14,.06);--rd:10px;--rs:6px;--sb:env(safe-area-inset-bottom,0px)}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-height:100dvh;overflow-x:hidden}
 
+/* Bottom nav */
 .bnav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--o9);z-index:200;padding:4px 2px calc(4px + var(--sb));border-top:1px solid rgba(255,255,255,.08);box-shadow:0 -2px 12px rgba(0,0,0,.15)}
-.bnav-inner{display:flex;justify-content:space-around;max-width:520px;margin:0 auto}
-.bnav-b{display:flex;flex-direction:column;align-items:center;gap:1px;padding:4px 2px;border:none;background:none;color:rgba(255,255,255,.4);font-family:inherit;font-size:.5rem;cursor:pointer;border-radius:6px;flex:1;min-width:0;transition:.15s}
-.bnav-b .bi{font-size:1.1rem}.bnav-b.active{color:var(--g4);background:rgba(196,154,42,.1)}.bnav-b:active{transform:scale(.92)}
+.bnav-in{display:flex;justify-content:space-around;max-width:520px;margin:0 auto}
+.bnb{display:flex;flex-direction:column;align-items:center;gap:1px;padding:4px 2px;border:none;background:none;color:rgba(255,255,255,.4);font-family:inherit;font-size:.5rem;cursor:pointer;border-radius:6px;flex:1;min-width:0;transition:.15s}
+.bnb .bi{font-size:1.1rem}.bnb.act{color:var(--g4);background:rgba(196,154,42,.1)}.bnb:active{transform:scale(.92)}
 
+/* Sidebar */
 .side{width:248px;background:var(--o9);color:#fff;display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100}
-.side-brand{padding:20px 18px 14px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:10px}
-.side-brand .logo{width:34px;height:34px;background:linear-gradient(135deg,var(--g5),var(--o5));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;box-shadow:0 2px 8px rgba(196,154,42,.3);flex-shrink:0}
-.side-brand h1{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--g4)}
-.side-brand p{font-size:.6rem;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.13em;margin-top:1px}
-.side-nav{flex:1;padding:12px 10px;display:flex;flex-direction:column;gap:1px;overflow-y:auto}
-.nav-lbl{font-size:.58rem;text-transform:uppercase;letter-spacing:.13em;color:rgba(255,255,255,.22);padding:14px 10px 4px}
-.nav-b{display:flex;align-items:center;gap:10px;padding:9px 12px;border:none;background:0;color:rgba(255,255,255,.5);font-family:inherit;font-size:.8rem;border-radius:7px;cursor:pointer;transition:.15s;text-align:left;width:100%}
-.nav-b:hover{background:rgba(255,255,255,.05);color:rgba(255,255,255,.8)}
-.nav-b.active{background:rgba(196,154,42,.14);color:var(--g4)}
-.nav-b .ni{font-size:.95rem;width:20px;text-align:center}
-.side-ft{padding:10px;border-top:1px solid rgba(255,255,255,.08)}
-.sync-ind{display:flex;align-items:center;gap:6px;padding:8px 10px;border-radius:6px;font-size:.68rem;color:rgba(255,255,255,.4);background:rgba(255,255,255,.03)}
-.sync-ind .dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-.dot-g{background:#27ae60;box-shadow:0 0 5px rgba(39,174,96,.4)}.dot-y{background:#f39c12}.dot-r{background:#c0392b}
-.sync-spin{width:10px;height:10px;border:2px solid rgba(255,255,255,.2);border-top-color:var(--g4);border-radius:50%;animation:spin .7s linear infinite}
+.sbrand{padding:20px 18px 14px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:10px}
+.sbrand .slogo{width:34px;height:34px;background:linear-gradient(135deg,var(--g5),var(--o5));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.sbrand h1{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--g4)}
+.sbrand p{font-size:.6rem;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.13em;margin-top:1px}
+.snav{flex:1;padding:12px 10px;display:flex;flex-direction:column;gap:1px;overflow-y:auto}
+.snl{font-size:.58rem;text-transform:uppercase;letter-spacing:.13em;color:rgba(255,255,255,.22);padding:14px 10px 4px}
+.snb{display:flex;align-items:center;gap:10px;padding:9px 12px;border:none;background:0;color:rgba(255,255,255,.5);font-family:inherit;font-size:.8rem;border-radius:7px;cursor:pointer;transition:.15s;text-align:left;width:100%}
+.snb:hover{background:rgba(255,255,255,.05);color:rgba(255,255,255,.8)}.snb.act{background:rgba(196,154,42,.14);color:var(--g4)}
+.snb .ni{font-size:.95rem;width:20px;text-align:center}
+.sft{padding:10px;border-top:1px solid rgba(255,255,255,.08)}
+.sind{display:flex;align-items:center;gap:6px;padding:8px 10px;border-radius:6px;font-size:.68rem;color:rgba(255,255,255,.4);background:rgba(255,255,255,.03)}
+.sind .dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.dg{background:#27ae60;box-shadow:0 0 5px rgba(39,174,96,.4)}.dy{background:#f39c12}.dr{background:#c0392b}
+.sspin{width:10px;height:10px;border:2px solid rgba(255,255,255,.2);border-top-color:var(--g4);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 
 .main{margin-left:248px;padding:28px 32px;max-width:1100px}
-.mhead{display:none;position:fixed;top:0;left:0;right:0;height:52px;background:var(--o9);z-index:150;align-items:center;padding:0 14px;gap:8px}
-.mhead h1{font-family:'Playfair Display',serif;font-size:1rem;color:var(--g4);font-weight:700}
+.mh{display:none;position:fixed;top:0;left:0;right:0;height:52px;background:var(--o9);z-index:150;align-items:center;padding:0 14px;gap:8px}
+.mh h1{font-family:'Playfair Display',serif;font-size:1rem;color:var(--g4);font-weight:700}
 
 .ph{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:22px;gap:10px;flex-wrap:wrap}
 .ph h2{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:700;color:var(--o8)}
 .ph p{color:var(--t2);font-size:.8rem;margin-top:2px}
 
 .card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rd);box-shadow:var(--sh);overflow:hidden;margin-bottom:16px}
-.card-h{padding:13px 16px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center}
-.card-h h3{font-size:.88rem;font-weight:600}.card-b{padding:16px}
+.ch{padding:13px 16px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center}
+.ch h3{font-size:.88rem;font-weight:600}.cb{padding:16px}
 
 table{width:100%;border-collapse:collapse;font-size:.8rem}
 thead th{text-align:left;padding:8px 10px;background:var(--sa);color:var(--t2);font-weight:600;font-size:.66rem;text-transform:uppercase;letter-spacing:.05em;border-bottom:2px solid var(--bd);white-space:nowrap}
 tbody td{padding:9px 10px;border-bottom:1px solid var(--bd);vertical-align:middle}
 tbody tr:last-child td{border-bottom:none}tbody tr:hover{background:var(--o0)}
-
-.amt{font-weight:600;font-variant-numeric:tabular-nums}.pos{color:var(--o6)}.neg{color:var(--r5)}
+.am{font-weight:600;font-variant-numeric:tabular-nums}.po{color:var(--o6)}.ne{color:var(--r5)}
 
 .fg{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:16px}
-.fgi{display:flex;flex-direction:column;gap:3px}
-.fgi label{font-size:.7rem;font-weight:600;color:var(--t2);text-transform:uppercase;letter-spacing:.04em}
-.fgi input,.fgi select{padding:9px 11px;border:1px solid var(--bd);border-radius:var(--rs);font-family:inherit;font-size:16px;background:var(--sf);color:var(--tx);transition:.15s;-webkit-appearance:none}
-.fgi select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%235a5a52' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px}
-.fgi input:focus,.fgi select:focus{outline:none;border-color:var(--o4);box-shadow:0 0 0 3px rgba(107,128,59,.12)}
+.fi{display:flex;flex-direction:column;gap:3px}
+.fi label{font-size:.7rem;font-weight:600;color:var(--t2);text-transform:uppercase;letter-spacing:.04em}
+.fi input,.fi select{padding:9px 11px;border:1px solid var(--bd);border-radius:var(--rs);font-family:inherit;font-size:16px;background:var(--sf);color:var(--tx);transition:.15s;-webkit-appearance:none}
+.fi select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%235a5a52' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px}
+.fi input:focus,.fi select:focus{outline:none;border-color:var(--o4);box-shadow:0 0 0 3px rgba(107,128,59,.12)}
 
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:5px;padding:9px 16px;border:none;border-radius:var(--rs);font-family:inherit;font-size:.8rem;font-weight:600;cursor:pointer;transition:.15s;white-space:nowrap}
 .btn:active{transform:scale(.97)}.btn:disabled{opacity:.5;cursor:not-allowed}
 .bp{background:var(--o6);color:#fff}.bp:hover{background:var(--o7)}
-.bg2{background:var(--g5);color:#fff}.bg2:hover{background:#b08a22}
+.bg{background:var(--g5);color:#fff}.bg:hover{background:#b08a22}
 .bo{background:0;border:1px solid var(--bd);color:var(--t2)}.bo:hover{background:var(--sa)}
-.bd2{background:var(--r1);color:var(--r5);border:1px solid rgba(192,57,43,.15)}
+.bd{background:var(--r1);color:var(--r5);border:1px solid rgba(192,57,43,.15)}
 .bb{background:var(--b5);color:#fff}
-.bs{padding:6px 10px;font-size:.72rem}
+.bsm{padding:6px 10px;font-size:.72rem}
 
 .sr{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:18px}
 .sc{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rd);padding:13px 15px;box-shadow:var(--sh)}
@@ -84,572 +77,785 @@ tbody tr:last-child td{border-bottom:none}tbody tr:hover{background:var(--o0)}
 .sc .sv{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:var(--o8)}
 
 .rf{display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap;margin-bottom:16px;padding:14px 16px;background:var(--o0);border-radius:var(--rd);border:1px solid var(--o1)}
-.rf .fgi{min-width:130px;flex:1}
+.rf .fi{min-width:130px;flex:1}
 
 .badge{display:inline-block;padding:2px 7px;border-radius:16px;font-size:.65rem;font-weight:600}
-.badge-o{background:var(--o1);color:var(--o7)}.badge-g{background:var(--g1);color:#8a6e10}
+.bdo{background:var(--o1);color:var(--o7)}.bdg{background:var(--g1);color:#8a6e10}
 
 .empty{text-align:center;padding:32px 16px;color:var(--t2)}.empty .ei{font-size:1.8rem;margin-bottom:6px;opacity:.4}.empty p{font-size:.82rem}
 
-.mov{position:fixed;inset:0;background:rgba(26,31,14,.5);display:flex;align-items:flex-end;justify-content:center;z-index:1000;opacity:0;pointer-events:none;transition:.2s}
-.mov.open{opacity:1;pointer-events:all}
+/* Modal */
+.ov{position:fixed;inset:0;background:rgba(26,31,14,.5);display:flex;align-items:flex-end;justify-content:center;z-index:1000;opacity:0;pointer-events:none;transition:.2s}
+.ov.open{opacity:1;pointer-events:all}
 .mo{background:var(--sf);border-radius:14px 14px 0 0;box-shadow:var(--sh2);width:100%;max-width:540px;max-height:90dvh;overflow-y:auto;transform:translateY(100%);transition:transform .3s;padding-bottom:var(--sb)}
-.mov.open .mo{transform:translateY(0)}
-.mo-handle{width:32px;height:4px;background:var(--bd);border-radius:2px;position:absolute;top:7px;left:50%;transform:translateX(-50%)}
-.mo-h{padding:16px 18px 10px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:var(--sf);z-index:1}
-.mo-h h3{font-size:.98rem;font-weight:700}
-.mo-x{background:none;border:none;font-size:1.3rem;color:var(--t2);cursor:pointer;padding:4px 8px}
-.mo-b{padding:14px 18px 20px}
-.mo-a{display:flex;flex-direction:column;gap:8px;margin-top:12px}.mo-a .btn{width:100%}
+.ov.open .mo{transform:translateY(0)}
+.moh{width:32px;height:4px;background:var(--bd);border-radius:2px;position:absolute;top:7px;left:50%;transform:translateX(-50%)}
+.mohd{padding:16px 18px 10px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:var(--sf);z-index:1}
+.mohd h3{font-size:.98rem;font-weight:700}
+.mox{background:none;border:none;font-size:1.3rem;color:var(--t2);cursor:pointer;padding:4px 8px}
+.mob{padding:14px 18px 20px}
+.moa{display:flex;flex-direction:column;gap:8px;margin-top:12px}.moa .btn{width:100%}
 
 .wl{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
 .wi{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:var(--sa);border:1px solid var(--bd);border-radius:var(--rs)}
 .wi .wn{font-weight:600;font-size:.85rem}
 .aw{display:flex;gap:7px}.aw input{flex:1}
 
-.cfg-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--bd);gap:10px}
-.cfg-row:last-child{border-bottom:none}
-.cfg-row .cfg-l{font-size:.85rem;font-weight:500;color:var(--tx);flex:1}
-.cfg-row .cfg-v{display:flex;align-items:center;gap:6px;flex-shrink:0}
-.cfg-row input{width:90px;padding:7px 10px;border:1px solid var(--bd);border-radius:var(--rs);font-family:inherit;font-size:16px;text-align:right}
+.cr{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--bd);gap:10px}
+.cr:last-child{border-bottom:none}.cr .cl{font-size:.85rem;font-weight:500;flex:1}
+.cr .cv{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.cr input{width:90px;padding:7px 10px;border:1px solid var(--bd);border-radius:var(--rs);font-family:inherit;font-size:16px;text-align:right}
 
 .tc{position:fixed;bottom:72px;left:50%;transform:translateX(-50%);z-index:2000;display:flex;flex-direction:column;gap:6px;width:calc(100% - 28px);max-width:360px}
-.toast{padding:11px 14px;border-radius:var(--rs);font-size:.8rem;font-weight:500;box-shadow:var(--sh2);animation:tIn .3s ease,tOut .3s ease 3s forwards;display:flex;align-items:center;gap:8px}
-.t-ok{background:#27ae60;color:#fff}.t-w{background:#f39c12;color:#fff}.t-e{background:#c0392b;color:#fff}.t-i{background:var(--b5);color:#fff}
-@keyframes tIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
-@keyframes tOut{from{opacity:1}to{opacity:0;transform:translateY(-6px)}}
-@keyframes spin{to{transform:rotate(360deg)}}
+.toast{padding:11px 14px;border-radius:var(--rs);font-size:.8rem;font-weight:500;box-shadow:var(--sh2);animation:tI .3s ease,tO .3s ease 3s forwards;display:flex;align-items:center;gap:8px}
+.tok{background:#27ae60;color:#fff}.tw{background:#f39c12;color:#fff}.te{background:#c0392b;color:#fff}.ti{background:var(--b5);color:#fff}
+@keyframes tI{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes tO{from{opacity:1}to{opacity:0;transform:translateY(-6px)}}
 
 .totr td{font-weight:700!important;background:var(--o0)!important;border-top:2px solid var(--o3)!important}
-.act{display:flex;gap:4px}
+.ac{display:flex;gap:4px}
 
 .fab{display:none;position:fixed;right:16px;bottom:calc(68px + var(--sb));width:52px;height:52px;border-radius:50%;background:var(--o6);color:#fff;border:none;font-size:1.5rem;box-shadow:0 4px 14px rgba(85,102,47,.35);cursor:pointer;z-index:150;align-items:center;justify-content:center}
 .fab:active{transform:scale(.9)}
 
+/* URL setup */
+.url-setup{max-width:480px;margin:60px auto;padding:30px;text-align:center}
+.url-setup .us-logo{font-size:3rem;margin-bottom:12px}
+.url-setup h2{font-family:'Playfair Display',serif;color:var(--o8);margin-bottom:6px}
+.url-setup p{font-size:.85rem;color:var(--t2);margin-bottom:20px;line-height:1.5}
+.url-setup input{width:100%;padding:12px;border:2px solid var(--bd);border-radius:var(--rs);font-size:14px;font-family:monospace;margin-bottom:12px;text-align:center}
+.url-setup input:focus{outline:none;border-color:var(--o4)}
+.url-setup .us-error{color:var(--r5);font-size:.82rem;margin-top:8px;min-height:20px}
+.url-setup .us-ok{color:#27ae60;font-size:.82rem;margin-top:8px}
+
+.ri{padding:12px 14px;background:var(--o0);border-radius:var(--rs);margin:10px 0;font-size:.82rem;line-height:1.6}
+.ri strong{color:var(--o7)}
+.rs{background:var(--g1);border:2px solid var(--g4);border-radius:var(--rd);padding:16px;margin:12px 0}
+.rs h4{font-family:'Playfair Display',serif;color:var(--o8);margin-bottom:8px}
+
 .print-area{display:none}
-@media print{body *{visibility:hidden}.print-area,.print-area *{visibility:visible;display:block!important}.print-area{position:fixed;left:0;top:0;width:100%;padding:20px}.print-area table{font-size:10px}}
-
-.rinfo{padding:12px 14px;background:var(--o0);border-radius:var(--rs);margin:10px 0;font-size:.82rem;line-height:1.6}
-.rinfo strong{color:var(--o7)}
-.rsummary{background:var(--g1);border:2px solid var(--g4);border-radius:var(--rd);padding:16px;margin:12px 0}
-.rsummary h4{font-family:'Playfair Display',serif;color:var(--o8);margin-bottom:8px}
-
-/* URL Config banner */
-.url-banner{background:var(--r1);border:1px solid rgba(192,57,43,.2);border-radius:var(--rd);padding:16px;margin-bottom:20px;text-align:center}
-.url-banner h3{color:var(--r5);font-size:.95rem;margin-bottom:6px}
-.url-banner p{font-size:.8rem;color:var(--t2);margin-bottom:10px}
-.url-banner input{width:100%;padding:9px 12px;border:1px solid var(--bd);border-radius:var(--rs);font-size:14px;font-family:monospace;margin-bottom:8px}
+@media print{body *{visibility:hidden}.print-area,.print-area *{visibility:visible;display:block!important}.print-area{position:fixed;left:0;top:0;width:100%;padding:20px}}
 
 @media(max-width:768px){
-.side{display:none}.mhead{display:flex}.bnav{display:block}.fab{display:flex}
+.side{display:none}.mh{display:flex}.bnav{display:block}.fab{display:flex}
 .main{margin-left:0;padding:62px 12px calc(72px + var(--sb)) 12px}
-.ph h2{font-size:1.15rem}.ph .btn{display:none}
+.ph h2{font-size:1.15rem}.ph>.btn{display:none}
 .sr{grid-template-columns:1fr 1fr;gap:6px}.sc{padding:10px 12px}.sc .sv{font-size:1.1rem}
 .fg{grid-template-columns:1fr;gap:10px}
 .rf{flex-direction:column;padding:12px;gap:8px}
 .hm{display:none!important}
 thead th{padding:6px 8px;font-size:.6rem}tbody td{padding:7px 8px;font-size:.76rem}
 }
-@media(min-width:769px){.mov{align-items:center}.mo{border-radius:var(--rd)}.mo-handle{display:none}.mo{transform:translateY(10px)}}
+@media(min-width:769px){.ov{align-items:center}.mo{border-radius:var(--rd)}.moh{display:none}.mo{transform:translateY(10px)}}
 @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}.anim{animation:fadeIn .3s ease both}
 </style>
 </head>
 <body>
 
-<div class="mhead"><span style="font-size:1rem">🌿</span><h1>GestiónAgro</h1><div id="mhSync" style="margin-left:auto"></div></div>
+<!-- Mobile header -->
+<div class="mh"><span style="font-size:1rem">🌿</span><h1>GestiónAgro</h1><div id="mhS" style="margin-left:auto"></div></div>
 
-<nav class="bnav"><div class="bnav-inner">
-<button class="bnav-b active" onclick="go('horas')" data-s="horas"><span class="bi">⏱</span>Horas</button>
-<button class="bnav-b" onclick="go('pagos')" data-s="pagos"><span class="bi">💶</span>Pagos</button>
-<button class="bnav-b" onclick="go('ss')" data-s="ss"><span class="bi">🏛</span>Seg.Soc</button>
-<button class="bnav-b" onclick="go('gasoil')" data-s="gasoil"><span class="bi">⛽</span>Gasoil</button>
-<button class="bnav-b" onclick="go('trab')" data-s="trab"><span class="bi">👷</span>Plantilla</button>
-<button class="bnav-b" onclick="go('informes')" data-s="informes"><span class="bi">📊</span>Informes</button>
-<button class="bnav-b" onclick="go('config')" data-s="config"><span class="bi">⚙️</span>Ajustes</button>
+<!-- Bottom nav -->
+<nav class="bnav"><div class="bnav-in">
+<button class="bnb act" onclick="go('horas')" data-s="horas"><span class="bi">⏱</span>Horas</button>
+<button class="bnb" onclick="go('pagos')" data-s="pagos"><span class="bi">💶</span>Pagos</button>
+<button class="bnb" onclick="go('ss')" data-s="ss"><span class="bi">🏛</span>Seg.Soc</button>
+<button class="bnb" onclick="go('gasoil')" data-s="gasoil"><span class="bi">⛽</span>Gasoil</button>
+<button class="bnb" onclick="go('trab')" data-s="trab"><span class="bi">👷</span>Plantilla</button>
+<button class="bnb" onclick="go('informes')" data-s="informes"><span class="bi">📊</span>Informes</button>
+<button class="bnb" onclick="go('config')" data-s="config"><span class="bi">⚙️</span>Ajustes</button>
 </div></nav>
 
-<button class="fab" id="fab" onclick="fabAct()">+</button>
+<button class="fab" id="fab" onclick="fabA()">+</button>
 
 <div style="display:flex;min-height:100dvh">
+
+<!-- Sidebar -->
 <nav class="side">
-<div class="side-brand"><div class="logo">🌿</div><div><h1>GestiónAgro</h1><p>Control operativo</p></div></div>
-<div class="side-nav">
-<div class="nav-lbl">Registro</div>
-<button class="nav-b active" onclick="go('horas')" data-s="horas"><span class="ni">⏱</span>Horas Trabajo</button>
-<button class="nav-b" onclick="go('pagos')" data-s="pagos"><span class="ni">💶</span>Pagos Realizados</button>
-<button class="nav-b" onclick="go('ss')" data-s="ss"><span class="ni">🏛</span>Seguridad Social</button>
-<button class="nav-b" onclick="go('gasoil')" data-s="gasoil"><span class="ni">⛽</span>Gasoil</button>
-<div class="nav-lbl">Gestión</div>
-<button class="nav-b" onclick="go('trab')" data-s="trab"><span class="ni">👷</span>Trabajadores</button>
-<button class="nav-b" onclick="go('config')" data-s="config"><span class="ni">⚙️</span>Configuración</button>
-<div class="nav-lbl">Análisis</div>
-<button class="nav-b" onclick="go('informes')" data-s="informes"><span class="ni">📊</span>Informes</button>
+<div class="sbrand"><div class="slogo">🌿</div><div><h1>GestiónAgro</h1><p>Control operativo</p></div></div>
+<div class="snav">
+<div class="snl">Registro</div>
+<button class="snb act" onclick="go('horas')" data-s="horas"><span class="ni">⏱</span>Horas Trabajo</button>
+<button class="snb" onclick="go('pagos')" data-s="pagos"><span class="ni">💶</span>Pagos Realizados</button>
+<button class="snb" onclick="go('ss')" data-s="ss"><span class="ni">🏛</span>Seguridad Social</button>
+<button class="snb" onclick="go('gasoil')" data-s="gasoil"><span class="ni">⛽</span>Gasoil</button>
+<div class="snl">Gestión</div>
+<button class="snb" onclick="go('trab')" data-s="trab"><span class="ni">👷</span>Trabajadores</button>
+<button class="snb" onclick="go('config')" data-s="config"><span class="ni">⚙️</span>Configuración</button>
+<div class="snl">Análisis</div>
+<button class="snb" onclick="go('informes')" data-s="informes"><span class="ni">📊</span>Informes</button>
 </div>
-<div class="side-ft">
-<div class="sync-ind" id="syncInd"><span class="dot dot-g"></span><span>Google Sheets conectado</span></div>
-</div>
+<div class="sft"><div class="sind" id="sInd"><span class="dot dg"></span><span>Google Sheets</span></div></div>
 </nav>
 
-<main class="main" id="M">
+<main class="main">
 
-<!-- URL CONFIG -->
-<div class="url-banner" id="urlBanner" style="display:none">
-<h3>⚠️ Configura la conexión</h3>
-<p>Pega la URL de tu Apps Script desplegado:</p>
-<input type="text" id="apiUrlInput" placeholder="https://script.google.com/macros/s/.../exec">
-<button class="btn bp" onclick="saveApiUrl()">Conectar</button>
+<!-- SETUP SCREEN -->
+<div id="setupScreen" class="url-setup" style="display:none">
+<div class="us-logo">🌿</div>
+<h2>GestiónAgro</h2>
+<p>Conecta con tu Google Sheet para empezar.<br>Pega la URL del Apps Script desplegado:</p>
+<input type="text" id="setupUrl" placeholder="https://script.google.com/macros/s/.../exec">
+<button class="btn bp" onclick="tryConnect()" id="setupBtn" style="width:100%">🔗 Conectar</button>
+<div id="setupMsg" class="us-error"></div>
 </div>
+
+<!-- APP SECTIONS -->
+<div id="appContent" style="display:none">
 
 <!-- HORAS -->
 <section id="sec-horas" class="sec anim">
-<div class="ph"><div><h2>⏱ Horas de Trabajo</h2><p>Registro diario o semanal por empresa</p></div><button class="btn bp" onclick="oMo('mo-horas')">+ Registro</button></div>
-<div class="sr" id="st-horas"></div>
-<div class="card"><div class="card-h"><h3>Registros</h3><span class="badge badge-o" id="ct-horas">0</span></div>
-<div class="card-b" style="padding:0;overflow-x:auto"><table><thead><tr><th>Fecha</th><th>Empresa</th><th>Trabajador</th><th>Horas</th><th class="hm">€/h</th><th>Coste</th><th></th></tr></thead><tbody id="tb-horas"></tbody></table></div></div>
+<div class="ph"><div><h2>⏱ Horas de Trabajo</h2><p>Registro diario o semanal</p></div><button class="btn bp" onclick="oM('mo-horas')">+ Registro</button></div>
+<div class="sr" id="st-h"></div>
+<div class="card"><div class="ch"><h3>Registros</h3><span class="badge bdo" id="ct-h">0</span></div>
+<div class="cb" style="padding:0;overflow-x:auto"><table><thead><tr><th>Fecha</th><th>Empresa</th><th>Trabajador</th><th>Horas</th><th class="hm">€/h</th><th>Coste</th><th></th></tr></thead><tbody id="tb-h"></tbody></table></div></div>
 </section>
 
 <!-- PAGOS -->
 <section id="sec-pagos" class="sec anim" style="display:none">
-<div class="ph"><div><h2>💶 Pagos Realizados</h2><p>Efectivo y transferencias/nóminas</p></div><button class="btn bp" onclick="oMo('mo-pagos')">+ Pago</button></div>
-<div class="sr" id="st-pagos"></div>
-<div class="card"><div class="card-h"><h3>Historial</h3><span class="badge badge-o" id="ct-pagos">0</span></div>
-<div class="card-b" style="padding:0;overflow-x:auto"><table><thead><tr><th>Fecha</th><th>Empresa</th><th>Trabajador</th><th>Importe</th><th class="hm">Método</th><th></th></tr></thead><tbody id="tb-pagos"></tbody></table></div></div>
+<div class="ph"><div><h2>💶 Pagos Realizados</h2><p>Efectivo y transferencias</p></div><button class="btn bp" onclick="oM('mo-pagos')">+ Pago</button></div>
+<div class="sr" id="st-p"></div>
+<div class="card"><div class="ch"><h3>Historial</h3><span class="badge bdo" id="ct-p">0</span></div>
+<div class="cb" style="padding:0;overflow-x:auto"><table><thead><tr><th>Fecha</th><th>Empresa</th><th>Trabajador</th><th>Importe</th><th class="hm">Método</th><th></th></tr></thead><tbody id="tb-p"></tbody></table></div></div>
 </section>
 
 <!-- SS -->
 <section id="sec-ss" class="sec anim" style="display:none">
-<div class="ph"><div><h2>🏛 Seguridad Social</h2><p>Jornadas oficiales cotizadas</p></div><button class="btn bp" onclick="oMo('mo-ss')">+ Cotización</button></div>
-<div class="sr" id="st-ss"></div>
-<div class="card"><div class="card-h"><h3>Jornadas Cotizadas</h3><span class="badge badge-o" id="ct-ss">0</span></div>
-<div class="card-b" style="padding:0;overflow-x:auto"><table><thead><tr><th>Mes</th><th>Empresa</th><th>Trabajador</th><th>Jornadas</th><th>Coste</th><th></th></tr></thead><tbody id="tb-ss"></tbody></table></div></div>
+<div class="ph"><div><h2>🏛 Seguridad Social</h2><p>Jornadas cotizadas</p></div><button class="btn bp" onclick="oM('mo-ss')">+ Cotización</button></div>
+<div class="sr" id="st-s"></div>
+<div class="card"><div class="ch"><h3>Cotizaciones</h3><span class="badge bdo" id="ct-s">0</span></div>
+<div class="cb" style="padding:0;overflow-x:auto"><table><thead><tr><th>Mes</th><th>Empresa</th><th>Trabajador</th><th>Jornadas</th><th>Coste</th><th></th></tr></thead><tbody id="tb-s"></tbody></table></div></div>
 </section>
 
 <!-- GASOIL -->
 <section id="sec-gasoil" class="sec anim" style="display:none">
-<div class="ph"><div><h2>⛽ Gasoil</h2><p>Consumos, compras y existencias</p></div>
-<div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn bp" onclick="oMo('mo-consumo')">+ Consumo</button><button class="btn bg2" onclick="oMo('mo-compra')">+ Compra</button></div></div>
-<div class="sr" id="st-gasoil"></div>
-<div class="card"><div class="card-h"><h3>Movimientos</h3><span class="badge badge-o" id="ct-gasoil">0</span></div>
-<div class="card-b" style="padding:0;overflow-x:auto"><table><thead><tr><th>Fecha</th><th>Tipo</th><th>Empresa</th><th>Litros</th><th>€/L</th><th>Importe</th><th></th></tr></thead><tbody id="tb-gasoil"></tbody></table></div></div>
+<div class="ph"><div><h2>⛽ Gasoil</h2><p>Consumos y compras</p></div>
+<div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn bp" onclick="oM('mo-gc')">+ Consumo</button><button class="btn bg" onclick="oM('mo-gp')">+ Compra</button></div></div>
+<div class="sr" id="st-g"></div>
+<div class="card"><div class="ch"><h3>Movimientos</h3><span class="badge bdo" id="ct-g">0</span></div>
+<div class="cb" style="padding:0;overflow-x:auto"><table><thead><tr><th>Fecha</th><th>Tipo</th><th>Empresa</th><th>Litros</th><th>€/L</th><th>Importe</th><th></th></tr></thead><tbody id="tb-g"></tbody></table></div></div>
 </section>
 
 <!-- TRABAJADORES -->
 <section id="sec-trab" class="sec anim" style="display:none">
-<div class="ph"><div><h2>👷 Trabajadores</h2><p>Alta y gestión del personal</p></div></div>
-<div class="card"><div class="card-h"><h3>Dar de Alta</h3></div><div class="card-b">
-<div class="aw"><input type="text" id="nw-name" placeholder="Nombre del trabajador" style="padding:9px 11px;border:1px solid var(--bd);border-radius:var(--rs);font-family:inherit;font-size:16px;flex:1"><button class="btn bp" onclick="addW()">Añadir</button></div>
+<div class="ph"><div><h2>👷 Trabajadores</h2><p>Alta y gestión</p></div></div>
+<div class="card"><div class="ch"><h3>Dar de Alta</h3></div><div class="cb">
+<div class="aw"><input type="text" id="nwn" placeholder="Nombre del trabajador" style="padding:9px 11px;border:1px solid var(--bd);border-radius:var(--rs);font-family:inherit;font-size:16px;flex:1"><button class="btn bp" onclick="addW()">Añadir</button></div>
 </div></div>
-<div class="card"><div class="card-h"><h3>Plantilla</h3><span class="badge badge-o" id="ct-w">0</span></div>
-<div class="card-b" style="padding:0"><div id="wlist" style="padding:12px"></div></div></div>
+<div class="card"><div class="ch"><h3>Plantilla</h3><span class="badge bdo" id="ct-w">0</span></div>
+<div class="cb" style="padding:0"><div id="wl" style="padding:12px"></div></div></div>
 </section>
 
 <!-- CONFIG -->
 <section id="sec-config" class="sec anim" style="display:none">
-<div class="ph"><div><h2>⚙️ Configuración</h2><p>Parámetros y conexión</p></div></div>
-<div class="card"><div class="card-h"><h3>Tarifas y Costes</h3></div><div class="card-b">
-<div class="cfg-row"><span class="cfg-l">Precio hora de trabajo</span><div class="cfg-v"><input type="number" id="cfg-ph" step="0.01" min="0" inputmode="decimal"><span>€/h</span></div></div>
-<div class="cfg-row"><span class="cfg-l">Coste Seguridad Social</span><div class="cfg-v"><input type="number" id="cfg-ss" step="0.01" min="0" inputmode="decimal"><span>€/jorn.</span></div></div>
-<div class="cfg-row"><span class="cfg-l">Horas por jornada</span><div class="cfg-v"><input type="number" id="cfg-hj" step="0.1" min="1" inputmode="decimal"><span>horas</span></div></div>
-<div style="margin-top:14px;text-align:right"><button class="btn bp" onclick="saveConfig()">Guardar</button></div>
+<div class="ph"><div><h2>⚙️ Configuración</h2><p>Tarifas y conexión</p></div></div>
+<div class="card"><div class="ch"><h3>Tarifas</h3></div><div class="cb">
+<div class="cr"><span class="cl">Precio hora</span><div class="cv"><input type="number" id="c-ph" step="0.01" inputmode="decimal"><span>€/h</span></div></div>
+<div class="cr"><span class="cl">Coste Seg. Social</span><div class="cv"><input type="number" id="c-ss" step="0.01" inputmode="decimal"><span>€/jorn.</span></div></div>
+<div class="cr"><span class="cl">Horas/jornada</span><div class="cv"><input type="number" id="c-hj" step="0.1" inputmode="decimal"><span>h</span></div></div>
+<div style="margin-top:14px;text-align:right"><button class="btn bp" onclick="saveCfg()">Guardar</button></div>
 </div></div>
-<div class="card"><div class="card-h"><h3>Conexión Google Sheets</h3></div><div class="card-b">
-<div class="cfg-row"><span class="cfg-l">URL del Apps Script</span></div>
-<input type="text" id="cfg-url" style="width:100%;padding:9px 11px;border:1px solid var(--bd);border-radius:var(--rs);font-family:monospace;font-size:13px;margin:8px 0" placeholder="https://script.google.com/macros/s/.../exec">
-<div style="display:flex;gap:8px"><button class="btn bp" onclick="saveApiUrl2()">Guardar URL</button><button class="btn bo" onclick="testConnection()">Probar conexión</button></div>
+<div class="card"><div class="ch"><h3>Google Sheets</h3></div><div class="cb">
+<p style="font-size:.82rem;color:var(--t2);margin-bottom:8px">URL del Apps Script desplegado:</p>
+<input type="text" id="c-url" style="width:100%;padding:9px 11px;border:1px solid var(--bd);border-radius:var(--rs);font-family:monospace;font-size:13px;margin-bottom:8px">
+<div style="display:flex;gap:8px"><button class="btn bp" onclick="saveUrl()">Guardar</button><button class="btn bo" onclick="testConn()">Probar</button><button class="btn bo" onclick="reloadData()">🔄 Recargar datos</button></div>
 </div></div>
 </section>
 
 <!-- INFORMES -->
 <section id="sec-informes" class="sec anim" style="display:none">
-<div class="ph"><div><h2>📊 Informes</h2><p>Análisis cruzado entre fechas</p></div></div>
+<div class="ph"><div><h2>📊 Informes</h2><p>Análisis entre fechas</p></div></div>
 <div class="rf">
-<div class="fgi"><label>Desde</label><input type="date" id="r-desde"></div>
-<div class="fgi"><label>Hasta</label><input type="date" id="r-hasta"></div>
-<div class="fgi"><label>Informe</label><select id="r-tipo">
+<div class="fi"><label>Desde</label><input type="date" id="r-d"></div>
+<div class="fi"><label>Hasta</label><input type="date" id="r-h"></div>
+<div class="fi"><label>Informe</label><select id="r-t">
 <option value="1">1 — Horas de Trabajo</option>
-<option value="2">2 — Pagos vs Coste (Saldo)</option>
+<option value="2">2 — Pagos vs Coste</option>
 <option value="3">3 — Seg. Social (Desviaciones)</option>
 <option value="4">4 — Gasoil (Inventario)</option>
 <option value="all">Todos</option>
 </select></div>
-<button class="btn bg2" onclick="genReport()" style="flex:0">📊 Generar</button>
+<button class="btn bg" onclick="genR()" style="flex:0">📊 Generar</button>
 <button class="btn bo" onclick="printR()" style="flex:0">🖨</button>
 </div>
-<div id="rout"></div>
+<div id="ro"></div>
 </section>
 
+</div><!-- appContent -->
 </main>
 </div>
 
 <!-- MODALS -->
-<div class="mov" id="mo-horas"><div class="mo"><div class="mo-handle"></div><div class="mo-h"><h3>Registrar Horas</h3><button class="mo-x" onclick="cMo('mo-horas')">&times;</button></div><div class="mo-b">
+<div class="ov" id="mo-horas"><div class="mo"><div class="moh"></div><div class="mohd"><h3>Registrar Horas</h3><button class="mox" onclick="cM('mo-horas')">&times;</button></div><div class="mob">
 <div class="fg">
-<div class="fgi"><label>Fecha</label><input type="date" id="h-fecha"></div>
-<div class="fgi"><label>Empresa</label><select id="h-emp"><option value="">—</option><option value="E1">EVA PÉREZ DEL CASTILLO</option><option value="E2">FCO. JOSÉ DE LA FUENTE RUZ</option></select></div>
-<div class="fgi"><label>Trabajador</label><select id="h-trab"><option value="">—</option></select></div>
-<div class="fgi"><label>Horas</label><input type="number" id="h-hrs" step="0.5" min="0" inputmode="decimal"></div>
+<div class="fi"><label>Fecha</label><input type="date" id="hf"></div>
+<div class="fi"><label>Empresa</label><select id="he"><option value="">—</option><option value="E1">EVA PÉREZ DEL CASTILLO</option><option value="E2">FCO. JOSÉ DE LA FUENTE RUZ</option></select></div>
+<div class="fi"><label>Trabajador</label><select id="ht"><option value="">—</option></select></div>
+<div class="fi"><label>Horas</label><input type="number" id="hh" step="0.5" min="0" inputmode="decimal"></div>
 </div>
-<p style="font-size:.78rem;color:var(--t2);margin-bottom:10px">Precio/hora: <strong id="h-precio-lbl">10,10</strong> €</p>
-<button class="btn bp" onclick="addH()" style="width:100%">Guardar</button>
+<p style="font-size:.78rem;color:var(--t2);margin-bottom:10px">Precio/hora: <strong id="hpl">10,10</strong> €</p>
+<button class="btn bp" onclick="addH()" style="width:100%" id="btnH">Guardar</button>
 </div></div></div>
 
-<div class="mov" id="mo-pagos"><div class="mo"><div class="mo-handle"></div><div class="mo-h"><h3>Registrar Pago</h3><button class="mo-x" onclick="cMo('mo-pagos')">&times;</button></div><div class="mo-b">
+<div class="ov" id="mo-pagos"><div class="mo"><div class="moh"></div><div class="mohd"><h3>Registrar Pago</h3><button class="mox" onclick="cM('mo-pagos')">&times;</button></div><div class="mob">
 <div class="fg">
-<div class="fgi"><label>Fecha</label><input type="date" id="p-fecha"></div>
-<div class="fgi"><label>Empresa pagadora</label><select id="p-emp"><option value="">—</option><option value="E1">EVA PÉREZ</option><option value="E2">FCO. JOSÉ DE LA FUENTE</option></select></div>
-<div class="fgi"><label>Trabajador</label><select id="p-trab"><option value="">—</option></select></div>
-<div class="fgi"><label>Importe (€)</label><input type="number" id="p-imp" step="0.01" min="0" inputmode="decimal"></div>
-<div class="fgi"><label>Método</label><select id="p-met"><option>Efectivo</option><option>Transferencia (Nómina)</option></select></div>
+<div class="fi"><label>Fecha</label><input type="date" id="pf"></div>
+<div class="fi"><label>Empresa</label><select id="pe"><option value="">—</option><option value="E1">EVA PÉREZ</option><option value="E2">FCO. JOSÉ DE LA FUENTE</option></select></div>
+<div class="fi"><label>Trabajador</label><select id="pt"><option value="">—</option></select></div>
+<div class="fi"><label>Importe (€)</label><input type="number" id="pi" step="0.01" min="0" inputmode="decimal"></div>
+<div class="fi"><label>Método</label><select id="pm"><option>Efectivo</option><option>Transferencia (Nómina)</option></select></div>
 </div>
-<button class="btn bp" onclick="addP()" style="width:100%">Guardar</button>
+<button class="btn bp" onclick="addP()" style="width:100%" id="btnP">Guardar</button>
 </div></div></div>
 
-<div class="mov" id="mo-ss"><div class="mo"><div class="mo-handle"></div><div class="mo-h"><h3>Jornadas Cotizadas</h3><button class="mo-x" onclick="cMo('mo-ss')">&times;</button></div><div class="mo-b">
+<div class="ov" id="mo-ss"><div class="mo"><div class="moh"></div><div class="mohd"><h3>Cotización SS</h3><button class="mox" onclick="cM('mo-ss')">&times;</button></div><div class="mob">
 <div class="fg">
-<div class="fgi"><label>Mes</label><input type="month" id="s-mes"></div>
-<div class="fgi"><label>Empresa</label><select id="s-emp"><option value="">—</option><option value="E1">EVA PÉREZ</option><option value="E2">FCO. JOSÉ DE LA FUENTE</option></select></div>
-<div class="fgi"><label>Trabajador</label><select id="s-trab"><option value="">—</option></select></div>
-<div class="fgi"><label>Jornadas oficiales</label><input type="number" id="s-dias" min="0" inputmode="numeric"></div>
+<div class="fi"><label>Mes</label><input type="month" id="sm"></div>
+<div class="fi"><label>Empresa</label><select id="se"><option value="">—</option><option value="E1">EVA PÉREZ</option><option value="E2">FCO. JOSÉ DE LA FUENTE</option></select></div>
+<div class="fi"><label>Trabajador</label><select id="st2"><option value="">—</option></select></div>
+<div class="fi"><label>Jornadas</label><input type="number" id="sd" min="0" inputmode="numeric"></div>
 </div>
-<p style="font-size:.78rem;color:var(--t2);margin-bottom:10px">Coste/jornada: <strong id="s-coste-lbl">18,17</strong> €</p>
-<button class="btn bp" onclick="addSS()" style="width:100%">Guardar</button>
+<p style="font-size:.78rem;color:var(--t2);margin-bottom:10px">Coste: <strong id="scl">18,17</strong> €/jornada</p>
+<button class="btn bp" onclick="addSS()" style="width:100%" id="btnS">Guardar</button>
 </div></div></div>
 
-<div class="mov" id="mo-consumo"><div class="mo"><div class="mo-handle"></div><div class="mo-h"><h3>Consumo Gasoil</h3><button class="mo-x" onclick="cMo('mo-consumo')">&times;</button></div><div class="mo-b">
+<div class="ov" id="mo-gc"><div class="mo"><div class="moh"></div><div class="mohd"><h3>Consumo Gasoil</h3><button class="mox" onclick="cM('mo-gc')">&times;</button></div><div class="mob">
 <div class="fg">
-<div class="fgi"><label>Fecha</label><input type="date" id="gc-fecha"></div>
-<div class="fgi"><label>Empresa</label><select id="gc-emp"><option value="">—</option><option value="E1">EVA PÉREZ</option><option value="E2">FCO. JOSÉ DE LA FUENTE</option></select></div>
-<div class="fgi"><label>Litros</label><input type="number" id="gc-lit" step="0.1" min="0" inputmode="decimal"></div>
+<div class="fi"><label>Fecha</label><input type="date" id="gcf"></div>
+<div class="fi"><label>Empresa</label><select id="gce"><option value="">—</option><option value="E1">EVA PÉREZ</option><option value="E2">FCO. JOSÉ DE LA FUENTE</option></select></div>
+<div class="fi"><label>Litros</label><input type="number" id="gcl" step="0.1" min="0" inputmode="decimal"></div>
 </div>
-<button class="btn bp" onclick="addGC()" style="width:100%">Guardar</button>
+<button class="btn bp" onclick="addGC()" style="width:100%" id="btnGC">Guardar</button>
 </div></div></div>
 
-<div class="mov" id="mo-compra"><div class="mo"><div class="mo-handle"></div><div class="mo-h"><h3>Compra / Existencias Gasoil</h3><button class="mo-x" onclick="cMo('mo-compra')">&times;</button></div><div class="mo-b">
+<div class="ov" id="mo-gp"><div class="mo"><div class="moh"></div><div class="mohd"><h3>Compra Gasoil</h3><button class="mox" onclick="cM('mo-gp')">&times;</button></div><div class="mob">
 <div class="fg">
-<div class="fgi"><label>Fecha</label><input type="date" id="gp-fecha"></div>
-<div class="fgi"><label>Empresa</label><select id="gp-emp"><option value="">—</option><option value="E1">EVA PÉREZ</option><option value="E2">FCO. JOSÉ DE LA FUENTE</option></select></div>
-<div class="fgi"><label>Litros</label><input type="number" id="gp-lit" step="0.1" min="0" inputmode="decimal"></div>
-<div class="fgi"><label>Precio €/litro</label><input type="number" id="gp-precio" step="0.001" min="0" inputmode="decimal"></div>
-<div class="fgi"><label>Tipo</label><select id="gp-tipo"><option>Compra</option><option>Existencias iniciales</option></select></div>
+<div class="fi"><label>Fecha</label><input type="date" id="gpf"></div>
+<div class="fi"><label>Empresa</label><select id="gpe"><option value="">—</option><option value="E1">EVA PÉREZ</option><option value="E2">FCO. JOSÉ DE LA FUENTE</option></select></div>
+<div class="fi"><label>Litros</label><input type="number" id="gpl" step="0.1" min="0" inputmode="decimal"></div>
+<div class="fi"><label>€/litro</label><input type="number" id="gpp" step="0.001" min="0" inputmode="decimal"></div>
+<div class="fi"><label>Tipo</label><select id="gpt"><option>Compra</option><option>Existencias iniciales</option></select></div>
 </div>
-<button class="btn bp" onclick="addGP()" style="width:100%">Guardar</button>
+<button class="btn bp" onclick="addGP()" style="width:100%" id="btnGP">Guardar</button>
 </div></div></div>
 
 <div class="tc" id="tc"></div>
-<div class="print-area" id="pArea"></div>
+<div class="print-area" id="pa"></div>
 
 <script>
 // ═══════════════════════════════════════════════════════════════
-// GestiónAgro — Frontend con Google Sheets Backend
+// GestiónAgro v6 — Google Sheets Backend (JSONP robusto)
 // ═══════════════════════════════════════════════════════════════
 
-// ──────────── CONFIG ────────────
-let API_URL = localStorage.getItem('gestionagro_api_url') || '';
-let CFG = JSON.parse(localStorage.getItem('gestionagro_config') || '{"precioHora":10.10,"costeSS":18.17,"horasJornada":6.5}');
-const EN = {E1:'EVA PÉREZ DEL CASTILLO', E2:'FCO. JOSÉ DE LA FUENTE RUZ'};
-const ES = {E1:'EVA PÉREZ', E2:'FCO. JOSÉ'};
-let curSec = 'horas';
-let DATA = {horas:[],pagos:[],ss:[],gasoil:[],trabajadores:[]};
-let jsonpCounter = 0;
+let URL_API = localStorage.getItem('ga_url') || '';
+let CFG = JSON.parse(localStorage.getItem('ga_cfg') || '{"precioHora":10.10,"costeSS":18.17,"horasJornada":6.5}');
+const EN = {E1:'EVA PÉREZ DEL CASTILLO',E2:'FCO. JOSÉ DE LA FUENTE RUZ'};
+const ES2 = {E1:'EVA PÉREZ',E2:'FCO. JOSÉ'};
+let D = {horas:[],pagos:[],ss:[],gasoil:[],trabajadores:[]};
+let cur = 'horas', jcnt = 0;
 
-// ──────────── JSONP API ────────────
-function api(params) {
+// ──── JSONP robusto ────
+function jsonp(params) {
   return new Promise((resolve, reject) => {
-    if (!API_URL) { reject('No API URL configured'); return; }
-    const cbName = '_gaCb' + (jsonpCounter++);
-    const timeout = setTimeout(() => { delete window[cbName]; reject('Timeout'); }, 15000);
-    window[cbName] = function(data) {
-      clearTimeout(timeout);
-      delete window[cbName];
-      if (data.error) reject(data.error);
+    if (!URL_API) return reject('Sin URL');
+    const cb = '_ga' + (jcnt++) + '_' + Date.now();
+    const to = setTimeout(() => {
+      cleanup();
+      reject('Sin respuesta del servidor (timeout). Verifica la URL y que el script esté desplegado.');
+    }, 20000);
+    
+    function cleanup() {
+      clearTimeout(to);
+      try { delete window[cb]; } catch(e) {}
+      const el = document.getElementById(cb);
+      if (el) el.remove();
+    }
+    
+    window[cb] = function(data) {
+      cleanup();
+      if (data && data.error) reject(data.error);
       else resolve(data);
     };
-    params.callback = cbName;
-    const qs = Object.entries(params).map(([k,v]) => `${k}=${encodeURIComponent(v)}`).join('&');
-    const script = document.createElement('script');
-    script.src = API_URL + '?' + qs;
-    script.onerror = () => { clearTimeout(timeout); delete window[cbName]; reject('Network error'); };
-    document.head.appendChild(script);
-    script.onload = () => script.remove();
+    
+    params.callback = cb;
+    const qs = Object.entries(params).map(([k,v]) => k + '=' + encodeURIComponent(v)).join('&');
+    const s = document.createElement('script');
+    s.id = cb;
+    s.src = URL_API + '?' + qs;
+    s.onerror = function() {
+      cleanup();
+      reject('Error de red. Verifica tu conexión y la URL.');
+    };
+    document.body.appendChild(s);
   });
 }
 
-async function apiPost(data, params) {
-  // For imports we need POST — use fetch with no-cors + fallback
-  // Actually JSONP is GET only, so we encode data in params for small payloads
-  // For large imports, we chunk into the URL
-  params.data = JSON.stringify(data);
-  return api(params);
-}
-
-function setSyncing(on) {
-  const ind = document.getElementById('syncInd');
-  const mh = document.getElementById('mhSync');
+// ──── Sync indicator ────
+function syncing(on) {
+  const si = document.getElementById('sInd');
+  const ms = document.getElementById('mhS');
   if (on) {
-    ind.innerHTML = '<div class="sync-spin"></div><span>Sincronizando...</span>';
-    mh.innerHTML = '<div class="sync-spin"></div>';
+    si.innerHTML = '<div class="sspin"></div><span>Sincronizando...</span>';
+    ms.innerHTML = '<div class="sspin"></div>';
   } else {
-    ind.innerHTML = '<span class="dot dot-g"></span><span>Google Sheets ✓</span>';
-    mh.innerHTML = '';
+    si.innerHTML = '<span class="dot dg"></span><span>Sheets ✓</span>';
+    ms.innerHTML = '';
   }
 }
-
-function setError() {
-  document.getElementById('syncInd').innerHTML = '<span class="dot dot-r"></span><span>Error conexión</span>';
+function syncErr(msg) {
+  document.getElementById('sInd').innerHTML = '<span class="dot dr"></span><span>' + (msg||'Error') + '</span>';
+  document.getElementById('mhS').innerHTML = '<span style="color:#c0392b;font-size:.7rem">⚠</span>';
 }
 
-// ──────────── LOAD ALL DATA ────────────
+// ──── Toast ────
+function toast(m,t) {
+  t = t||'ok';
+  const c = document.getElementById('tc'), el = document.createElement('div');
+  const ic = {ok:'✅',w:'⚠️',e:'❌',i:'ℹ️'};
+  el.className = 'toast t' + t;
+  el.innerHTML = '<span>' + (ic[t]||'') + '</span> ' + m;
+  c.appendChild(el);
+  setTimeout(() => el.remove(), 3500);
+}
+
+function fm(n) { return Number(n).toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function fd(d) { if(!d) return '—'; var p = (d+'').split('-'); return p.length===3 ? p[2]+'/'+p[1]+'/'+p[0] : d; }
+function gid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+
+// ──── Setup / Connect ────
+async function tryConnect() {
+  const url = document.getElementById('setupUrl').value.trim();
+  const msg = document.getElementById('setupMsg');
+  if (!url) { msg.textContent = 'Pega la URL'; msg.className = 'us-error'; return; }
+  
+  document.getElementById('setupBtn').disabled = true;
+  document.getElementById('setupBtn').textContent = 'Conectando...';
+  msg.textContent = '';
+  
+  URL_API = url;
+  try {
+    const res = await jsonp({action:'ping'});
+    if (res.ok) {
+      localStorage.setItem('ga_url', url);
+      msg.textContent = '✅ Conectado correctamente';
+      msg.className = 'us-ok';
+      setTimeout(() => {
+        document.getElementById('setupScreen').style.display = 'none';
+        document.getElementById('appContent').style.display = '';
+        loadAll();
+      }, 800);
+    }
+  } catch(err) {
+    msg.textContent = '❌ ' + err;
+    msg.className = 'us-error';
+    URL_API = '';
+  }
+  document.getElementById('setupBtn').disabled = false;
+  document.getElementById('setupBtn').textContent = '🔗 Conectar';
+}
+
 async function loadAll() {
-  if (!API_URL) {
-    document.getElementById('urlBanner').style.display = '';
-    return;
-  }
-  document.getElementById('urlBanner').style.display = 'none';
-  setSyncing(true);
+  syncing(true);
   try {
-    const res = await api({action:'exportAll'});
-    DATA = res.data || {horas:[],pagos:[],ss:[],gasoil:[],trabajadores:[]};
-    // Ensure numeric fields
-    DATA.horas.forEach(r => r.horas = Number(r.horas)||0);
-    DATA.pagos.forEach(r => r.importe = Number(r.importe)||0);
-    DATA.ss.forEach(r => r.dias = Number(r.dias)||0);
-    DATA.gasoil.forEach(r => { r.litros = Number(r.litros)||0; r.precio = Number(r.precio)||0; });
-    setSyncing(false);
-    ren(curSec);
+    const res = await jsonp({action:'exportAll'});
+    D = res.data || {horas:[],pagos:[],ss:[],gasoil:[],trabajadores:[]};
+    D.horas.forEach(r => r.horas = Number(r.horas)||0);
+    D.pagos.forEach(r => r.importe = Number(r.importe)||0);
+    D.ss.forEach(r => r.dias = Number(r.dias)||0);
+    D.gasoil.forEach(r => { r.litros = Number(r.litros)||0; r.precio = Number(r.precio)||0; });
+    syncing(false);
+    ren(cur);
+    toast('Datos cargados');
   } catch(err) {
-    setError();
-    toast('Error conectando: ' + err, 'e');
+    syncErr('Error');
+    toast('Error: ' + err, 'e');
   }
 }
 
-async function remoteAdd(store, record) {
-  setSyncing(true);
+function reloadData() { loadAll(); }
+
+async function testConn() {
+  if (!URL_API) return toast('No hay URL','w');
+  syncing(true);
   try {
-    await api({action:'add', store, data: JSON.stringify(record)});
-    DATA[store].push(record);
-    setSyncing(false);
+    await jsonp({action:'ping'});
+    toast('Conexión OK ✓');
+    syncing(false);
+  } catch(e) {
+    syncErr('Error');
+    toast('Error: ' + e, 'e');
+  }
+}
+
+function saveUrl() {
+  const url = document.getElementById('c-url').value.trim();
+  if (!url) return;
+  URL_API = url;
+  localStorage.setItem('ga_url', url);
+  toast('URL guardada');
+  loadAll();
+}
+
+// ──── Remote ops ────
+async function rAdd(store, rec) {
+  syncing(true);
+  try {
+    await jsonp({action:'add', store: store, data: JSON.stringify(rec)});
+    D[store].push(rec);
+    syncing(false);
     return true;
   } catch(err) {
-    setError();
-    toast('Error guardando: ' + err, 'e');
+    syncErr('Error');
+    toast('Error: ' + err, 'e');
     return false;
   }
 }
 
-async function remoteDel(store, id) {
-  setSyncing(true);
+async function rDel(store, id) {
+  syncing(true);
   try {
-    await api({action:'delete', store, id});
-    DATA[store] = DATA[store].filter(r => r.id !== id);
-    setSyncing(false);
+    await jsonp({action:'delete', store: store, id: id});
+    D[store] = D[store].filter(r => r.id !== id);
+    syncing(false);
     return true;
   } catch(err) {
-    setError();
-    toast('Error eliminando: ' + err, 'e');
+    syncErr('Error');
+    toast('Error: ' + err, 'e');
     return false;
   }
 }
 
-// ──────────── HELPERS ────────────
-function gid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
-function fm(n){return Number(n).toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2})}
-function fd(d){if(!d)return'—';const p=d.split('-');return p.length===3?`${p[2]}/${p[1]}/${p[0]}`:d}
-function toast(m,t='ok'){const c=document.getElementById('tc'),el=document.createElement('div');const ic={ok:'✅',w:'⚠️',e:'❌',i:'ℹ️'};el.className=`toast t-${t}`;el.innerHTML=`<span>${ic[t]||''}</span> ${m}`;c.appendChild(el);setTimeout(()=>el.remove(),3500)}
-
-function go(s){curSec=s;document.querySelectorAll('.sec').forEach(x=>x.style.display='none');const el=document.getElementById('sec-'+s);if(el)el.style.display='';
-document.querySelectorAll('.nav-b,.bnav-b').forEach(b=>b.classList.remove('active'));document.querySelectorAll(`[data-s="${s}"]`).forEach(b=>b.classList.add('active'));
-document.getElementById('fab').style.display=['horas','pagos','ss','gasoil'].includes(s)?'flex':'none';
-ren(s)}
-function fabAct(){const mm={horas:'mo-horas',pagos:'mo-pagos',ss:'mo-ss',gasoil:'mo-consumo'};if(mm[curSec])oMo(mm[curSec])}
-function oMo(id){document.getElementById(id).classList.add('open');popW()}
-function cMo(id){document.getElementById(id).classList.remove('open')}
-
-function popW(){const w=(DATA.trabajadores||[]).sort((a,b)=>(a.name||'').localeCompare(b.name||''));
-const opts='<option value="">—</option>'+w.map(x=>`<option value="${x.name}">${x.name}</option>`).join('');
-['h-trab','p-trab','s-trab'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=opts})}
-
-function loadConfigUI(){
-document.getElementById('cfg-ph').value=CFG.precioHora;document.getElementById('cfg-ss').value=CFG.costeSS;document.getElementById('cfg-hj').value=CFG.horasJornada;
-document.getElementById('h-precio-lbl').textContent=fm(CFG.precioHora);document.getElementById('s-coste-lbl').textContent=fm(CFG.costeSS);
-document.getElementById('cfg-url').value=API_URL}
-
-function saveConfig(){CFG.precioHora=parseFloat(document.getElementById('cfg-ph').value)||10.10;CFG.costeSS=parseFloat(document.getElementById('cfg-ss').value)||18.17;CFG.horasJornada=parseFloat(document.getElementById('cfg-hj').value)||6.5;
-localStorage.setItem('gestionagro_config',JSON.stringify(CFG));
-document.getElementById('h-precio-lbl').textContent=fm(CFG.precioHora);document.getElementById('s-coste-lbl').textContent=fm(CFG.costeSS);toast('Configuración guardada')}
-
-function saveApiUrl(){const url=document.getElementById('apiUrlInput').value.trim();if(!url)return;
-API_URL=url;localStorage.setItem('gestionagro_api_url',url);document.getElementById('urlBanner').style.display='none';
-document.getElementById('cfg-url').value=url;loadAll();toast('Conectado')}
-function saveApiUrl2(){const url=document.getElementById('cfg-url').value.trim();if(!url)return;
-API_URL=url;localStorage.setItem('gestionagro_api_url',url);toast('URL guardada');loadAll()}
-async function testConnection(){if(!API_URL)return toast('No hay URL','w');setSyncing(true);
-try{await api({action:'exportAll'});toast('Conexión OK ✓');setSyncing(false)}catch(e){setError();toast('Error: '+e,'e')}}
-
-// ──────────── CRUD ────────────
-async function addH(){const r={id:gid(),fecha:document.getElementById('h-fecha').value,emp:document.getElementById('h-emp').value,
-trab:document.getElementById('h-trab').value,horas:parseFloat(document.getElementById('h-hrs').value)||0};
-if(!r.fecha||!r.emp||!r.trab||!r.horas)return alert('Completa todos los campos');
-if(await remoteAdd('horas',r)){cMo('mo-horas');['h-fecha','h-hrs'].forEach(i=>document.getElementById(i).value='');
-document.getElementById('h-emp').selectedIndex=0;document.getElementById('h-trab').selectedIndex=0;ren('horas');toast('Horas registradas')}}
-
-async function addP(){const r={id:gid(),fecha:document.getElementById('p-fecha').value,emp:document.getElementById('p-emp').value,
-trab:document.getElementById('p-trab').value,importe:parseFloat(document.getElementById('p-imp').value)||0,metodo:document.getElementById('p-met').value};
-if(!r.fecha||!r.emp||!r.trab||!r.importe)return alert('Completa todos los campos');
-if(await remoteAdd('pagos',r)){cMo('mo-pagos');['p-fecha','p-imp'].forEach(i=>document.getElementById(i).value='');
-document.getElementById('p-emp').selectedIndex=0;document.getElementById('p-trab').selectedIndex=0;ren('pagos');toast('Pago registrado')}}
-
-async function addSS(){const r={id:gid(),mes:document.getElementById('s-mes').value,emp:document.getElementById('s-emp').value,
-trab:document.getElementById('s-trab').value,dias:parseInt(document.getElementById('s-dias').value)||0};
-if(!r.mes||!r.emp||!r.trab||!r.dias)return alert('Completa todos los campos');
-if(await remoteAdd('ss',r)){cMo('mo-ss');document.getElementById('s-dias').value='';
-document.getElementById('s-emp').selectedIndex=0;document.getElementById('s-trab').selectedIndex=0;ren('ss');toast('Cotización registrada')}}
-
-async function addGC(){const r={id:gid(),tipo:'consumo',fecha:document.getElementById('gc-fecha').value,emp:document.getElementById('gc-emp').value,
-litros:parseFloat(document.getElementById('gc-lit').value)||0,precio:0};
-if(!r.fecha||!r.emp||!r.litros)return alert('Completa todos los campos');
-if(await remoteAdd('gasoil',r)){cMo('mo-consumo');document.getElementById('gc-lit').value='';document.getElementById('gc-emp').selectedIndex=0;ren('gasoil');toast('Consumo registrado')}}
-
-async function addGP(){const tipo=document.getElementById('gp-tipo').value;
-const r={id:gid(),tipo:tipo==='Compra'?'compra':'existencias',fecha:document.getElementById('gp-fecha').value,emp:document.getElementById('gp-emp').value,
-litros:parseFloat(document.getElementById('gp-lit').value)||0,precio:parseFloat(document.getElementById('gp-precio').value)||0};
-if(!r.fecha||!r.emp||!r.litros||!r.precio)return alert('Completa todos los campos');
-if(await remoteAdd('gasoil',r)){cMo('mo-compra');['gp-lit','gp-precio'].forEach(i=>document.getElementById(i).value='');document.getElementById('gp-emp').selectedIndex=0;ren('gasoil');toast('Compra registrada')}}
-
-async function addW(){const inp=document.getElementById('nw-name');const name=inp.value.trim().toUpperCase();if(!name)return alert('Escribe un nombre');
-if(DATA.trabajadores.some(w=>w.name===name))return toast('Ya existe','w');
-if(await remoteAdd('trabajadores',{id:gid(),name})){inp.value='';renW();toast('Trabajador dado de alta')}}
-
-async function del(s,id){if(!confirm('¿Eliminar?'))return;if(await remoteDel(s,id)){ren(s);toast('Eliminado','w')}}
-
-// ──────────── RENDERS ────────────
-function ren(s){const fn={horas:renH,pagos:renP,ss:renSS,gasoil:renG,trab:renW,config:loadConfigUI,informes:()=>{}};if(fn[s])fn[s]()}
-
-function renH(){const d=(DATA.horas||[]).slice().sort((a,b)=>(b.fecha||'').localeCompare(a.fecha||'')),tb=document.getElementById('tb-horas');
-document.getElementById('ct-horas').textContent=d.length;
-if(!d.length){tb.innerHTML='<tr><td colspan="7"><div class="empty"><div class="ei">⏱</div><p>Sin registros</p></div></td></tr>';document.getElementById('st-horas').innerHTML='';return}
-const tH=d.reduce((s,r)=>s+r.horas,0),tC=tH*CFG.precioHora;
-const e1h=d.filter(r=>r.emp==='E1').reduce((s,r)=>s+r.horas,0),e2h=d.filter(r=>r.emp==='E2').reduce((s,r)=>s+r.horas,0);
-document.getElementById('st-horas').innerHTML=`<div class="sc"><div class="sl">Total Horas</div><div class="sv">${fm(tH)}</div></div>
-<div class="sc"><div class="sl">Coste</div><div class="sv">${fm(tC)}€</div></div>
-<div class="sc"><div class="sl">Eva Pérez</div><div class="sv">${fm(e1h)}h</div></div>
-<div class="sc"><div class="sl">Fco. José</div><div class="sv">${fm(e2h)}h</div></div>`;
-tb.innerHTML=d.map(r=>`<tr><td>${fd(r.fecha)}</td><td>${ES[r.emp]||r.emp}</td><td>${r.trab}</td>
-<td class="amt">${fm(r.horas)}</td><td class="hm">${fm(CFG.precioHora)}€</td><td class="amt pos">${fm(r.horas*CFG.precioHora)}€</td>
-<td class="act"><button class="btn bd2 bs" onclick="del('horas','${r.id}')">✕</button></td></tr>`).join('')}
-
-function renP(){const d=(DATA.pagos||[]).slice().sort((a,b)=>(b.fecha||'').localeCompare(a.fecha||'')),tb=document.getElementById('tb-pagos');
-document.getElementById('ct-pagos').textContent=d.length;
-if(!d.length){tb.innerHTML='<tr><td colspan="6"><div class="empty"><div class="ei">💶</div><p>Sin pagos</p></div></td></tr>';document.getElementById('st-pagos').innerHTML='';return}
-const tot=d.reduce((s,r)=>s+r.importe,0);
-const e1=d.filter(r=>r.emp==='E1').reduce((s,r)=>s+r.importe,0),e2=d.filter(r=>r.emp==='E2').reduce((s,r)=>s+r.importe,0);
-document.getElementById('st-pagos').innerHTML=`<div class="sc"><div class="sl">Total</div><div class="sv">${fm(tot)}€</div></div>
-<div class="sc"><div class="sl">Eva Pérez</div><div class="sv">${fm(e1)}€</div></div>
-<div class="sc"><div class="sl">Fco. José</div><div class="sv">${fm(e2)}€</div></div>
-<div class="sc"><div class="sl">Pagos</div><div class="sv">${d.length}</div></div>`;
-tb.innerHTML=d.map(r=>`<tr><td>${fd(r.fecha)}</td><td>${ES[r.emp]||r.emp}</td><td>${r.trab}</td>
-<td class="amt neg">${fm(r.importe)}€</td><td class="hm"><span class="badge ${r.metodo==='Efectivo'?'badge-g':'badge-o'}">${r.metodo||''}</span></td>
-<td class="act"><button class="btn bd2 bs" onclick="del('pagos','${r.id}')">✕</button></td></tr>`).join('')}
-
-function renSS(){const d=(DATA.ss||[]).slice().sort((a,b)=>(b.mes||'').localeCompare(a.mes||'')),tb=document.getElementById('tb-ss');
-document.getElementById('ct-ss').textContent=d.length;
-if(!d.length){tb.innerHTML='<tr><td colspan="6"><div class="empty"><div class="ei">🏛</div><p>Sin cotizaciones</p></div></td></tr>';document.getElementById('st-ss').innerHTML='';return}
-const tD=d.reduce((s,r)=>s+r.dias,0);
-document.getElementById('st-ss').innerHTML=`<div class="sc"><div class="sl">Jornadas</div><div class="sv">${tD}</div></div>
-<div class="sc"><div class="sl">Coste</div><div class="sv">${fm(tD*CFG.costeSS)}€</div></div>
-<div class="sc"><div class="sl">€/jorn.</div><div class="sv">${fm(CFG.costeSS)}</div></div>`;
-tb.innerHTML=d.map(r=>`<tr><td>${r.mes}</td><td>${ES[r.emp]||r.emp}</td><td>${r.trab}</td>
-<td class="amt">${r.dias}</td><td class="amt neg">${fm(r.dias*CFG.costeSS)}€</td>
-<td class="act"><button class="btn bd2 bs" onclick="del('ss','${r.id}')">✕</button></td></tr>`).join('')}
-
-function getLP(movements,emp,before){const p=movements.filter(m=>(m.tipo==='compra'||m.tipo==='existencias')&&m.emp===emp&&m.fecha<=before).sort((a,b)=>b.fecha.localeCompare(a.fecha));return p.length?p[0].precio:0}
-
-function renG(){const d=(DATA.gasoil||[]).slice().sort((a,b)=>(b.fecha||'').localeCompare(a.fecha||'')),tb=document.getElementById('tb-gasoil');
-document.getElementById('ct-gasoil').textContent=d.length;
-if(!d.length){tb.innerHTML='<tr><td colspan="7"><div class="empty"><div class="ei">⛽</div><p>Sin movimientos</p></div></td></tr>';document.getElementById('st-gasoil').innerHTML='';return}
-const sorted=d.slice().sort((a,b)=>a.fecha.localeCompare(b.fecha));
-let s1=0,s2=0;sorted.forEach(m=>{if(m.tipo!=='consumo'){if(m.emp==='E1')s1+=m.litros;else s2+=m.litros}else{if(m.emp==='E1')s1-=m.litros;else s2-=m.litros}});
-document.getElementById('st-gasoil').innerHTML=`<div class="sc"><div class="sl">Stock E.Pérez</div><div class="sv">${fm(s1)}L</div></div>
-<div class="sc"><div class="sl">Stock F.José</div><div class="sv">${fm(s2)}L</div></div>
-<div class="sc"><div class="sl">Total</div><div class="sv">${fm(s1+s2)}L</div></div>`;
-tb.innerHTML=d.map(r=>{const isC=r.tipo!=='consumo';const p=isC?r.precio:getLP(sorted,r.emp,r.fecha);
-return`<tr><td>${fd(r.fecha)}</td><td><span class="badge ${isC?'badge-o':'badge-g'}">${r.tipo==='existencias'?'Exist.':r.tipo==='compra'?'Compra':'Consumo'}</span></td>
-<td>${ES[r.emp]||r.emp}</td><td class="amt ${isC?'pos':'neg'}">${isC?'+':'−'}${fm(r.litros)}</td>
-<td>${p?fm(p)+'€':'—'}</td><td class="amt">${p?fm(r.litros*p)+'€':'—'}</td>
-<td class="act"><button class="btn bd2 bs" onclick="del('gasoil','${r.id}')">✕</button></td></tr>`}).join('')}
-
-function renW(){const w=(DATA.trabajadores||[]).sort((a,b)=>(a.name||'').localeCompare(b.name||''));
-document.getElementById('ct-w').textContent=w.length;
-const c=document.getElementById('wlist');if(!w.length){c.innerHTML='<div class="empty"><div class="ei">👷</div><p>Sin trabajadores</p></div>';return}
-c.innerHTML='<div class="wl">'+w.map(x=>`<div class="wi"><span class="wn">${x.name}</span><button class="btn bd2 bs" onclick="del('trabajadores','${x.id}')">✕</button></div>`).join('')+'</div>'}
-
-// ──────────── REPORTS (same logic as v5) ────────────
-function genReport(){
-const desde=document.getElementById('r-desde').value,hasta=document.getElementById('r-hasta').value,tipo=document.getElementById('r-tipo').value;
-if(!desde||!hasta)return alert('Selecciona fechas');if(desde>hasta)return alert('"Desde" < "Hasta"');
-const out=document.getElementById('rout');let html='';const inR=d=>d>=desde&&d<=hasta;
-const tipos=tipo==='all'?['1','2','3','4']:[tipo];
-const horas=DATA.horas||[],pagos=DATA.pagos||[],ss=DATA.ss||[],gasoil=DATA.gasoil||[];
-
-for(const t of tipos){
-if(t==='1'){const fh=horas.filter(r=>inR(r.fecha));html+=`<div class="card"><div class="card-h"><h3>📋 INFORME 1 — Horas de Trabajo</h3></div><div class="card-b">`;
-if(!fh.length){html+=`<div class="empty"><p>Sin datos</p></div></div></div>`;continue}
-for(const ek of['E1','E2']){const ed=fh.filter(r=>r.emp===ek);if(!ed.length)continue;const tH=ed.reduce((s,r)=>s+r.horas,0);
-const byT={};ed.forEach(r=>{byT[r.trab]=(byT[r.trab]||0)+r.horas});
-html+=`<div class="rinfo"><strong>${EN[ek]}</strong><br>Total: <strong>${fm(tH)} horas</strong> — Coste: <strong>${fm(tH*CFG.precioHora)} €</strong><br>`;
-Object.entries(byT).forEach(([t,h])=>{html+=`• ${t}: ${fm(h)}h — ${fm(h*CFG.precioHora)}€<br>`});html+=`</div>`}
-html+=`<div class="rsummary"><h4>Total</h4>${fm(fh.reduce((s,r)=>s+r.horas,0))} horas — ${fm(fh.reduce((s,r)=>s+r.horas,0)*CFG.precioHora)} €</div></div></div>`}
-
-if(t==='2'){const fh=horas.filter(r=>inR(r.fecha)),fp=pagos.filter(r=>inR(r.fecha));
-html+=`<div class="card"><div class="card-h"><h3>📋 INFORME 2 — Pagos vs Coste</h3></div><div class="card-b">`;
-for(const ek of['E1','E2']){const eh=fh.filter(r=>r.emp===ek),ep=fp.filter(r=>r.emp===ek);
-const coste=eh.reduce((s,r)=>s+r.horas,0)*CFG.precioHora;const pEf=ep.filter(r=>r.metodo==='Efectivo').reduce((s,r)=>s+r.importe,0);
-const pTr=ep.filter(r=>r.metodo!=='Efectivo').reduce((s,r)=>s+r.importe,0);const total=pEf+pTr;const saldo=total-coste;
-html+=`<div class="rinfo"><strong>${EN[ek]}</strong><br>Coste horas: <strong>${fm(coste)}€</strong><br>
-Pagos: <strong>${fm(total)}€</strong> (${ep.filter(r=>r.metodo==='Efectivo').length} efectivo=${fm(pEf)}€ | ${ep.filter(r=>r.metodo!=='Efectivo').length} transf.=${fm(pTr)}€)<br>
-<strong style="color:${saldo>=0?'#27ae60':'#c0392b'}">Saldo: ${saldo>=0?'+':''}${fm(saldo)}€ ${saldo>=0?'(pagado de más)':'(pendiente)'}</strong></div>`}
-html+=`</div></div>`}
-
-if(t==='3'){const fh=horas.filter(r=>inR(r.fecha)),fs=ss.filter(r=>{const m=r.mes+'-01';return m>=desde&&m<=hasta});
-html+=`<div class="card"><div class="card-h"><h3>📋 INFORME 3 — Seguridad Social</h3></div><div class="card-b">`;
-let res={};for(const ek of['E1','E2']){const eh=fh.filter(r=>r.emp===ek),es2=fs.filter(r=>r.emp===ek);
-const hT=eh.reduce((s,r)=>s+r.horas,0);const dR=Math.round(hT/CFG.horasJornada);const dC=es2.reduce((s,r)=>s+r.dias,0);
-const cS=dC*CFG.costeSS;const cR=dR*CFG.costeSS;res[ek]={cS,cR};
-const byT={};eh.forEach(r=>{byT[r.trab]=(byT[r.trab]||0)+r.horas});const byTS={};es2.forEach(r=>{byTS[r.trab]=(byTS[r.trab]||0)+r.dias});
-html+=`<div class="rinfo"><strong>${EN[ek]}</strong><br>Horas: <strong>${fm(hT)}</strong> → <strong>${dR} jornadas reales</strong> (${CFG.horasJornada}h/jorn.)<br>
-Cotizadas: <strong>${dC}</strong> | Desv: <strong style="color:${dR-dC<=0?'#27ae60':'#c0392b'}">${dR-dC>0?'+':''}${dR-dC}</strong><br>
-Soportado: ${fm(cS)}€ | Real: ${fm(cR)}€ | <strong style="color:${cS-cR>=0?'#27ae60':'#c0392b'}">Desv: ${fm(cS-cR)}€</strong><br>`;
-new Set([...Object.keys(byT),...Object.keys(byTS)]).forEach(tr=>{const h=byT[tr]||0,dr=Math.round(h/CFG.horasJornada),dcx=byTS[tr]||0;html+=`• ${tr}: ${fm(h)}h → ${dr}d real / ${dcx}d cot. (${dr-dcx})<br>`});html+=`</div>`}
-if(res.E1&&res.E2){const tR=res.E1.cR+res.E2.cR,tS=res.E1.cS+res.E2.cS;const p1=tR?(res.E1.cR/tR*100):50,p2=tR?(res.E2.cR/tR*100):50;
-const d1=tS*(p1/100)-res.E1.cS,d2=tS*(p2/100)-res.E2.cS;
-html+=`<div class="rsummary"><h4>Compensación</h4>Proporción real: ${ES.E1} ${fm(p1)}% | ${ES.E2} ${fm(p2)}%<br>Total cotizado: ${fm(tS)}€<br>`;
-if(Math.abs(d1)>0.01){if(d1>0)html+=`<strong style="color:#c0392b">${ES.E1} debe compensar a ${ES.E2}: ${fm(Math.abs(d1))}€</strong>`;
-else html+=`<strong style="color:#c0392b">${ES.E2} debe compensar a ${ES.E1}: ${fm(Math.abs(d1))}€</strong>`}else html+=`<strong style="color:#27ae60">Compensadas</strong>`;html+=`</div>`}
-html+=`</div></div>`}
-
-if(t==='4'){const fg=gasoil.filter(r=>inR(r.fecha)).sort((a,b)=>a.fecha.localeCompare(b.fecha));const allG=gasoil.sort((a,b)=>a.fecha.localeCompare(b.fecha));
-html+=`<div class="card"><div class="card-h"><h3>📋 INFORME 4 — Gasoil</h3></div><div class="card-b">`;
-if(!fg.length){html+=`<div class="empty"><p>Sin datos</p></div></div></div>`;continue}
-for(const ek of['E1','E2']){const ed=fg.filter(r=>r.emp===ek);const comp=ed.filter(r=>r.tipo!=='consumo');const cons=ed.filter(r=>r.tipo==='consumo');
-const lC=comp.reduce((s,r)=>s+r.litros,0),eC=comp.reduce((s,r)=>s+r.litros*r.precio,0);
-let lCo=0,eCo=0;cons.forEach(c=>{const p=getLP(allG,ek,c.fecha);lCo+=c.litros;eCo+=c.litros*p});
-let sT=0;allG.filter(r=>r.emp===ek).forEach(m=>{if(m.tipo!=='consumo')sT+=m.litros;else sT-=m.litros});
-html+=`<div class="rinfo"><strong>${EN[ek]}</strong><br>Aportado: <strong>${fm(lC)}L</strong> (${fm(eC)}€)<br>Consumido: <strong>${fm(lCo)}L</strong> (${fm(eCo)}€)<br>
-<strong>Desv: ${fm(lC-lCo)}L (${fm(eC-eCo)}€)</strong><br>Stock actual: <strong>${fm(sT)}L</strong></div>`}
-let s1=0,s2=0;allG.filter(r=>r.emp==='E1').forEach(m=>{if(m.tipo!=='consumo')s1+=m.litros;else s1-=m.litros});
-allG.filter(r=>r.emp==='E2').forEach(m=>{if(m.tipo!=='consumo')s2+=m.litros;else s2-=m.litros});
-html+=`<div class="rsummary"><h4>Stock Global</h4>${fm(s1+s2)}L (${ES.E1}: ${fm(s1)}L | ${ES.E2}: ${fm(s2)}L)</div></div></div>`}
+// ──── Nav ────
+function go(s) {
+  cur = s;
+  document.querySelectorAll('.sec').forEach(x => x.style.display='none');
+  var el = document.getElementById('sec-'+s);
+  if (el) el.style.display = '';
+  document.querySelectorAll('.snb,.bnb').forEach(b => b.classList.remove('act'));
+  document.querySelectorAll('[data-s="'+s+'"]').forEach(b => b.classList.add('act'));
+  document.getElementById('fab').style.display = ['horas','pagos','ss','gasoil'].indexOf(s)>=0 ? 'flex' : 'none';
+  ren(s);
 }
-out.innerHTML=html;document.getElementById('pArea').innerHTML=`<h2>GestiónAgro</h2><div style="font-size:12px;color:#666;margin-bottom:14px">${fd(desde)}—${fd(hasta)}</div>${html}`}
-function printR(){if(!document.getElementById('pArea').innerHTML.trim())return alert('Genera primero');window.print()}
 
-// ──────────── INIT ────────────
-document.addEventListener('DOMContentLoaded',()=>{
-const now=new Date(),y=now.getFullYear(),m=String(now.getMonth()+1).padStart(2,'0');
-document.getElementById('r-desde').value=`${y}-${m}-01`;document.getElementById('r-hasta').value=now.toISOString().split('T')[0];
-loadConfigUI();
-if(API_URL)loadAll();else document.getElementById('urlBanner').style.display='';
+function fabA() {
+  var mm = {horas:'mo-horas',pagos:'mo-pagos',ss:'mo-ss',gasoil:'mo-gc'};
+  if (mm[cur]) oM(mm[cur]);
+}
+
+function oM(id) { document.getElementById(id).classList.add('open'); popW(); }
+function cM(id) { document.getElementById(id).classList.remove('open'); }
+
+function popW() {
+  var w = (D.trabajadores||[]).slice().sort(function(a,b){return(a.name||'').localeCompare(b.name||'')});
+  var opts = '<option value="">—</option>' + w.map(function(x){return '<option value="'+x.name+'">'+x.name+'</option>'}).join('');
+  ['ht','pt','st2'].forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML=opts});
+}
+
+// ──── CRUD ────
+async function addH() {
+  var r = {id:gid(),fecha:document.getElementById('hf').value,emp:document.getElementById('he').value,
+    trab:document.getElementById('ht').value,horas:parseFloat(document.getElementById('hh').value)||0};
+  if(!r.fecha||!r.emp||!r.trab||!r.horas) return alert('Completa todos los campos');
+  document.getElementById('btnH').disabled=true;
+  if(await rAdd('horas',r)){cM('mo-horas');document.getElementById('hf').value='';document.getElementById('hh').value='';
+    document.getElementById('he').selectedIndex=0;document.getElementById('ht').selectedIndex=0;ren('horas');toast('Registrado')}
+  document.getElementById('btnH').disabled=false;
+}
+
+async function addP() {
+  var r = {id:gid(),fecha:document.getElementById('pf').value,emp:document.getElementById('pe').value,
+    trab:document.getElementById('pt').value,importe:parseFloat(document.getElementById('pi').value)||0,metodo:document.getElementById('pm').value};
+  if(!r.fecha||!r.emp||!r.trab||!r.importe) return alert('Completa todos los campos');
+  document.getElementById('btnP').disabled=true;
+  if(await rAdd('pagos',r)){cM('mo-pagos');document.getElementById('pf').value='';document.getElementById('pi').value='';
+    document.getElementById('pe').selectedIndex=0;document.getElementById('pt').selectedIndex=0;ren('pagos');toast('Registrado')}
+  document.getElementById('btnP').disabled=false;
+}
+
+async function addSS() {
+  var r = {id:gid(),mes:document.getElementById('sm').value,emp:document.getElementById('se').value,
+    trab:document.getElementById('st2').value,dias:parseInt(document.getElementById('sd').value)||0};
+  if(!r.mes||!r.emp||!r.trab||!r.dias) return alert('Completa todos los campos');
+  document.getElementById('btnS').disabled=true;
+  if(await rAdd('ss',r)){cM('mo-ss');document.getElementById('sd').value='';
+    document.getElementById('se').selectedIndex=0;document.getElementById('st2').selectedIndex=0;ren('ss');toast('Registrado')}
+  document.getElementById('btnS').disabled=false;
+}
+
+async function addGC() {
+  var r = {id:gid(),tipo:'consumo',fecha:document.getElementById('gcf').value,emp:document.getElementById('gce').value,
+    litros:parseFloat(document.getElementById('gcl').value)||0,precio:0};
+  if(!r.fecha||!r.emp||!r.litros) return alert('Completa todos los campos');
+  document.getElementById('btnGC').disabled=true;
+  if(await rAdd('gasoil',r)){cM('mo-gc');document.getElementById('gcl').value='';document.getElementById('gce').selectedIndex=0;ren('gasoil');toast('Registrado')}
+  document.getElementById('btnGC').disabled=false;
+}
+
+async function addGP() {
+  var tipo = document.getElementById('gpt').value;
+  var r = {id:gid(),tipo:tipo==='Compra'?'compra':'existencias',fecha:document.getElementById('gpf').value,emp:document.getElementById('gpe').value,
+    litros:parseFloat(document.getElementById('gpl').value)||0,precio:parseFloat(document.getElementById('gpp').value)||0};
+  if(!r.fecha||!r.emp||!r.litros||!r.precio) return alert('Completa todos los campos');
+  document.getElementById('btnGP').disabled=true;
+  if(await rAdd('gasoil',r)){cM('mo-gp');document.getElementById('gpl').value='';document.getElementById('gpp').value='';document.getElementById('gpe').selectedIndex=0;ren('gasoil');toast('Registrado')}
+  document.getElementById('btnGP').disabled=false;
+}
+
+async function addW() {
+  var inp = document.getElementById('nwn');
+  var name = inp.value.trim().toUpperCase();
+  if(!name) return alert('Escribe un nombre');
+  if(D.trabajadores.some(function(w){return w.name===name})) return toast('Ya existe','w');
+  if(await rAdd('trabajadores',{id:gid(),name:name})){inp.value='';renW();toast('Trabajador dado de alta')}
+}
+
+async function del(s,id) { if(!confirm('¿Eliminar?')) return; if(await rDel(s,id)){ren(s);toast('Eliminado','w')} }
+
+// ──── Renders ────
+function ren(s) {
+  var fn = {horas:renH,pagos:renP,ss:renS,gasoil:renG,trab:renW,config:loadCfgUI,informes:function(){}};
+  if(fn[s]) fn[s]();
+}
+
+function renH() {
+  var d = (D.horas||[]).slice().sort(function(a,b){return(b.fecha||'').localeCompare(a.fecha||'')});
+  var tb = document.getElementById('tb-h');
+  document.getElementById('ct-h').textContent = d.length;
+  if(!d.length){tb.innerHTML='<tr><td colspan="7"><div class="empty"><div class="ei">⏱</div><p>Sin registros</p></div></td></tr>';document.getElementById('st-h').innerHTML='';return}
+  var tH=0,e1=0,e2=0;d.forEach(function(r){tH+=r.horas;if(r.emp==='E1')e1+=r.horas;else e2+=r.horas});
+  document.getElementById('st-h').innerHTML='<div class="sc"><div class="sl">Horas</div><div class="sv">'+fm(tH)+'</div></div>'+
+    '<div class="sc"><div class="sl">Coste</div><div class="sv">'+fm(tH*CFG.precioHora)+'€</div></div>'+
+    '<div class="sc"><div class="sl">Eva Pérez</div><div class="sv">'+fm(e1)+'h</div></div>'+
+    '<div class="sc"><div class="sl">Fco. José</div><div class="sv">'+fm(e2)+'h</div></div>';
+  tb.innerHTML=d.map(function(r){return'<tr><td>'+fd(r.fecha)+'</td><td>'+(ES2[r.emp]||r.emp)+'</td><td>'+r.trab+'</td>'+
+    '<td class="am">'+fm(r.horas)+'</td><td class="hm">'+fm(CFG.precioHora)+'€</td><td class="am po">'+fm(r.horas*CFG.precioHora)+'€</td>'+
+    '<td class="ac"><button class="btn bd bsm" onclick="del(\'horas\',\''+r.id+'\')">✕</button></td></tr>'}).join('');
+}
+
+function renP() {
+  var d=(D.pagos||[]).slice().sort(function(a,b){return(b.fecha||'').localeCompare(a.fecha||'')});
+  var tb=document.getElementById('tb-p');document.getElementById('ct-p').textContent=d.length;
+  if(!d.length){tb.innerHTML='<tr><td colspan="6"><div class="empty"><div class="ei">💶</div><p>Sin pagos</p></div></td></tr>';document.getElementById('st-p').innerHTML='';return}
+  var tot=0,p1=0,p2=0;d.forEach(function(r){tot+=r.importe;if(r.emp==='E1')p1+=r.importe;else p2+=r.importe});
+  document.getElementById('st-p').innerHTML='<div class="sc"><div class="sl">Total</div><div class="sv">'+fm(tot)+'€</div></div>'+
+    '<div class="sc"><div class="sl">Eva Pérez</div><div class="sv">'+fm(p1)+'€</div></div>'+
+    '<div class="sc"><div class="sl">Fco. José</div><div class="sv">'+fm(p2)+'€</div></div>';
+  tb.innerHTML=d.map(function(r){return'<tr><td>'+fd(r.fecha)+'</td><td>'+(ES2[r.emp]||r.emp)+'</td><td>'+r.trab+'</td>'+
+    '<td class="am ne">'+fm(r.importe)+'€</td><td class="hm"><span class="badge '+(r.metodo==='Efectivo'?'bdg':'bdo')+'">'+(r.metodo||'')+'</span></td>'+
+    '<td class="ac"><button class="btn bd bsm" onclick="del(\'pagos\',\''+r.id+'\')">✕</button></td></tr>'}).join('');
+}
+
+function renS() {
+  var d=(D.ss||[]).slice().sort(function(a,b){return(b.mes||'').localeCompare(a.mes||'')});
+  var tb=document.getElementById('tb-s');document.getElementById('ct-s').textContent=d.length;
+  if(!d.length){tb.innerHTML='<tr><td colspan="6"><div class="empty"><div class="ei">🏛</div><p>Sin cotizaciones</p></div></td></tr>';document.getElementById('st-s').innerHTML='';return}
+  var tD=0;d.forEach(function(r){tD+=r.dias});
+  document.getElementById('st-s').innerHTML='<div class="sc"><div class="sl">Jornadas</div><div class="sv">'+tD+'</div></div>'+
+    '<div class="sc"><div class="sl">Coste</div><div class="sv">'+fm(tD*CFG.costeSS)+'€</div></div>';
+  tb.innerHTML=d.map(function(r){return'<tr><td>'+r.mes+'</td><td>'+(ES2[r.emp]||r.emp)+'</td><td>'+r.trab+'</td>'+
+    '<td class="am">'+r.dias+'</td><td class="am ne">'+fm(r.dias*CFG.costeSS)+'€</td>'+
+    '<td class="ac"><button class="btn bd bsm" onclick="del(\'ss\',\''+r.id+'\')">✕</button></td></tr>'}).join('');
+}
+
+// Calcula el Precio Medio Ponderado (PMP) para una empresa en una fecha dada
+// Recorre cronológicamente: en cada compra/existencias recalcula PMP, los consumos usan el PMP vigente
+function calcPMP(all, emp) {
+  var sorted = all.filter(function(m){return m.emp===emp}).slice().sort(function(a,b){return a.fecha.localeCompare(b.fecha)||(a.tipo==='consumo'?1:-1)});
+  var stock=0, valor=0, pmp=0;
+  var result = []; // {id, pmp} para cada movimiento
+  for (var i=0; i<sorted.length; i++) {
+    var m = sorted[i];
+    if (m.tipo==='compra' || m.tipo==='existencias') {
+      valor = stock * pmp + m.litros * m.precio;
+      stock += m.litros;
+      pmp = stock > 0 ? valor / stock : m.precio;
+      result.push({id:m.id, pmp:m.precio, stock:stock, valorStock:valor});
+    } else {
+      // consumo: se valora al PMP vigente
+      result.push({id:m.id, pmp:pmp, stock:stock, valorStock:valor});
+      stock -= m.litros;
+      valor = stock * pmp;
+      if (stock < 0) stock = 0;
+      if (valor < 0) valor = 0;
+    }
+  }
+  return result;
+}
+
+// Obtener PMP para un movimiento concreto
+function getPMP(all, emp, movId) {
+  var pmps = calcPMP(all, emp);
+  for (var i=0; i<pmps.length; i++) {
+    if (pmps[i].id === movId) return pmps[i].pmp;
+  }
+  return 0;
+}
+
+// Obtener PMP vigente de una empresa a una fecha (para informes)
+function getPMPAtDate(all, emp, fecha) {
+  var sorted = all.filter(function(m){return m.emp===emp && m.fecha<=fecha}).sort(function(a,b){return a.fecha.localeCompare(b.fecha)||(a.tipo==='consumo'?1:-1)});
+  var stock=0, pmp=0;
+  for (var i=0; i<sorted.length; i++) {
+    var m = sorted[i];
+    if (m.tipo!=='consumo') {
+      var valor = stock * pmp + m.litros * m.precio;
+      stock += m.litros;
+      pmp = stock > 0 ? valor / stock : m.precio;
+    } else {
+      stock -= m.litros;
+      if (stock < 0) stock = 0;
+    }
+  }
+  return pmp;
+}
+
+function renG() {
+  var d=(D.gasoil||[]).slice().sort(function(a,b){return(b.fecha||'').localeCompare(a.fecha||'')});
+  var tb=document.getElementById('tb-g');document.getElementById('ct-g').textContent=d.length;
+  if(!d.length){tb.innerHTML='<tr><td colspan="7"><div class="empty"><div class="ei">⛽</div><p>Sin movimientos</p></div></td></tr>';document.getElementById('st-g').innerHTML='';return}
+  var sorted=d.slice().sort(function(a,b){return a.fecha.localeCompare(b.fecha)});
+  var s1=0,s2=0;sorted.forEach(function(m){if(m.tipo!=='consumo'){if(m.emp==='E1')s1+=m.litros;else s2+=m.litros}else{if(m.emp==='E1')s1-=m.litros;else s2-=m.litros}});
+  var pmpV1=getPMPAtDate(sorted,'E1','9999-12-31'),pmpV2=getPMPAtDate(sorted,'E2','9999-12-31');
+  document.getElementById('st-g').innerHTML='<div class="sc"><div class="sl">Stock E.Pérez</div><div class="sv">'+fm(s1)+'L</div></div>'+
+    '<div class="sc"><div class="sl">Stock F.José</div><div class="sv">'+fm(s2)+'L</div></div>'+
+    '<div class="sc"><div class="sl">PMP E.P.</div><div class="sv">'+fm(pmpV1)+'€</div></div>'+
+    '<div class="sc"><div class="sl">PMP F.J.</div><div class="sv">'+fm(pmpV2)+'€</div></div>';
+  // Precalcular PMPs para cada empresa
+  var pmpE1 = calcPMP(sorted,'E1'), pmpE2 = calcPMP(sorted,'E2');
+  var pmpMap = {};
+  pmpE1.concat(pmpE2).forEach(function(x){pmpMap[x.id]=x.pmp});
+  tb.innerHTML=d.map(function(r){var isC=r.tipo!=='consumo';var p=isC?r.precio:(pmpMap[r.id]||0);
+    return'<tr><td>'+fd(r.fecha)+'</td><td><span class="badge '+(isC?'bdo':'bdg')+'">'+(r.tipo==='existencias'?'Exist.':r.tipo==='compra'?'Compra':'Consumo')+'</span></td>'+
+    '<td>'+(ES2[r.emp]||r.emp)+'</td><td class="am '+(isC?'po':'ne')+'">'+(isC?'+':'−')+fm(r.litros)+'</td>'+
+    '<td>'+(p?fm(p)+'€':'—')+'</td><td class="am">'+(p?fm(r.litros*p)+'€':'—')+'</td>'+
+    '<td class="ac"><button class="btn bd bsm" onclick="del(\'gasoil\',\''+r.id+'\')">✕</button></td></tr>'}).join('');
+}
+
+function renW() {
+  var w=(D.trabajadores||[]).sort(function(a,b){return(a.name||'').localeCompare(b.name||'')});
+  document.getElementById('ct-w').textContent=w.length;
+  var c=document.getElementById('wl');
+  if(!w.length){c.innerHTML='<div class="empty"><div class="ei">👷</div><p>Sin trabajadores</p></div>';return}
+  c.innerHTML='<div class="wl">'+w.map(function(x){return'<div class="wi"><span class="wn">'+x.name+'</span><button class="btn bd bsm" onclick="del(\'trabajadores\',\''+x.id+'\')">✕</button></div>'}).join('')+'</div>';
+}
+
+// ──── Config ────
+function loadCfgUI() {
+  document.getElementById('c-ph').value=CFG.precioHora;
+  document.getElementById('c-ss').value=CFG.costeSS;
+  document.getElementById('c-hj').value=CFG.horasJornada;
+  document.getElementById('c-url').value=URL_API;
+  document.getElementById('hpl').textContent=fm(CFG.precioHora);
+  document.getElementById('scl').textContent=fm(CFG.costeSS);
+}
+
+function saveCfg() {
+  CFG.precioHora=parseFloat(document.getElementById('c-ph').value)||10.10;
+  CFG.costeSS=parseFloat(document.getElementById('c-ss').value)||18.17;
+  CFG.horasJornada=parseFloat(document.getElementById('c-hj').value)||6.5;
+  localStorage.setItem('ga_cfg',JSON.stringify(CFG));
+  document.getElementById('hpl').textContent=fm(CFG.precioHora);
+  document.getElementById('scl').textContent=fm(CFG.costeSS);
+  toast('Guardado');
+}
+
+// ──── Reports (same as v5) ────
+function genR() {
+  var desde=document.getElementById('r-d').value,hasta=document.getElementById('r-h').value,tipo=document.getElementById('r-t').value;
+  if(!desde||!hasta)return alert('Selecciona fechas');if(desde>hasta)return alert('"Desde" < "Hasta"');
+  var out=document.getElementById('ro'),html='';
+  function inR(d){return d>=desde&&d<=hasta}
+  var tipos=tipo==='all'?['1','2','3','4']:[tipo];
+  var horas=D.horas||[],pagos=D.pagos||[],ss=D.ss||[],gasoil=D.gasoil||[];
+
+  tipos.forEach(function(t){
+  if(t==='1'){var fh=horas.filter(function(r){return inR(r.fecha)});
+    html+='<div class="card"><div class="ch"><h3>📋 INFORME 1 — Horas</h3></div><div class="cb">';
+    if(!fh.length){html+='<div class="empty"><p>Sin datos</p></div></div></div>';return}
+    ['E1','E2'].forEach(function(ek){var ed=fh.filter(function(r){return r.emp===ek});if(!ed.length)return;
+      var tH=0;var byT={};ed.forEach(function(r){tH+=r.horas;byT[r.trab]=(byT[r.trab]||0)+r.horas});
+      html+='<div class="ri"><strong>'+EN[ek]+'</strong><br>Total: <strong>'+fm(tH)+'h</strong> — Coste: <strong>'+fm(tH*CFG.precioHora)+'€</strong><br>';
+      Object.keys(byT).forEach(function(t2){html+='• '+t2+': '+fm(byT[t2])+'h — '+fm(byT[t2]*CFG.precioHora)+'€<br>'});html+='</div>'});
+    var totH=fh.reduce(function(s,r){return s+r.horas},0);
+    html+='<div class="rs"><h4>Total</h4>'+fm(totH)+'h — '+fm(totH*CFG.precioHora)+'€</div></div></div>'}
+
+  if(t==='2'){var fh2=horas.filter(function(r){return inR(r.fecha)}),fp=pagos.filter(function(r){return inR(r.fecha)});
+    html+='<div class="card"><div class="ch"><h3>📋 INFORME 2 — Pagos vs Coste</h3></div><div class="cb">';
+    ['E1','E2'].forEach(function(ek){var eh=fh2.filter(function(r){return r.emp===ek}),ep=fp.filter(function(r){return r.emp===ek});
+      var coste=eh.reduce(function(s,r){return s+r.horas},0)*CFG.precioHora;
+      var pEf=ep.filter(function(r){return r.metodo==='Efectivo'}).reduce(function(s,r){return s+r.importe},0);
+      var pTr=ep.filter(function(r){return r.metodo!=='Efectivo'}).reduce(function(s,r){return s+r.importe},0);
+      var saldo=pEf+pTr-coste;
+      html+='<div class="ri"><strong>'+EN[ek]+'</strong><br>Coste: <strong>'+fm(coste)+'€</strong><br>Pagos: <strong>'+fm(pEf+pTr)+'€</strong> (efectivo '+fm(pEf)+'€ + transf. '+fm(pTr)+'€)<br>'+
+        '<strong style="color:'+(saldo>=0?'#27ae60':'#c0392b')+'">Saldo: '+(saldo>=0?'+':'')+fm(saldo)+'€ '+(saldo>=0?'(al día)':'(pendiente)')+'</strong></div>'});
+    html+='</div></div>'}
+
+  if(t==='3'){var fh3=horas.filter(function(r){return inR(r.fecha)}),fs=ss.filter(function(r){var m=r.mes+'-01';return m>=desde&&m<=hasta});
+    html+='<div class="card"><div class="ch"><h3>📋 INFORME 3 — Seg. Social</h3></div><div class="cb">';
+    var res={};['E1','E2'].forEach(function(ek){var eh=fh3.filter(function(r){return r.emp===ek}),es=fs.filter(function(r){return r.emp===ek});
+      var hT=eh.reduce(function(s,r){return s+r.horas},0);var dR=Math.round(hT/CFG.horasJornada);var dC=es.reduce(function(s,r){return s+r.dias},0);
+      var cS=dC*CFG.costeSS,cR=dR*CFG.costeSS;res[ek]={cS:cS,cR:cR};
+      var byT={},byTS={};eh.forEach(function(r){byT[r.trab]=(byT[r.trab]||0)+r.horas});es.forEach(function(r){byTS[r.trab]=(byTS[r.trab]||0)+r.dias});
+      html+='<div class="ri"><strong>'+EN[ek]+'</strong><br>'+fm(hT)+'h → <strong>'+dR+' jornadas reales</strong> | Cotizadas: <strong>'+dC+'</strong> | Desv: <strong style="color:'+(dR-dC<=0?'#27ae60':'#c0392b')+'">'+(dR-dC)+'</strong><br>'+
+        'Soportado: '+fm(cS)+'€ | Real: '+fm(cR)+'€ | <strong style="color:'+(cS-cR>=0?'#27ae60':'#c0392b')+'">'+fm(cS-cR)+'€</strong><br>';
+      var allT=Object.keys(byT).concat(Object.keys(byTS)).filter(function(v,i,a){return a.indexOf(v)===i});
+      allT.forEach(function(tr){var h=byT[tr]||0,dr=Math.round(h/CFG.horasJornada),dcx=byTS[tr]||0;html+='• '+tr+': '+fm(h)+'h → '+dr+'d / '+dcx+'d cot. ('+(dr-dcx)+')<br>'});html+='</div>'});
+    if(res.E1&&res.E2){var tR=res.E1.cR+res.E2.cR,tS=res.E1.cS+res.E2.cS;var p1=tR?(res.E1.cR/tR*100):50;
+      var d1=tS*(p1/100)-res.E1.cS;
+      html+='<div class="rs"><h4>Compensación</h4>Proporción: '+ES2.E1+' '+fm(p1)+'% | '+ES2.E2+' '+fm(100-p1)+'%<br>';
+      if(Math.abs(d1)>0.01){if(d1>0)html+='<strong style="color:#c0392b">'+ES2.E1+' compensa a '+ES2.E2+': '+fm(Math.abs(d1))+'€</strong>';
+        else html+='<strong style="color:#c0392b">'+ES2.E2+' compensa a '+ES2.E1+': '+fm(Math.abs(d1))+'€</strong>'}
+      else html+='<strong style="color:#27ae60">Compensadas</strong>';html+='</div>'}
+    html+='</div></div>'}
+
+  if(t==='4'){var fg=gasoil.filter(function(r){return inR(r.fecha)}).sort(function(a,b){return a.fecha.localeCompare(b.fecha)});
+    var allG=gasoil.slice().sort(function(a,b){return a.fecha.localeCompare(b.fecha)});
+    html+='<div class="card"><div class="ch"><h3>📋 INFORME 4 — Gasoil (PMP)</h3></div><div class="cb">';
+    if(!fg.length){html+='<div class="empty"><p>Sin datos</p></div></div></div>';return}
+    ['E1','E2'].forEach(function(ek){var ed=fg.filter(function(r){return r.emp===ek});
+      var comp=ed.filter(function(r){return r.tipo!=='consumo'}),cons=ed.filter(function(r){return r.tipo==='consumo'});
+      var lC=comp.reduce(function(s,r){return s+r.litros},0),eC=comp.reduce(function(s,r){return s+r.litros*r.precio},0);
+      // Consumos valorados a PMP
+      var pmpAll=calcPMP(allG,ek);var pmpById={};pmpAll.forEach(function(x){pmpById[x.id]=x.pmp});
+      var lCo=0,eCo=0;cons.forEach(function(c){var p=pmpById[c.id]||0;lCo+=c.litros;eCo+=c.litros*p});
+      // Stock actual y PMP vigente
+      var sT=0;allG.filter(function(r){return r.emp===ek}).forEach(function(m){if(m.tipo!=='consumo')sT+=m.litros;else sT-=m.litros});
+      var pmpActual=getPMPAtDate(allG,ek,'9999-12-31');
+      html+='<div class="ri"><strong>'+EN[ek]+'</strong><br>Aportado: <strong>'+fm(lC)+'L</strong> ('+fm(eC)+'€) | Consumido: <strong>'+fm(lCo)+'L</strong> ('+fm(eCo)+'€ a PMP)<br>'+
+        '<strong>Desv: '+fm(lC-lCo)+'L ('+fm(eC-eCo)+'€)</strong><br>Stock actual: <strong>'+fm(sT)+'L</strong> (PMP: '+fm(pmpActual)+'€/L → valor: '+fm(sT*pmpActual)+'€)</div>'});
+    var st1=0,st2=0;allG.filter(function(r){return r.emp==='E1'}).forEach(function(m){if(m.tipo!=='consumo')st1+=m.litros;else st1-=m.litros});
+    allG.filter(function(r){return r.emp==='E2'}).forEach(function(m){if(m.tipo!=='consumo')st2+=m.litros;else st2-=m.litros});
+    var pmp1=getPMPAtDate(allG,'E1','9999-12-31'),pmp2=getPMPAtDate(allG,'E2','9999-12-31');
+    html+='<div class="rs"><h4>Stock Global</h4>'+fm(st1+st2)+'L<br>'+
+      ES2.E1+': '+fm(st1)+'L × '+fm(pmp1)+'€ = '+fm(st1*pmp1)+'€<br>'+
+      ES2.E2+': '+fm(st2)+'L × '+fm(pmp2)+'€ = '+fm(st2*pmp2)+'€<br>'+
+      '<strong>Valor total: '+fm(st1*pmp1+st2*pmp2)+'€</strong></div></div></div>'}
+  });
+
+  out.innerHTML=html;
+  document.getElementById('pa').innerHTML='<h2>GestiónAgro</h2><div style="font-size:12px;color:#666;margin-bottom:14px">'+fd(desde)+' — '+fd(hasta)+'</div>'+html;
+}
+
+function printR(){if(!document.getElementById('pa').innerHTML.trim())return alert('Genera primero');window.print()}
+
+// ──── Init ────
+document.addEventListener('DOMContentLoaded', function() {
+  var now = new Date(), y = now.getFullYear(), m = String(now.getMonth()+1).padStart(2,'0');
+  document.getElementById('r-d').value = y+'-'+m+'-01';
+  document.getElementById('r-h').value = now.toISOString().split('T')[0];
+  loadCfgUI();
+  
+  if (URL_API) {
+    document.getElementById('setupScreen').style.display = 'none';
+    document.getElementById('appContent').style.display = '';
+    loadAll();
+  } else {
+    document.getElementById('setupScreen').style.display = '';
+    document.getElementById('appContent').style.display = 'none';
+  }
 });
-document.querySelectorAll('.mov').forEach(o=>{o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open')})});
+
+document.querySelectorAll('.ov').forEach(function(o){o.addEventListener('click',function(e){if(e.target===o)o.classList.remove('open')})});
 </script>
 </body>
 </html>
