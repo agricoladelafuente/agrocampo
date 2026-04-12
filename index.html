@@ -195,7 +195,7 @@ thead th{padding:6px 8px;font-size:.6rem}tbody td{padding:7px 8px;font-size:.76r
 <div class="us-logo">🌿</div>
 <h2>GestiónAgro</h2>
 <p>Conecta con tu Google Sheet para empezar.<br>Pega la URL del Apps Script desplegado:</p>
-<input type="text" id="setupUrl" placeholder="https://script.google.com/macros/s/.../exec">
+<input type="password" id="setupUrl" placeholder="Pega aquí la URL del Apps Script" autocomplete="off">
 <button class="btn bp" onclick="tryConnect()" id="setupBtn" style="width:100%">🔗 Conectar</button>
 <div id="setupMsg" class="us-error"></div>
 </div>
@@ -256,9 +256,8 @@ thead th{padding:6px 8px;font-size:.6rem}tbody td{padding:7px 8px;font-size:.76r
 <div style="margin-top:14px;text-align:right"><button class="btn bp" onclick="saveCfg()">Guardar</button></div>
 </div></div>
 <div class="card"><div class="ch"><h3>Google Sheets</h3></div><div class="cb">
-<p style="font-size:.82rem;color:var(--t2);margin-bottom:8px">URL del Apps Script desplegado:</p>
-<input type="text" id="c-url" style="width:100%;padding:9px 11px;border:1px solid var(--bd);border-radius:var(--rs);font-family:monospace;font-size:13px;margin-bottom:8px">
-<div style="display:flex;gap:8px"><button class="btn bp" onclick="saveUrl()">Guardar</button><button class="btn bo" onclick="testConn()">Probar</button><button class="btn bo" onclick="reloadData()">🔄 Recargar datos</button></div>
+<div class="cr"><span class="cl">Estado de conexión</span><div class="cv" id="cfg-conn-status"><span class="dot dg" style="width:8px;height:8px;border-radius:50;display:inline-block"></span> Conectado</div></div>
+<div style="display:flex;gap:8px;margin-top:12px"><button class="btn bo" onclick="testConn()">Probar conexión</button><button class="btn bo" onclick="reloadData()">🔄 Recargar datos</button><button class="btn bd bsm" onclick="resetUrl()">Cambiar URL</button></div>
 </div></div>
 </section>
 
@@ -487,13 +486,13 @@ async function testConn() {
   }
 }
 
-function saveUrl() {
-  const url = document.getElementById('c-url').value.trim();
-  if (!url) return;
-  URL_API = url;
-  localStorage.setItem('ga_url', url);
-  toast('URL guardada');
-  loadAll();
+function resetUrl() {
+  if (!confirm('¿Cambiar la URL de conexión? Se mostrará la pantalla de configuración.')) return;
+  URL_API = '';
+  localStorage.removeItem('ga_url');
+  document.getElementById('setupScreen').style.display = '';
+  document.getElementById('appContent').style.display = 'none';
+  document.getElementById('setupUrl').value = '';
 }
 
 // ──── Remote ops ────
@@ -744,9 +743,11 @@ function loadCfgUI() {
   document.getElementById('c-ph').value=CFG.precioHora;
   document.getElementById('c-ss').value=CFG.costeSS;
   document.getElementById('c-hj').value=CFG.horasJornada;
-  document.getElementById('c-url').value=URL_API;
   document.getElementById('hpl').textContent=fm(CFG.precioHora);
   document.getElementById('scl').textContent=fm(CFG.costeSS);
+  var cs=document.getElementById('cfg-conn-status');
+  if(URL_API) cs.innerHTML='<span class="dot dg" style="width:8px;height:8px;border-radius:50%;display:inline-block"></span> Conectado';
+  else cs.innerHTML='<span class="dot dr" style="width:8px;height:8px;border-radius:50%;display:inline-block"></span> No configurado';
 }
 
 function saveCfg() {
