@@ -118,16 +118,6 @@ tbody tr:last-child td{border-bottom:none}tbody tr:hover{background:var(--o0)}
 .fab{display:none;position:fixed;right:16px;bottom:calc(68px + var(--sb));width:52px;height:52px;border-radius:50%;background:var(--o6);color:#fff;border:none;font-size:1.5rem;box-shadow:0 4px 14px rgba(85,102,47,.35);cursor:pointer;z-index:150;align-items:center;justify-content:center}
 .fab:active{transform:scale(.9)}
 
-/* URL setup */
-.url-setup{max-width:480px;margin:60px auto;padding:30px;text-align:center}
-.url-setup .us-logo{font-size:3rem;margin-bottom:12px}
-.url-setup h2{font-family:'Playfair Display',serif;color:var(--o8);margin-bottom:6px}
-.url-setup p{font-size:.85rem;color:var(--t2);margin-bottom:20px;line-height:1.5}
-.url-setup input{width:100%;padding:12px;border:2px solid var(--bd);border-radius:var(--rs);font-size:14px;font-family:monospace;margin-bottom:12px;text-align:center}
-.url-setup input:focus{outline:none;border-color:var(--o4)}
-.url-setup .us-error{color:var(--r5);font-size:.82rem;margin-top:8px;min-height:20px}
-.url-setup .us-ok{color:#27ae60;font-size:.82rem;margin-top:8px}
-
 .ri{padding:12px 14px;background:var(--o0);border-radius:var(--rs);margin:10px 0;font-size:.82rem;line-height:1.6}
 .ri strong{color:var(--o7)}
 .rs{background:var(--g1);border:2px solid var(--g4);border-radius:var(--rd);padding:16px;margin:12px 0}
@@ -190,18 +180,8 @@ thead th{padding:6px 8px;font-size:.6rem}tbody td{padding:7px 8px;font-size:.76r
 
 <main class="main">
 
-<!-- SETUP SCREEN -->
-<div id="setupScreen" class="url-setup" style="display:none">
-<div class="us-logo">🌿</div>
-<h2>GestiónAgro</h2>
-<p>Conecta con tu Google Sheet para empezar.<br>Pega la URL del Apps Script desplegado:</p>
-<input type="password" id="setupUrl" placeholder="Pega aquí la URL del Apps Script" autocomplete="off">
-<button class="btn bp" onclick="tryConnect()" id="setupBtn" style="width:100%">🔗 Conectar</button>
-<div id="setupMsg" class="us-error"></div>
-</div>
-
 <!-- APP SECTIONS -->
-<div id="appContent" style="display:none">
+<div id="appContent">
 
 <!-- HORAS -->
 <section id="sec-horas" class="sec anim">
@@ -256,8 +236,8 @@ thead th{padding:6px 8px;font-size:.6rem}tbody td{padding:7px 8px;font-size:.76r
 <div style="margin-top:14px;text-align:right"><button class="btn bp" onclick="saveCfg()">Guardar</button></div>
 </div></div>
 <div class="card"><div class="ch"><h3>Google Sheets</h3></div><div class="cb">
-<div class="cr"><span class="cl">Estado de conexión</span><div class="cv" id="cfg-conn-status"><span class="dot dg" style="width:8px;height:8px;border-radius:50;display:inline-block"></span> Conectado</div></div>
-<div style="display:flex;gap:8px;margin-top:12px"><button class="btn bo" onclick="testConn()">Probar conexión</button><button class="btn bo" onclick="reloadData()">🔄 Recargar datos</button><button class="btn bd bsm" onclick="resetUrl()">Cambiar URL</button></div>
+<div class="cr"><span class="cl">Estado de conexión</span><div class="cv" id="cfg-conn-status"><span class="dot dg" style="width:8px;height:8px;border-radius:50%;display:inline-block"></span> Conectado</div></div>
+<div style="display:flex;gap:8px;margin-top:12px"><button class="btn bo" onclick="testConn()">Probar conexión</button><button class="btn bo" onclick="reloadData()">🔄 Recargar datos</button></div>
 </div></div>
 </section>
 
@@ -346,7 +326,7 @@ thead th{padding:6px 8px;font-size:.6rem}tbody td{padding:7px 8px;font-size:.76r
 // GestiónAgro v6 — Google Sheets Backend (JSONP robusto)
 // ═══════════════════════════════════════════════════════════════
 
-let URL_API = localStorage.getItem('ga_url') || '';
+const URL_API = 'https://script.google.com/macros/s/AKfycbxaq0FVCszAq8D9p6Bi4oDC6PHtdTFVawCtbi8xX8aW_T5x11vXN2MY_BWiXBWJiXVK/exec';
 let CFG = JSON.parse(localStorage.getItem('ga_cfg') || '{"precioHora":10.10,"costeSS":18.17,"horasJornada":6.5}');
 const EN = {E1:'EVA PÉREZ DEL CASTILLO',E2:'FCO. JOSÉ DE LA FUENTE RUZ'};
 const ES2 = {E1:'EVA PÉREZ',E2:'FCO. JOSÉ'};
@@ -422,37 +402,6 @@ function fd(d) { if(!d) return '—'; var p = (d+'').split('-'); return p.length
 function gid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
 
 // ──── Setup / Connect ────
-async function tryConnect() {
-  const url = document.getElementById('setupUrl').value.trim();
-  const msg = document.getElementById('setupMsg');
-  if (!url) { msg.textContent = 'Pega la URL'; msg.className = 'us-error'; return; }
-  
-  document.getElementById('setupBtn').disabled = true;
-  document.getElementById('setupBtn').textContent = 'Conectando...';
-  msg.textContent = '';
-  
-  URL_API = url;
-  try {
-    const res = await jsonp({action:'ping'});
-    if (res.ok) {
-      localStorage.setItem('ga_url', url);
-      msg.textContent = '✅ Conectado correctamente';
-      msg.className = 'us-ok';
-      setTimeout(() => {
-        document.getElementById('setupScreen').style.display = 'none';
-        document.getElementById('appContent').style.display = '';
-        loadAll();
-      }, 800);
-    }
-  } catch(err) {
-    msg.textContent = '❌ ' + err;
-    msg.className = 'us-error';
-    URL_API = '';
-  }
-  document.getElementById('setupBtn').disabled = false;
-  document.getElementById('setupBtn').textContent = '🔗 Conectar';
-}
-
 async function loadAll() {
   syncing(true);
   try {
@@ -474,7 +423,6 @@ async function loadAll() {
 function reloadData() { loadAll(); }
 
 async function testConn() {
-  if (!URL_API) return toast('No hay URL','w');
   syncing(true);
   try {
     await jsonp({action:'ping'});
@@ -484,15 +432,6 @@ async function testConn() {
     syncErr('Error');
     toast('Error: ' + e, 'e');
   }
-}
-
-function resetUrl() {
-  if (!confirm('¿Cambiar la URL de conexión? Se mostrará la pantalla de configuración.')) return;
-  URL_API = '';
-  localStorage.removeItem('ga_url');
-  document.getElementById('setupScreen').style.display = '';
-  document.getElementById('appContent').style.display = 'none';
-  document.getElementById('setupUrl').value = '';
 }
 
 // ──── Remote ops ────
@@ -845,15 +784,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('r-d').value = y+'-'+m+'-01';
   document.getElementById('r-h').value = now.toISOString().split('T')[0];
   loadCfgUI();
-  
-  if (URL_API) {
-    document.getElementById('setupScreen').style.display = 'none';
-    document.getElementById('appContent').style.display = '';
-    loadAll();
-  } else {
-    document.getElementById('setupScreen').style.display = '';
-    document.getElementById('appContent').style.display = 'none';
-  }
+  loadAll();
 });
 
 document.querySelectorAll('.ov').forEach(function(o){o.addEventListener('click',function(e){if(e.target===o)o.classList.remove('open')})});
