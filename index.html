@@ -570,6 +570,7 @@ async function del(s,id) { if(!confirm('¿Eliminar?')) return; if(await rDel(s,i
 function ren(s) {
   var fn = {horas:renH,pagos:renP,ss:renS,gasoil:renG,trab:renW,config:loadCfgUI,informes:function(){}};
   if(fn[s]) fn[s]();
+}
 
 // ═══════════════════════════════════════
 // RENDERS CON TOTALES POR EMPRESA
