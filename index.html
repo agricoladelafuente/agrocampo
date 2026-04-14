@@ -570,92 +570,137 @@ async function del(s,id) { if(!confirm('¿Eliminar?')) return; if(await rDel(s,i
 function ren(s) {
   var fn = {horas:renH,pagos:renP,ss:renS,gasoil:renG,trab:renW,config:loadCfgUI,informes:function(){}};
   if(fn[s]) fn[s]();
-}
+
+// ═══════════════════════════════════════
+// RENDERS CON TOTALES POR EMPRESA
+// ═══════════════════════════════════════
 
 function renH() {
-  var d = (D.horas||[]).slice().sort(function(a,b){return(b.fecha||'').localeCompare(a.fecha||'')});
+  var d = (D.horas||[]).slice().sort(function(a,b){return (b.fecha||'').localeCompare(a.fecha||'')});
   var tb = document.getElementById('tb-h');
   document.getElementById('ct-h').textContent = d.length;
-  if(!d.length){tb.innerHTML='<tr><td colspan="7"><div class="empty"><div class="ei">⏱</div><p>Sin registros</p></div></td></tr>';document.getElementById('st-h').innerHTML='';return}
-  var tH=0,e1=0,e2=0;d.forEach(function(r){tH+=r.horas;if(r.emp==='E1')e1+=r.horas;else e2+=r.horas});
-  document.getElementById('st-h').innerHTML='<div class="sc"><div class="sl">Horas</div><div class="sv">'+fm(tH)+'</div></div>'+
-    '<div class="sc"><div class="sl">Coste</div><div class="sv">'+fm(tH*CFG.precioHora)+'€</div></div>'+
-    '<div class="sc"><div class="sl">Eva Pérez</div><div class="sv">'+fm(e1)+'h</div></div>'+
-    '<div class="sc"><div class="sl">Fco. José</div><div class="sv">'+fm(e2)+'h</div></div>';
-  tb.innerHTML=d.map(function(r){return'<tr><td>'+fd(r.fecha)+'</td><td>'+(ES2[r.emp]||r.emp)+'</td><td>'+r.trab+'</td>'+
-    '<td class="am">'+fm(r.horas)+'</td><td class="hm">'+fm(CFG.precioHora)+'€</td><td class="am po">'+fm(r.horas*CFG.precioHora)+'€</td>'+
-    '<td class="ac"><button class="btn bd bsm" onclick="del(\'horas\',\''+r.id+'\')">✕</button></td></tr>'}).join('');
+  if (!d.length) {
+    tb.innerHTML='<tr><td colspan="7"><div class="empty"><div class="ei">⏱</div><p>Sin registros</p></div></td></tr>';
+    document.getElementById('st-h').innerHTML=''; return;
+  }
+  var e1h=0, e2h=0, e1c=0, e2c=0;
+  d.forEach(function(r) {
+    if (r.emp==='E1') { e1h+=r.horas; e1c+=r.horas*CFG.precioHora; }
+    else { e2h+=r.horas; e2c+=r.horas*CFG.precioHora; }
+  });
+  document.getElementById('st-h').innerHTML =
+    '<div class="sc"><div class="sl">E.Pérez horas</div><div class="sv">'+fm(e1h)+'</div></div>'+
+    '<div class="sc"><div class="sl">E.Pérez coste</div><div class="sv">'+fm(e1c)+'€</div></div>'+
+    '<div class="sc"><div class="sl">F.José horas</div><div class="sv">'+fm(e2h)+'</div></div>'+
+    '<div class="sc"><div class="sl">F.José coste</div><div class="sv">'+fm(e2c)+'€</div></div>';
+  tb.innerHTML = d.map(function(r) {
+    return '<tr><td>'+fd(r.fecha)+'</td><td>'+(ES2[r.emp]||r.emp)+'</td><td>'+r.trab+'</td>'+
+      '<td class="am">'+fm(r.horas)+'</td><td class="hm">'+fm(CFG.precioHora)+'€</td><td class="am po">'+fm(r.horas*CFG.precioHora)+'€</td>'+
+      '<td class="ac"><button class="btn bd bsm" onclick="del(\'horas\',\''+r.id+'\')">✕</button></td></tr>';
+  }).join('');
 }
 
 function renP() {
-  var d=(D.pagos||[]).slice().sort(function(a,b){return(b.fecha||'').localeCompare(a.fecha||'')});
-  var tb=document.getElementById('tb-p');document.getElementById('ct-p').textContent=d.length;
-  if(!d.length){tb.innerHTML='<tr><td colspan="6"><div class="empty"><div class="ei">💶</div><p>Sin pagos</p></div></td></tr>';document.getElementById('st-p').innerHTML='';return}
-  var tot=0,p1=0,p2=0;d.forEach(function(r){tot+=r.importe;if(r.emp==='E1')p1+=r.importe;else p2+=r.importe});
-  document.getElementById('st-p').innerHTML='<div class="sc"><div class="sl">Total</div><div class="sv">'+fm(tot)+'€</div></div>'+
-    '<div class="sc"><div class="sl">Eva Pérez</div><div class="sv">'+fm(p1)+'€</div></div>'+
-    '<div class="sc"><div class="sl">Fco. José</div><div class="sv">'+fm(p2)+'€</div></div>';
-  tb.innerHTML=d.map(function(r){return'<tr><td>'+fd(r.fecha)+'</td><td>'+(ES2[r.emp]||r.emp)+'</td><td>'+r.trab+'</td>'+
-    '<td class="am ne">'+fm(r.importe)+'€</td><td class="hm"><span class="badge '+(r.metodo==='Efectivo'?'bdg':'bdo')+'">'+(r.metodo||'')+'</span></td>'+
-    '<td class="ac"><button class="btn bd bsm" onclick="del(\'pagos\',\''+r.id+'\')">✕</button></td></tr>'}).join('');
+  var d = (D.pagos||[]).slice().sort(function(a,b){return (b.fecha||'').localeCompare(a.fecha||'')});
+  var tb = document.getElementById('tb-p');
+  document.getElementById('ct-p').textContent = d.length;
+  if (!d.length) {
+    tb.innerHTML='<tr><td colspan="6"><div class="empty"><div class="ei">💶</div><p>Sin pagos</p></div></td></tr>';
+    document.getElementById('st-p').innerHTML=''; return;
+  }
+  var e1=0, e2=0;
+  d.forEach(function(r) { if (r.emp==='E1') e1+=r.importe; else e2+=r.importe; });
+  document.getElementById('st-p').innerHTML =
+    '<div class="sc"><div class="sl">E.Pérez</div><div class="sv">'+fm(e1)+'€</div></div>'+
+    '<div class="sc"><div class="sl">F.José</div><div class="sv">'+fm(e2)+'€</div></div>'+
+    '<div class="sc"><div class="sl">Total</div><div class="sv">'+fm(e1+e2)+'€</div></div>'+
+    '<div class="sc"><div class="sl">Nº Pagos</div><div class="sv">'+d.length+'</div></div>';
+  tb.innerHTML = d.map(function(r) {
+    return '<tr><td>'+fd(r.fecha)+'</td><td>'+(ES2[r.emp]||r.emp)+'</td><td>'+r.trab+'</td>'+
+      '<td class="am ne">'+fm(r.importe)+'€</td><td class="hm"><span class="badge '+(r.metodo==='Efectivo'?'bdg':'bdo')+'">'+(r.metodo||'')+'</span></td>'+
+      '<td class="ac"><button class="btn bd bsm" onclick="del(\'pagos\',\''+r.id+'\')">✕</button></td></tr>';
+  }).join('');
 }
 
 function renS() {
-  var d=(D.ss||[]).slice().sort(function(a,b){return(b.mes||'').localeCompare(a.mes||'')});
-  var tb=document.getElementById('tb-s');document.getElementById('ct-s').textContent=d.length;
-  if(!d.length){tb.innerHTML='<tr><td colspan="6"><div class="empty"><div class="ei">🏛</div><p>Sin cotizaciones</p></div></td></tr>';document.getElementById('st-s').innerHTML='';return}
-  var tD=0;d.forEach(function(r){tD+=r.dias});
-  document.getElementById('st-s').innerHTML='<div class="sc"><div class="sl">Jornadas</div><div class="sv">'+tD+'</div></div>'+
-    '<div class="sc"><div class="sl">Coste</div><div class="sv">'+fm(tD*CFG.costeSS)+'€</div></div>';
-  tb.innerHTML=d.map(function(r){return'<tr><td>'+r.mes+'</td><td>'+(ES2[r.emp]||r.emp)+'</td><td>'+r.trab+'</td>'+
-    '<td class="am">'+r.dias+'</td><td class="am ne">'+fm(r.dias*CFG.costeSS)+'€</td>'+
-    '<td class="ac"><button class="btn bd bsm" onclick="del(\'ss\',\''+r.id+'\')">✕</button></td></tr>'}).join('');
+  var d = (D.ss||[]).slice().sort(function(a,b){return (b.mes||'').localeCompare(a.mes||'')});
+  var tb = document.getElementById('tb-s');
+  document.getElementById('ct-s').textContent = d.length;
+  if (!d.length) {
+    tb.innerHTML='<tr><td colspan="6"><div class="empty"><div class="ei">🏛</div><p>Sin cotizaciones</p></div></td></tr>';
+    document.getElementById('st-s').innerHTML=''; return;
+  }
+  var e1d=0, e2d=0;
+  d.forEach(function(r) { if (r.emp==='E1') e1d+=r.dias; else e2d+=r.dias; });
+  document.getElementById('st-s').innerHTML =
+    '<div class="sc"><div class="sl">E.Pérez jorn.</div><div class="sv">'+e1d+'</div></div>'+
+    '<div class="sc"><div class="sl">E.Pérez coste</div><div class="sv">'+fm(e1d*CFG.costeSS)+'€</div></div>'+
+    '<div class="sc"><div class="sl">F.José jorn.</div><div class="sv">'+e2d+'</div></div>'+
+    '<div class="sc"><div class="sl">F.José coste</div><div class="sv">'+fm(e2d*CFG.costeSS)+'€</div></div>';
+  tb.innerHTML = d.map(function(r) {
+    return '<tr><td>'+r.mes+'</td><td>'+(ES2[r.emp]||r.emp)+'</td><td>'+r.trab+'</td>'+
+      '<td class="am">'+r.dias+'</td><td class="am ne">'+fm(r.dias*CFG.costeSS)+'€</td>'+
+      '<td class="ac"><button class="btn bd bsm" onclick="del(\'ss\',\''+r.id+'\')">✕</button></td></tr>';
+  }).join('');
 }
 
-// Calcula el Precio Medio Ponderado (PMP) para una empresa en una fecha dada
-// Recorre cronológicamente: en cada compra/existencias recalcula PMP, los consumos usan el PMP vigente
-function calcPMP(all, emp) {
-  var sorted = all.filter(function(m){return m.emp===emp}).slice().sort(function(a,b){return a.fecha.localeCompare(b.fecha)||(a.tipo==='consumo'?1:-1)});
-  var stock=0, valor=0, pmp=0;
-  var result = []; // {id, pmp} para cada movimiento
-  for (var i=0; i<sorted.length; i++) {
-    var m = sorted[i];
-    if (m.tipo==='compra' || m.tipo==='existencias') {
-      valor = stock * pmp + m.litros * m.precio;
+// ═══════════════════════════════════════
+// PMP — Precio Medio Ponderado (CORREGIDO)
+// ═══════════════════════════════════════
+// Cada empresa tiene su propio PMP independiente.
+// Al comprar: PMP_nuevo = (stock_actual * PMP_anterior + litros_compra * precio_compra) / (stock_actual + litros_compra)
+// Al consumir: se usa el PMP vigente de esa empresa.
+
+function calcPMP(allMovimientos, empresa) {
+  var movs = allMovimientos.filter(function(m) { return m.emp === empresa; })
+    .slice().sort(function(a,b) {
+      var c = a.fecha.localeCompare(b.fecha);
+      if (c !== 0) return c;
+      // Compras antes que consumos en el mismo día
+      if (a.tipo !== 'consumo' && b.tipo === 'consumo') return -1;
+      if (a.tipo === 'consumo' && b.tipo !== 'consumo') return 1;
+      return 0;
+    });
+
+  var stock = 0, pmp = 0;
+  var result = [];
+
+  for (var i = 0; i < movs.length; i++) {
+    var m = movs[i];
+    if (m.tipo === 'compra' || m.tipo === 'existencias') {
+      // Recalcular PMP ponderado
+      var valorAnterior = stock * pmp;
+      var valorNuevo = m.litros * m.precio;
       stock += m.litros;
-      pmp = stock > 0 ? valor / stock : m.precio;
-      result.push({id:m.id, pmp:m.precio, stock:stock, valorStock:valor});
+      pmp = stock > 0 ? (valorAnterior + valorNuevo) / stock : m.precio;
+      result.push({id: m.id, pmp: pmp, stock: stock});
     } else {
-      // consumo: se valora al PMP vigente
-      result.push({id:m.id, pmp:pmp, stock:stock, valorStock:valor});
+      // Consumo: se valora al PMP vigente
+      result.push({id: m.id, pmp: pmp, stock: stock});
       stock -= m.litros;
-      valor = stock * pmp;
       if (stock < 0) stock = 0;
-      if (valor < 0) valor = 0;
     }
   }
   return result;
 }
 
-// Obtener PMP para un movimiento concreto
-function getPMP(all, emp, movId) {
-  var pmps = calcPMP(all, emp);
-  for (var i=0; i<pmps.length; i++) {
-    if (pmps[i].id === movId) return pmps[i].pmp;
-  }
-  return 0;
-}
+function getPMPAtDate(allMovimientos, empresa, hastaFecha) {
+  var movs = allMovimientos.filter(function(m) { return m.emp === empresa && m.fecha <= hastaFecha; })
+    .sort(function(a,b) {
+      var c = a.fecha.localeCompare(b.fecha);
+      if (c !== 0) return c;
+      if (a.tipo !== 'consumo' && b.tipo === 'consumo') return -1;
+      if (a.tipo === 'consumo' && b.tipo !== 'consumo') return 1;
+      return 0;
+    });
 
-// Obtener PMP vigente de una empresa a una fecha (para informes)
-function getPMPAtDate(all, emp, fecha) {
-  var sorted = all.filter(function(m){return m.emp===emp && m.fecha<=fecha}).sort(function(a,b){return a.fecha.localeCompare(b.fecha)||(a.tipo==='consumo'?1:-1)});
-  var stock=0, pmp=0;
-  for (var i=0; i<sorted.length; i++) {
-    var m = sorted[i];
-    if (m.tipo!=='consumo') {
-      var valor = stock * pmp + m.litros * m.precio;
+  var stock = 0, pmp = 0;
+  for (var i = 0; i < movs.length; i++) {
+    var m = movs[i];
+    if (m.tipo !== 'consumo') {
+      var val = stock * pmp + m.litros * m.precio;
       stock += m.litros;
-      pmp = stock > 0 ? valor / stock : m.precio;
+      pmp = stock > 0 ? val / stock : m.precio;
     } else {
       stock -= m.litros;
       if (stock < 0) stock = 0;
@@ -664,60 +709,85 @@ function getPMPAtDate(all, emp, fecha) {
   return pmp;
 }
 
+function calcStockEmp(allMovimientos, empresa) {
+  var s = 0;
+  allMovimientos.forEach(function(m) {
+    if (m.emp !== empresa) return;
+    if (m.tipo !== 'consumo') s += m.litros; else s -= m.litros;
+  });
+  return s;
+}
+
 function renG() {
-  var d=(D.gasoil||[]).slice().sort(function(a,b){return(b.fecha||'').localeCompare(a.fecha||'')});
-  var tb=document.getElementById('tb-g');document.getElementById('ct-g').textContent=d.length;
-  if(!d.length){tb.innerHTML='<tr><td colspan="7"><div class="empty"><div class="ei">⛽</div><p>Sin movimientos</p></div></td></tr>';document.getElementById('st-g').innerHTML='';return}
-  var sorted=d.slice().sort(function(a,b){return a.fecha.localeCompare(b.fecha)});
-  var s1=0,s2=0;sorted.forEach(function(m){if(m.tipo!=='consumo'){if(m.emp==='E1')s1+=m.litros;else s2+=m.litros}else{if(m.emp==='E1')s1-=m.litros;else s2-=m.litros}});
-  var pmpV1=getPMPAtDate(sorted,'E1','9999-12-31'),pmpV2=getPMPAtDate(sorted,'E2','9999-12-31');
-  document.getElementById('st-g').innerHTML='<div class="sc"><div class="sl">Stock E.Pérez</div><div class="sv">'+fm(s1)+'L</div></div>'+
+  var d = (D.gasoil||[]).slice().sort(function(a,b){return (b.fecha||'').localeCompare(a.fecha||'')});
+  var tb = document.getElementById('tb-g');
+  document.getElementById('ct-g').textContent = d.length;
+  if (!d.length) {
+    tb.innerHTML='<tr><td colspan="7"><div class="empty"><div class="ei">⛽</div><p>Sin movimientos</p></div></td></tr>';
+    document.getElementById('st-g').innerHTML=''; return;
+  }
+  var sorted = d.slice().sort(function(a,b){return a.fecha.localeCompare(b.fecha)});
+  var s1 = calcStockEmp(sorted, 'E1'), s2 = calcStockEmp(sorted, 'E2');
+  var pmp1 = getPMPAtDate(sorted, 'E1', '9999-12-31');
+  var pmp2 = getPMPAtDate(sorted, 'E2', '9999-12-31');
+  document.getElementById('st-g').innerHTML =
+    '<div class="sc"><div class="sl">Stock E.Pérez</div><div class="sv">'+fm(s1)+'L</div></div>'+
+    '<div class="sc"><div class="sl">PMP E.Pérez</div><div class="sv">'+fm(pmp1)+'€</div></div>'+
     '<div class="sc"><div class="sl">Stock F.José</div><div class="sv">'+fm(s2)+'L</div></div>'+
-    '<div class="sc"><div class="sl">PMP E.P.</div><div class="sv">'+fm(pmpV1)+'€</div></div>'+
-    '<div class="sc"><div class="sl">PMP F.J.</div><div class="sv">'+fm(pmpV2)+'€</div></div>';
-  // Precalcular PMPs para cada empresa
-  var pmpE1 = calcPMP(sorted,'E1'), pmpE2 = calcPMP(sorted,'E2');
+    '<div class="sc"><div class="sl">PMP F.José</div><div class="sv">'+fm(pmp2)+'€</div></div>';
+
+  // PMP por movimiento para la tabla
+  var pmpE1 = calcPMP(sorted, 'E1');
+  var pmpE2 = calcPMP(sorted, 'E2');
   var pmpMap = {};
-  pmpE1.concat(pmpE2).forEach(function(x){pmpMap[x.id]=x.pmp});
-  tb.innerHTML=d.map(function(r){var isC=r.tipo!=='consumo';var p=isC?r.precio:(pmpMap[r.id]||0);
-    return'<tr><td>'+fd(r.fecha)+'</td><td><span class="badge '+(isC?'bdo':'bdg')+'">'+(r.tipo==='existencias'?'Exist.':r.tipo==='compra'?'Compra':'Consumo')+'</span></td>'+
-    '<td>'+(ES2[r.emp]||r.emp)+'</td><td class="am '+(isC?'po':'ne')+'">'+(isC?'+':'−')+fm(r.litros)+'</td>'+
-    '<td>'+(p?fm(p)+'€':'—')+'</td><td class="am">'+(p?fm(r.litros*p)+'€':'—')+'</td>'+
-    '<td class="ac"><button class="btn bd bsm" onclick="del(\'gasoil\',\''+r.id+'\')">✕</button></td></tr>'}).join('');
+  pmpE1.forEach(function(x) { pmpMap[x.id] = x.pmp; });
+  pmpE2.forEach(function(x) { pmpMap[x.id] = x.pmp; });
+
+  tb.innerHTML = d.map(function(r) {
+    var isC = r.tipo !== 'consumo';
+    var p = isC ? r.precio : (pmpMap[r.id] || 0);
+    return '<tr><td>'+fd(r.fecha)+'</td><td><span class="badge '+(isC?'bdo':'bdg')+'">'+(r.tipo==='existencias'?'Exist.':r.tipo==='compra'?'Compra':'Consumo')+'</span></td>'+
+      '<td>'+(ES2[r.emp]||r.emp)+'</td><td class="am '+(isC?'po':'ne')+'">'+(isC?'+':'−')+fm(r.litros)+'</td>'+
+      '<td>'+(p ? fm(p)+'€' : '—')+'</td><td class="am">'+(p ? fm(r.litros*p)+'€' : '—')+'</td>'+
+      '<td class="ac"><button class="btn bd bsm" onclick="del(\'gasoil\',\''+r.id+'\')">✕</button></td></tr>';
+  }).join('');
 }
 
 function renW() {
-  var w=(D.trabajadores||[]).sort(function(a,b){return(a.name||'').localeCompare(b.name||'')});
-  document.getElementById('ct-w').textContent=w.length;
-  var c=document.getElementById('wl');
-  if(!w.length){c.innerHTML='<div class="empty"><div class="ei">👷</div><p>Sin trabajadores</p></div>';return}
-  c.innerHTML='<div class="wl">'+w.map(function(x){return'<div class="wi"><span class="wn">'+x.name+'</span><button class="btn bd bsm" onclick="del(\'trabajadores\',\''+x.id+'\')">✕</button></div>'}).join('')+'</div>';
+  var w = (D.trabajadores||[]).sort(function(a,b){return (a.name||'').localeCompare(b.name||'')});
+  document.getElementById('ct-w').textContent = w.length;
+  var c = document.getElementById('wl');
+  if (!w.length) { c.innerHTML='<div class="empty"><div class="ei">👷</div><p>Sin trabajadores</p></div>'; return; }
+  c.innerHTML = '<div class="wl">' + w.map(function(x) {
+    return '<div class="wi"><span class="wn">'+x.name+'</span><button class="btn bd bsm" onclick="del(\'trabajadores\',\''+x.id+'\')">✕</button></div>';
+  }).join('') + '</div>';
 }
 
 // ──── Config ────
 function loadCfgUI() {
-  document.getElementById('c-ph').value=CFG.precioHora;
-  document.getElementById('c-ss').value=CFG.costeSS;
-  document.getElementById('c-hj').value=CFG.horasJornada;
-  document.getElementById('hpl').textContent=fm(CFG.precioHora);
-  document.getElementById('scl').textContent=fm(CFG.costeSS);
-  var cs=document.getElementById('cfg-conn-status');
-  if(URL_API) cs.innerHTML='<span class="dot dg" style="width:8px;height:8px;border-radius:50%;display:inline-block"></span> Conectado';
+  document.getElementById('c-ph').value = CFG.precioHora;
+  document.getElementById('c-ss').value = CFG.costeSS;
+  document.getElementById('c-hj').value = CFG.horasJornada;
+  document.getElementById('hpl').textContent = fm(CFG.precioHora);
+  document.getElementById('scl').textContent = fm(CFG.costeSS);
+  var cs = document.getElementById('cfg-conn-status');
+  if (URL_API) cs.innerHTML='<span class="dot dg" style="width:8px;height:8px;border-radius:50%;display:inline-block"></span> Conectado';
   else cs.innerHTML='<span class="dot dr" style="width:8px;height:8px;border-radius:50%;display:inline-block"></span> No configurado';
 }
 
 function saveCfg() {
-  CFG.precioHora=parseFloat(document.getElementById('c-ph').value)||10.10;
-  CFG.costeSS=parseFloat(document.getElementById('c-ss').value)||18.17;
-  CFG.horasJornada=parseFloat(document.getElementById('c-hj').value)||6.5;
-  localStorage.setItem('ga_cfg',JSON.stringify(CFG));
-  document.getElementById('hpl').textContent=fm(CFG.precioHora);
-  document.getElementById('scl').textContent=fm(CFG.costeSS);
+  CFG.precioHora = parseFloat(document.getElementById('c-ph').value) || 10.10;
+  CFG.costeSS = parseFloat(document.getElementById('c-ss').value) || 18.17;
+  CFG.horasJornada = parseFloat(document.getElementById('c-hj').value) || 6.5;
+  localStorage.setItem('ga_cfg', JSON.stringify(CFG));
+  document.getElementById('hpl').textContent = fm(CFG.precioHora);
+  document.getElementById('scl').textContent = fm(CFG.costeSS);
   toast('Guardado');
 }
 
-// ──── Reports (same as v5) ────
-// ──── INFORMES ────
+// ═══════════════════════════════════════
+// INFORMES
+// ═══════════════════════════════════════
 function genR() {
   var desde = document.getElementById('r-d').value;
   var hasta = document.getElementById('r-h').value;
@@ -725,277 +795,208 @@ function genR() {
   if (!desde || !hasta) return alert('Selecciona fechas');
   if (desde > hasta) return alert('"Desde" debe ser anterior a "Hasta"');
 
-  var out = document.getElementById('ro');
   var html = '';
   var tipos = tipo === 'all' ? ['1','2','3','4','5'] : [tipo];
 
   function inR(d) { return d >= desde && d <= hasta; }
+  function empF(arr, ek) { return arr.filter(function(r) { return r.emp === ek; }); }
 
-  // Filtrar por período
+  // Filtrar período
   var fH = (D.horas||[]).filter(function(r) { return inR(r.fecha); });
   var fP = (D.pagos||[]).filter(function(r) { return inR(r.fecha); });
-  var fS = (D.ss||[]).filter(function(r) { var m = r.mes + '-01'; return m >= desde && m <= hasta; });
+  var fS = (D.ss||[]).filter(function(r) { return (r.mes+'-01') >= desde && (r.mes+'-01') <= hasta; });
   var fG = (D.gasoil||[]).filter(function(r) { return inR(r.fecha); });
   var allG = (D.gasoil||[]).slice().sort(function(a,b) { return a.fecha.localeCompare(b.fecha); });
 
-  // Función auxiliar filtro empresa
-  function emp(arr, ek) { return arr.filter(function(r) { return r.emp === ek; }); }
-
-  // PMP precalculado por empresa (todo el histórico)
-  var pmpE1data = calcPMP(allG, 'E1');
-  var pmpE2data = calcPMP(allG, 'E2');
+  // PMP precalculado por empresa con TODO el histórico
+  var pmpResE1 = calcPMP(allG, 'E1');
+  var pmpResE2 = calcPMP(allG, 'E2');
   var pmpById = {};
-  pmpE1data.forEach(function(x) { pmpById[x.id] = x.pmp; });
-  pmpE2data.forEach(function(x) { pmpById[x.id] = x.pmp; });
+  pmpResE1.forEach(function(x) { pmpById[x.id] = x.pmp; });
+  pmpResE2.forEach(function(x) { pmpById[x.id] = x.pmp; });
   var pmpNowE1 = getPMPAtDate(allG, 'E1', '9999-12-31');
   var pmpNowE2 = getPMPAtDate(allG, 'E2', '9999-12-31');
 
-  function stockEmp(ek) {
-    var s = 0;
-    allG.forEach(function(m) {
-      if (m.emp !== ek) return;
-      if (m.tipo !== 'consumo') s += m.litros; else s -= m.litros;
-    });
-    return s;
-  }
-
-  // Acumulador para informe 5
+  // Precálculo por empresa para TODOS los informes
   var R = {};
   ['E1','E2'].forEach(function(ek) {
-    var eH = emp(fH, ek);
-    var eP = emp(fP, ek);
-    var eS = emp(fS, ek);
-    var eG = emp(fG, ek);
-    var totalH = eH.reduce(function(s,r) { return s + r.horas; }, 0);
-    var pEf = eP.filter(function(r){return r.metodo==='Efectivo'}).reduce(function(s,r){return s+r.importe},0);
-    var pTr = eP.filter(function(r){return r.metodo!=='Efectivo'}).reduce(function(s,r){return s+r.importe},0);
-    var dCot = eS.reduce(function(s,r) { return s + r.dias; }, 0);
-    var cons = eG.filter(function(r){return r.tipo==='consumo'});
-    var litC = cons.reduce(function(s,r){return s+r.litros},0);
-    var eurC = cons.reduce(function(s,r){return s+r.litros*(pmpById[r.id]||0)},0);
+    var h = empF(fH, ek), p = empF(fP, ek), s = empF(fS, ek), g = empF(fG, ek);
+    var totalH = h.reduce(function(a,r){return a+r.horas},0);
+    var pEf = p.filter(function(r){return r.metodo==='Efectivo'}).reduce(function(a,r){return a+r.importe},0);
+    var pTr = p.filter(function(r){return r.metodo!=='Efectivo'}).reduce(function(a,r){return a+r.importe},0);
+    var dCot = s.reduce(function(a,r){return a+r.dias},0);
+    var consumos = g.filter(function(r){return r.tipo==='consumo'});
+    var litC = consumos.reduce(function(a,r){return a+r.litros},0);
+    var eurC = consumos.reduce(function(a,r){return a+r.litros*(pmpById[r.id]||0)},0);
     R[ek] = {
-      horas: totalH,
-      costeH: totalH * CFG.precioHora,
-      pagosEf: pEf,
-      pagosTr: pTr,
-      totalPag: pEf + pTr,
-      jorReales: Math.round(totalH / CFG.horasJornada),
-      jorCot: dCot,
-      costeSS: dCot * CFG.costeSS,
-      litCons: litC,
-      costeCons: eurC
+      horas:totalH, costeH:totalH*CFG.precioHora,
+      pagosEf:pEf, pagosTr:pTr, totalPag:pEf+pTr,
+      jorReales:Math.round(totalH/CFG.horasJornada), jorCot:dCot, costeSS:dCot*CFG.costeSS,
+      litCons:litC, costeCons:eurC
     };
   });
 
-  // ── Encabezado ──
+  // Encabezado
   html += '<div style="margin-bottom:18px;padding:14px 16px;background:var(--o9);border-radius:var(--rd);color:#fff">';
   html += '<div style="font-family:Playfair Display,serif;font-size:1.15rem;color:var(--g4)">🌿 GestiónAgro — Informe</div>';
-  html += '<div style="font-size:.76rem;color:rgba(255,255,255,.55);margin-top:3px">Período: ' + fd(desde) + ' — ' + fd(hasta) + ' | Generado: ' + new Date().toLocaleDateString('es-ES') + '</div>';
-  html += '</div>';
+  html += '<div style="font-size:.76rem;color:rgba(255,255,255,.55);margin-top:3px">Período: '+fd(desde)+' — '+fd(hasta)+' | Generado: '+new Date().toLocaleDateString('es-ES')+'</div></div>';
 
   tipos.forEach(function(t) {
 
-  // ═══════════ 1: HORAS ═══════════
-  if (t === '1') {
+  // ═══ INFORME 1: HORAS ═══
+  if (t==='1') {
     html += '<div class="card"><div class="ch" style="background:var(--o0)"><h3>📋 INFORME 1 — HORAS DE TRABAJO EFECTIVO</h3></div><div class="cb">';
-    if (!fH.length) { html += '<div class="empty"><p>Sin registros de horas</p></div></div></div>'; return; }
-
-    var grandH = 0, grandC = 0;
+    if (!fH.length) { html += '<div class="empty"><p>Sin registros</p></div></div></div>'; return; }
+    var gH=0, gC=0;
     ['E1','E2'].forEach(function(ek) {
-      var eH2 = emp(fH, ek);
-      if (!eH2.length) return;
-      var byT = {};
-      eH2.forEach(function(r) { byT[r.trab] = (byT[r.trab]||0) + r.horas; });
-      var tH = R[ek].horas, tC = R[ek].costeH;
-      grandH += tH; grandC += tC;
-
-      html += '<h4 style="margin:16px 0 8px;color:var(--o7);font-size:.9rem">' + EN[ek] + '</h4>';
-      html += '<table><thead><tr><th>Trabajador</th><th style="text-align:right">Horas</th><th style="text-align:right">€/hora</th><th style="text-align:right">Coste</th></tr></thead><tbody>';
-      Object.keys(byT).sort().forEach(function(tr) {
-        html += '<tr><td>' + tr + '</td><td class="am" style="text-align:right">' + fm(byT[tr]) + '</td><td style="text-align:right">' + fm(CFG.precioHora) + '</td><td class="am" style="text-align:right">' + fm(byT[tr] * CFG.precioHora) + ' €</td></tr>';
+      var ed = empF(fH, ek); if (!ed.length) return;
+      var byT = {}; ed.forEach(function(r){byT[r.trab]=(byT[r.trab]||0)+r.horas});
+      gH += R[ek].horas; gC += R[ek].costeH;
+      html += '<h4 style="margin:16px 0 8px;color:var(--o7);font-size:.9rem">'+EN[ek]+'</h4>';
+      html += '<table><thead><tr><th>Trabajador</th><th style="text-align:right">Horas</th><th style="text-align:right">€/h</th><th style="text-align:right">Coste</th></tr></thead><tbody>';
+      Object.keys(byT).sort().forEach(function(tr){
+        html += '<tr><td>'+tr+'</td><td class="am" style="text-align:right">'+fm(byT[tr])+'</td><td style="text-align:right">'+fm(CFG.precioHora)+'</td><td class="am" style="text-align:right">'+fm(byT[tr]*CFG.precioHora)+' €</td></tr>';
       });
-      html += '<tr class="totr"><td><strong>TOTAL ' + ES2[ek] + '</strong></td><td class="am" style="text-align:right"><strong>' + fm(tH) + '</strong></td><td></td><td class="am" style="text-align:right"><strong>' + fm(tC) + ' €</strong></td></tr>';
-      html += '</tbody></table>';
+      html += '<tr class="totr"><td><strong>TOTAL '+ES2[ek]+'</strong></td><td class="am" style="text-align:right"><strong>'+fm(R[ek].horas)+'</strong></td><td></td><td class="am" style="text-align:right"><strong>'+fm(R[ek].costeH)+' €</strong></td></tr></tbody></table>';
     });
-    html += '<div class="rs" style="margin-top:14px"><h4>Total Ambas Empresas</h4><strong>' + fm(grandH) + ' horas — ' + fm(grandC) + ' €</strong></div>';
-    html += '</div></div>';
+    html += '<div class="rs" style="margin-top:14px"><h4>Total Ambas Empresas</h4><strong>'+fm(gH)+' horas — '+fm(gC)+' €</strong></div></div></div>';
   }
 
-  // ═══════════ 2: PAGOS VS COSTE ═══════════
-  if (t === '2') {
+  // ═══ INFORME 2: PAGOS VS COSTE ═══
+  if (t==='2') {
     html += '<div class="card"><div class="ch" style="background:var(--o0)"><h3>💶 INFORME 2 — PAGOS VS COSTE (SALDO)</h3></div><div class="cb">';
-
     ['E1','E2'].forEach(function(ek) {
-      var eP2 = emp(fP, ek);
-      var r = R[ek];
-
-      var byT = {};
-      eP2.forEach(function(p) {
-        if (!byT[p.trab]) byT[p.trab] = {ef:0, tr:0};
-        if (p.metodo === 'Efectivo') byT[p.trab].ef += p.importe;
-        else byT[p.trab].tr += p.importe;
-      });
-
+      var ep = empF(fP, ek), r = R[ek];
+      var byT = {}; ep.forEach(function(p){if(!byT[p.trab])byT[p.trab]={ef:0,tr:0};if(p.metodo==='Efectivo')byT[p.trab].ef+=p.importe;else byT[p.trab].tr+=p.importe});
       var saldo = r.totalPag - r.costeH;
-
-      html += '<h4 style="margin:16px 0 8px;color:var(--o7);font-size:.9rem">' + EN[ek] + '</h4>';
+      html += '<h4 style="margin:16px 0 8px;color:var(--o7);font-size:.9rem">'+EN[ek]+'</h4>';
       html += '<table><thead><tr><th>Trabajador</th><th style="text-align:right">Efectivo</th><th style="text-align:right">Transferencia</th><th style="text-align:right">Total</th></tr></thead><tbody>';
-      Object.keys(byT).sort().forEach(function(tr) {
-        var d = byT[tr];
-        html += '<tr><td>' + tr + '</td><td class="am" style="text-align:right">' + fm(d.ef) + ' €</td><td class="am" style="text-align:right">' + fm(d.tr) + ' €</td><td class="am" style="text-align:right">' + fm(d.ef+d.tr) + ' €</td></tr>';
-      });
-      html += '<tr class="totr"><td><strong>Total pagos ' + ES2[ek] + '</strong></td><td class="am" style="text-align:right"><strong>' + fm(r.pagosEf) + ' €</strong></td><td class="am" style="text-align:right"><strong>' + fm(r.pagosTr) + ' €</strong></td><td class="am" style="text-align:right"><strong>' + fm(r.totalPag) + ' €</strong></td></tr>';
-      html += '</tbody></table>';
-
-      html += '<div class="ri" style="margin-top:8px">';
-      html += 'Horas: <strong>' + fm(r.horas) + ' h</strong> × ' + fm(CFG.precioHora) + ' = <strong>' + fm(r.costeH) + ' €</strong> | Pagado: <strong>' + fm(r.totalPag) + ' €</strong><br>';
-      html += '<strong style="font-size:.92rem;color:' + (saldo >= 0 ? '#27ae60' : '#c0392b') + '">';
-      html += 'SALDO: ' + (saldo >= 0 ? '+' : '') + fm(saldo) + ' € ' + (saldo >= 0 ? '(al día)' : '(PENDIENTE)') + '</strong></div>';
+      Object.keys(byT).sort().forEach(function(tr){var d=byT[tr];html+='<tr><td>'+tr+'</td><td class="am" style="text-align:right">'+fm(d.ef)+' €</td><td class="am" style="text-align:right">'+fm(d.tr)+' €</td><td class="am" style="text-align:right">'+fm(d.ef+d.tr)+' €</td></tr>'});
+      html += '<tr class="totr"><td><strong>Total '+ES2[ek]+'</strong></td><td class="am" style="text-align:right"><strong>'+fm(r.pagosEf)+' €</strong></td><td class="am" style="text-align:right"><strong>'+fm(r.pagosTr)+' €</strong></td><td class="am" style="text-align:right"><strong>'+fm(r.totalPag)+' €</strong></td></tr></tbody></table>';
+      html += '<div class="ri" style="margin-top:8px">Coste horas: <strong>'+fm(r.horas)+'h</strong> × '+fm(CFG.precioHora)+' = <strong>'+fm(r.costeH)+' €</strong> | Pagado: <strong>'+fm(r.totalPag)+' €</strong><br>';
+      html += '<strong style="color:'+(saldo>=0?'#27ae60':'#c0392b')+'">SALDO: '+(saldo>=0?'+':'')+fm(saldo)+' € '+(saldo>=0?'(al día)':'(PENDIENTE)')+'</strong></div>';
     });
+    // Comparativa global
+    var sG = (R.E1.totalPag+R.E2.totalPag) - (R.E1.costeH+R.E2.costeH);
+    html += '<div class="rs" style="margin-top:14px"><h4>Global</h4>Coste total: <strong>'+fm(R.E1.costeH+R.E2.costeH)+' €</strong> | Pagado total: <strong>'+fm(R.E1.totalPag+R.E2.totalPag)+' €</strong> | <strong style="color:'+(sG>=0?'#27ae60':'#c0392b')+'">Saldo: '+(sG>=0?'+':'')+fm(sG)+' €</strong></div>';
     html += '</div></div>';
   }
 
-  // ═══════════ 3: SEGURIDAD SOCIAL ═══════════
-  if (t === '3') {
-    html += '<div class="card"><div class="ch" style="background:var(--o0)"><h3>🏛 INFORME 3 — SEGURIDAD SOCIAL (DESVIACIONES)</h3></div><div class="cb">';
-
-    var comp = {};
+  // ═══ INFORME 3: SEGURIDAD SOCIAL ═══
+  if (t==='3') {
+    html += '<div class="card"><div class="ch" style="background:var(--o0)"><h3>🏛 INFORME 3 — SEGURIDAD SOCIAL</h3></div><div class="cb">';
+    var compD = {};
     ['E1','E2'].forEach(function(ek) {
-      var eH3 = emp(fH, ek);
-      var eS3 = emp(fS, ek);
-      var r = R[ek];
+      var eH=empF(fH,ek), eS=empF(fS,ek), r=R[ek];
       var costeReal = r.jorReales * CFG.costeSS;
-      comp[ek] = {costeCot: r.costeSS, costeReal: costeReal};
-
-      var byTH = {}, byTS = {};
-      eH3.forEach(function(x) { byTH[x.trab] = (byTH[x.trab]||0) + x.horas; });
-      eS3.forEach(function(x) { byTS[x.trab] = (byTS[x.trab]||0) + x.dias; });
-      var allTr = Object.keys(byTH).concat(Object.keys(byTS)).filter(function(v,i,a) { return a.indexOf(v)===i; }).sort();
-
-      html += '<h4 style="margin:16px 0 8px;color:var(--o7);font-size:.9rem">' + EN[ek] + '</h4>';
+      compD[ek] = {costeCot:r.costeSS, costeReal:costeReal};
+      var byTH={},byTS={}; eH.forEach(function(x){byTH[x.trab]=(byTH[x.trab]||0)+x.horas}); eS.forEach(function(x){byTS[x.trab]=(byTS[x.trab]||0)+x.dias});
+      var allTr = Object.keys(byTH).concat(Object.keys(byTS)).filter(function(v,i,a){return a.indexOf(v)===i}).sort();
+      html += '<h4 style="margin:16px 0 8px;color:var(--o7);font-size:.9rem">'+EN[ek]+'</h4>';
       html += '<table><thead><tr><th>Trabajador</th><th style="text-align:right">Horas</th><th style="text-align:right">Días reales</th><th style="text-align:right">Cotizados</th><th style="text-align:right">Desv.</th><th style="text-align:right">Coste real</th><th style="text-align:right">Cotizado</th></tr></thead><tbody>';
-      allTr.forEach(function(tr) {
-        var h = byTH[tr]||0, dr = Math.round(h/CFG.horasJornada), dc = byTS[tr]||0, dv = dr-dc;
-        html += '<tr><td>'+tr+'</td><td class="am" style="text-align:right">'+fm(h)+'</td><td style="text-align:right">'+dr+'</td><td style="text-align:right">'+dc+'</td>';
-        html += '<td style="text-align:right;color:'+(dv<=0?'#27ae60':'#c0392b')+'"><strong>'+dv+'</strong></td>';
-        html += '<td class="am" style="text-align:right">'+fm(dr*CFG.costeSS)+' €</td><td class="am" style="text-align:right">'+fm(dc*CFG.costeSS)+' €</td></tr>';
-      });
-      html += '<tr class="totr"><td><strong>TOTAL '+ES2[ek]+'</strong></td><td class="am" style="text-align:right"><strong>'+fm(r.horas)+'</strong></td><td style="text-align:right"><strong>'+r.jorReales+'</strong></td><td style="text-align:right"><strong>'+r.jorCot+'</strong></td>';
-      html += '<td style="text-align:right"><strong style="color:'+(r.jorReales-r.jorCot<=0?'#27ae60':'#c0392b')+'">'+(r.jorReales-r.jorCot)+'</strong></td>';
-      html += '<td class="am" style="text-align:right"><strong>'+fm(costeReal)+' €</strong></td><td class="am" style="text-align:right"><strong>'+fm(r.costeSS)+' €</strong></td></tr></tbody></table>';
-      html += '<div class="ri" style="margin-top:6px"><strong style="color:'+(r.costeSS-costeReal>=0?'#27ae60':'#c0392b')+'">Desviación: '+(r.costeSS-costeReal>=0?'+':'')+fm(r.costeSS-costeReal)+' €</strong></div>';
+      allTr.forEach(function(tr){var h=byTH[tr]||0,dr=Math.round(h/CFG.horasJornada),dc=byTS[tr]||0,dv=dr-dc;
+        html+='<tr><td>'+tr+'</td><td class="am" style="text-align:right">'+fm(h)+'</td><td style="text-align:right">'+dr+'</td><td style="text-align:right">'+dc+'</td><td style="text-align:right;color:'+(dv<=0?'#27ae60':'#c0392b')+'"><strong>'+dv+'</strong></td><td class="am" style="text-align:right">'+fm(dr*CFG.costeSS)+' €</td><td class="am" style="text-align:right">'+fm(dc*CFG.costeSS)+' €</td></tr>'});
+      html += '<tr class="totr"><td><strong>TOTAL '+ES2[ek]+'</strong></td><td class="am" style="text-align:right"><strong>'+fm(r.horas)+'</strong></td><td style="text-align:right"><strong>'+r.jorReales+'</strong></td><td style="text-align:right"><strong>'+r.jorCot+'</strong></td><td style="text-align:right"><strong style="color:'+(r.jorReales-r.jorCot<=0?'#27ae60':'#c0392b')+'">'+(r.jorReales-r.jorCot)+'</strong></td><td class="am" style="text-align:right"><strong>'+fm(costeReal)+' €</strong></td><td class="am" style="text-align:right"><strong>'+fm(r.costeSS)+' €</strong></td></tr></tbody></table>';
+      html += '<div class="ri" style="margin-top:6px"><strong style="color:'+(r.costeSS-costeReal>=0?'#27ae60':'#c0392b')+'">Desviación '+ES2[ek]+': '+(r.costeSS-costeReal>=0?'+':'')+fm(r.costeSS-costeReal)+' €</strong></div>';
     });
-
     // Compensación
-    var tReal = comp.E1.costeReal + comp.E2.costeReal;
-    var tCot = comp.E1.costeCot + comp.E2.costeCot;
-    if (tReal > 0) {
-      var pct1 = comp.E1.costeReal / tReal * 100, pct2 = 100-pct1;
-      var deb1 = tCot*(pct1/100), deb2 = tCot*(pct2/100);
-      var dif = deb1 - comp.E1.costeCot;
+    var tReal=compD.E1.costeReal+compD.E2.costeReal, tCot=compD.E1.costeCot+compD.E2.costeCot;
+    if (tReal>0) {
+      var pct1=compD.E1.costeReal/tReal*100, pct2=100-pct1;
+      var deb1=tCot*(pct1/100), deb2=tCot*(pct2/100), dif=deb1-compD.E1.costeCot;
       html += '<div class="rs" style="margin-top:14px"><h4>Compensación entre Empresas</h4>';
-      html += '<table style="margin:8px 0"><thead><tr><th>Empresa</th><th style="text-align:right">% real</th><th style="text-align:right">Cotizado</th><th style="text-align:right">Debería</th><th style="text-align:right">Dif.</th></tr></thead><tbody>';
-      html += '<tr><td>'+ES2.E1+'</td><td style="text-align:right">'+fm(pct1)+'%</td><td style="text-align:right">'+fm(comp.E1.costeCot)+' €</td><td style="text-align:right">'+fm(deb1)+' €</td><td style="text-align:right;color:'+(dif>0.01?'#c0392b':'#27ae60')+'">'+fm(dif)+' €</td></tr>';
-      html += '<tr><td>'+ES2.E2+'</td><td style="text-align:right">'+fm(pct2)+'%</td><td style="text-align:right">'+fm(comp.E2.costeCot)+' €</td><td style="text-align:right">'+fm(deb2)+' €</td><td style="text-align:right;color:'+(-dif>0.01?'#c0392b':'#27ae60')+'">'+fm(-dif)+' €</td></tr>';
+      html += '<table style="margin:8px 0"><thead><tr><th>Empresa</th><th style="text-align:right">% real</th><th style="text-align:right">Cotizado</th><th style="text-align:right">Debería</th><th style="text-align:right">Diferencia</th></tr></thead><tbody>';
+      html += '<tr><td>'+ES2.E1+'</td><td style="text-align:right">'+fm(pct1)+'%</td><td style="text-align:right">'+fm(compD.E1.costeCot)+' €</td><td style="text-align:right">'+fm(deb1)+' €</td><td style="text-align:right;color:'+(dif>0.01?'#c0392b':'#27ae60')+'">'+fm(dif)+' €</td></tr>';
+      html += '<tr><td>'+ES2.E2+'</td><td style="text-align:right">'+fm(pct2)+'%</td><td style="text-align:right">'+fm(compD.E2.costeCot)+' €</td><td style="text-align:right">'+fm(deb2)+' €</td><td style="text-align:right;color:'+(-dif>0.01?'#c0392b':'#27ae60')+'">'+fm(-dif)+' €</td></tr>';
       html += '</tbody></table>';
-      if (Math.abs(dif) > 0.01) {
-        if (dif > 0) html += '<strong style="color:#c0392b">'+ES2.E1+' compensa a '+ES2.E2+': '+fm(Math.abs(dif))+' €</strong>';
-        else html += '<strong style="color:#c0392b">'+ES2.E2+' compensa a '+ES2.E1+': '+fm(Math.abs(dif))+' €</strong>';
-      } else html += '<strong style="color:#27ae60">Compensadas</strong>';
+      if (Math.abs(dif)>0.01) { html += '<strong style="color:#c0392b">'+(dif>0?ES2.E1+' compensa a '+ES2.E2:ES2.E2+' compensa a '+ES2.E1)+': '+fm(Math.abs(dif))+' €</strong>'; }
+      else html += '<strong style="color:#27ae60">Compensadas</strong>';
       html += '</div>';
     }
     html += '</div></div>';
   }
 
-  // ═══════════ 4: GASOIL ═══════════
-  if (t === '4') {
-    html += '<div class="card"><div class="ch" style="background:var(--o0)"><h3>⛽ INFORME 4 — GASOIL (INVENTARIO Y PMP)</h3></div><div class="cb">';
+  // ═══ INFORME 4: GASOIL ═══
+  if (t==='4') {
+    html += '<div class="card"><div class="ch" style="background:var(--o0)"><h3>⛽ INFORME 4 — GASOIL (PMP POR EMPRESA)</h3></div><div class="cb">';
     if (!fG.length) { html += '<div class="empty"><p>Sin movimientos</p></div></div></div>'; return; }
-
     ['E1','E2'].forEach(function(ek) {
-      var eG4 = emp(fG, ek);
-      var compras = eG4.filter(function(r) { return r.tipo !== 'consumo'; });
-      var consumos = eG4.filter(function(r) { return r.tipo === 'consumo'; });
-      var litComp = compras.reduce(function(s,r) { return s+r.litros; }, 0);
-      var eurComp = compras.reduce(function(s,r) { return s+r.litros*r.precio; }, 0);
-      var litCons = R[ek].litCons, eurCons = R[ek].costeCons;
-      var stk = stockEmp(ek);
-      var pmpNow = ek==='E1' ? pmpNowE1 : pmpNowE2;
+      var eG=empF(fG,ek);
+      var compras=eG.filter(function(r){return r.tipo!=='consumo'});
+      var consumos=eG.filter(function(r){return r.tipo==='consumo'});
+      var litComp=compras.reduce(function(a,r){return a+r.litros},0);
+      var eurComp=compras.reduce(function(a,r){return a+r.litros*r.precio},0);
+      var stk=calcStockEmp(allG,ek);
+      var pmpNow=ek==='E1'?pmpNowE1:pmpNowE2;
 
-      html += '<h4 style="margin:16px 0 8px;color:var(--o7);font-size:.9rem">' + EN[ek] + '</h4>';
-
+      html += '<h4 style="margin:16px 0 8px;color:var(--o7);font-size:.9rem">'+EN[ek]+' — PMP actual: '+fm(pmpNow)+' €/L</h4>';
       if (compras.length) {
         html += '<p style="font-size:.76rem;font-weight:600;color:var(--t2);margin:8px 0 4px">Compras / Existencias:</p>';
         html += '<table><thead><tr><th>Fecha</th><th>Tipo</th><th style="text-align:right">Litros</th><th style="text-align:right">€/L</th><th style="text-align:right">Importe</th></tr></thead><tbody>';
-        compras.sort(function(a,b){return a.fecha.localeCompare(b.fecha)}).forEach(function(r) {
+        compras.sort(function(a,b){return a.fecha.localeCompare(b.fecha)}).forEach(function(r){
           html += '<tr><td>'+fd(r.fecha)+'</td><td>'+(r.tipo==='existencias'?'Exist. ini.':'Compra')+'</td><td class="am" style="text-align:right">'+fm(r.litros)+'</td><td style="text-align:right">'+fm(r.precio)+' €</td><td class="am" style="text-align:right">'+fm(r.litros*r.precio)+' €</td></tr>';
         });
         html += '<tr class="totr"><td colspan="2"><strong>Total aportado</strong></td><td class="am" style="text-align:right"><strong>'+fm(litComp)+' L</strong></td><td></td><td class="am" style="text-align:right"><strong>'+fm(eurComp)+' €</strong></td></tr></tbody></table>';
       }
-
       if (consumos.length) {
         html += '<p style="font-size:.76rem;font-weight:600;color:var(--t2);margin:12px 0 4px">Consumos (PMP de '+ES2[ek]+'):</p>';
         html += '<table><thead><tr><th>Fecha</th><th style="text-align:right">Litros</th><th style="text-align:right">PMP</th><th style="text-align:right">Coste</th></tr></thead><tbody>';
-        consumos.sort(function(a,b){return a.fecha.localeCompare(b.fecha)}).forEach(function(c) {
-          var p = pmpById[c.id]||0;
+        consumos.sort(function(a,b){return a.fecha.localeCompare(b.fecha)}).forEach(function(c){
+          var p=pmpById[c.id]||0;
           html += '<tr><td>'+fd(c.fecha)+'</td><td class="am" style="text-align:right">'+fm(c.litros)+'</td><td style="text-align:right">'+fm(p)+' €</td><td class="am ne" style="text-align:right">'+fm(c.litros*p)+' €</td></tr>';
         });
-        html += '<tr class="totr"><td><strong>Total consumido</strong></td><td class="am" style="text-align:right"><strong>'+fm(litCons)+' L</strong></td><td></td><td class="am ne" style="text-align:right"><strong>'+fm(eurCons)+' €</strong></td></tr></tbody></table>';
+        html += '<tr class="totr"><td><strong>Total consumido</strong></td><td class="am" style="text-align:right"><strong>'+fm(R[ek].litCons)+' L</strong></td><td></td><td class="am ne" style="text-align:right"><strong>'+fm(R[ek].costeCons)+' €</strong></td></tr></tbody></table>';
       }
-
-      html += '<div class="ri" style="margin-top:8px">Stock actual: <strong>'+fm(stk)+' L</strong> | PMP: <strong>'+fm(pmpNow)+' €/L</strong> | Valor: <strong>'+fm(stk*pmpNow)+' €</strong></div>';
+      html += '<div class="ri" style="margin-top:8px">Stock actual '+ES2[ek]+': <strong>'+fm(stk)+' L</strong> × '+fm(pmpNow)+' €/L = <strong>'+fm(stk*pmpNow)+' €</strong></div>';
     });
-
-    // Stock global
-    var s1=stockEmp('E1'), s2=stockEmp('E2');
+    // Global
+    var s1=calcStockEmp(allG,'E1'), s2=calcStockEmp(allG,'E2');
     html += '<div class="rs" style="margin-top:14px"><h4>Stock Global</h4>';
     html += '<table><thead><tr><th>Empresa</th><th style="text-align:right">Litros</th><th style="text-align:right">PMP</th><th style="text-align:right">Valor</th></tr></thead><tbody>';
     html += '<tr><td>'+ES2.E1+'</td><td class="am" style="text-align:right">'+fm(s1)+'</td><td style="text-align:right">'+fm(pmpNowE1)+' €</td><td class="am" style="text-align:right">'+fm(s1*pmpNowE1)+' €</td></tr>';
     html += '<tr><td>'+ES2.E2+'</td><td class="am" style="text-align:right">'+fm(s2)+'</td><td style="text-align:right">'+fm(pmpNowE2)+' €</td><td class="am" style="text-align:right">'+fm(s2*pmpNowE2)+' €</td></tr>';
-    html += '<tr class="totr"><td><strong>TOTAL</strong></td><td class="am" style="text-align:right"><strong>'+fm(s1+s2)+'</strong></td><td></td><td class="am" style="text-align:right"><strong>'+fm(s1*pmpNowE1+s2*pmpNowE2)+' €</strong></td></tr>';
-    html += '</tbody></table></div></div></div>';
+    html += '<tr class="totr"><td><strong>TOTAL</strong></td><td class="am" style="text-align:right"><strong>'+fm(s1+s2)+'</strong></td><td></td><td class="am" style="text-align:right"><strong>'+fm(s1*pmpNowE1+s2*pmpNowE2)+' €</strong></td></tr></tbody></table></div>';
+    html += '</div></div>';
   }
 
-  // ═══════════ 5: RESUMEN COMPARATIVO ═══════════
-  if (t === '5') {
-    var r1 = R.E1, r2 = R.E2;
-    var saldo1 = r1.totalPag - r1.costeH, saldo2 = r2.totalPag - r2.costeH;
-    var tc1 = r1.costeH + r1.costeSS + r1.costeCons;
-    var tc2 = r2.costeH + r2.costeSS + r2.costeCons;
-    var pctE1 = (tc1+tc2) > 0 ? (tc1/(tc1+tc2)*100) : 50;
+  // ═══ INFORME 5: RESUMEN COMPARATIVO ═══
+  if (t==='5') {
+    var r1=R.E1, r2=R.E2;
+    var saldo1=r1.totalPag-r1.costeH, saldo2=r2.totalPag-r2.costeH;
+    var tc1=r1.costeH+r1.costeSS+r1.costeCons, tc2=r2.costeH+r2.costeSS+r2.costeCons;
+    var pctE1=(tc1+tc2)>0?(tc1/(tc1+tc2)*100):50;
 
     html += '<div class="card"><div class="ch" style="background:var(--g1)"><h3>📊 INFORME 5 — RESUMEN COMPARATIVO</h3></div><div class="cb">';
-    html += '<table><thead><tr><th>Concepto</th><th style="text-align:right">' + ES2.E1 + '</th><th style="text-align:right">' + ES2.E2 + '</th><th style="text-align:right">TOTAL</th></tr></thead><tbody>';
+    html += '<table><thead><tr><th>Concepto</th><th style="text-align:right">'+ES2.E1+'</th><th style="text-align:right">'+ES2.E2+'</th><th style="text-align:right">TOTAL</th></tr></thead><tbody>';
 
     html += '<tr style="background:var(--o0)"><td colspan="4"><strong>⏱ HORAS Y SALARIOS</strong></td></tr>';
-    html += '<tr><td>Horas trabajadas</td><td class="am" style="text-align:right">' + fm(r1.horas) + ' h</td><td class="am" style="text-align:right">' + fm(r2.horas) + ' h</td><td class="am" style="text-align:right"><strong>' + fm(r1.horas+r2.horas) + ' h</strong></td></tr>';
-    html += '<tr><td>Coste horas</td><td class="am" style="text-align:right">' + fm(r1.costeH) + ' €</td><td class="am" style="text-align:right">' + fm(r2.costeH) + ' €</td><td class="am" style="text-align:right"><strong>' + fm(r1.costeH+r2.costeH) + ' €</strong></td></tr>';
+    html += '<tr><td>Horas trabajadas</td><td class="am" style="text-align:right">'+fm(r1.horas)+' h</td><td class="am" style="text-align:right">'+fm(r2.horas)+' h</td><td class="am" style="text-align:right"><strong>'+fm(r1.horas+r2.horas)+' h</strong></td></tr>';
+    html += '<tr><td>Coste horas</td><td class="am" style="text-align:right">'+fm(r1.costeH)+' €</td><td class="am" style="text-align:right">'+fm(r2.costeH)+' €</td><td class="am" style="text-align:right"><strong>'+fm(r1.costeH+r2.costeH)+' €</strong></td></tr>';
 
     html += '<tr style="background:var(--o0)"><td colspan="4"><strong>💶 PAGOS</strong></td></tr>';
-    html += '<tr><td>Efectivo</td><td class="am" style="text-align:right">' + fm(r1.pagosEf) + ' €</td><td class="am" style="text-align:right">' + fm(r2.pagosEf) + ' €</td><td class="am" style="text-align:right">' + fm(r1.pagosEf+r2.pagosEf) + ' €</td></tr>';
-    html += '<tr><td>Transferencia</td><td class="am" style="text-align:right">' + fm(r1.pagosTr) + ' €</td><td class="am" style="text-align:right">' + fm(r2.pagosTr) + ' €</td><td class="am" style="text-align:right">' + fm(r1.pagosTr+r2.pagosTr) + ' €</td></tr>';
-    html += '<tr><td>Total pagado</td><td class="am" style="text-align:right"><strong>' + fm(r1.totalPag) + ' €</strong></td><td class="am" style="text-align:right"><strong>' + fm(r2.totalPag) + ' €</strong></td><td class="am" style="text-align:right"><strong>' + fm(r1.totalPag+r2.totalPag) + ' €</strong></td></tr>';
-    html += '<tr><td>Saldo (pagado − coste)</td><td style="text-align:right;color:' + (saldo1>=0?'#27ae60':'#c0392b') + '">' + (saldo1>=0?'+':'') + fm(saldo1) + ' €</td><td style="text-align:right;color:' + (saldo2>=0?'#27ae60':'#c0392b') + '">' + (saldo2>=0?'+':'') + fm(saldo2) + ' €</td><td style="text-align:right;color:' + ((saldo1+saldo2)>=0?'#27ae60':'#c0392b') + '">' + ((saldo1+saldo2)>=0?'+':'') + fm(saldo1+saldo2) + ' €</td></tr>';
+    html += '<tr><td>Efectivo</td><td class="am" style="text-align:right">'+fm(r1.pagosEf)+' €</td><td class="am" style="text-align:right">'+fm(r2.pagosEf)+' €</td><td class="am" style="text-align:right">'+fm(r1.pagosEf+r2.pagosEf)+' €</td></tr>';
+    html += '<tr><td>Transferencia</td><td class="am" style="text-align:right">'+fm(r1.pagosTr)+' €</td><td class="am" style="text-align:right">'+fm(r2.pagosTr)+' €</td><td class="am" style="text-align:right">'+fm(r1.pagosTr+r2.pagosTr)+' €</td></tr>';
+    html += '<tr><td>Total pagado</td><td class="am" style="text-align:right"><strong>'+fm(r1.totalPag)+' €</strong></td><td class="am" style="text-align:right"><strong>'+fm(r2.totalPag)+' €</strong></td><td class="am" style="text-align:right"><strong>'+fm(r1.totalPag+r2.totalPag)+' €</strong></td></tr>';
+    html += '<tr><td>Saldo (pagado − coste)</td><td style="text-align:right;color:'+(saldo1>=0?'#27ae60':'#c0392b')+'">'+(saldo1>=0?'+':'')+fm(saldo1)+' €</td><td style="text-align:right;color:'+(saldo2>=0?'#27ae60':'#c0392b')+'">'+(saldo2>=0?'+':'')+fm(saldo2)+' €</td><td style="text-align:right;color:'+((saldo1+saldo2)>=0?'#27ae60':'#c0392b')+'">'+(saldo1+saldo2>=0?'+':'')+fm(saldo1+saldo2)+' €</td></tr>';
 
     html += '<tr style="background:var(--o0)"><td colspan="4"><strong>🏛 SEGURIDAD SOCIAL</strong></td></tr>';
-    html += '<tr><td>Jornadas reales / cotizadas</td><td style="text-align:right">' + r1.jorReales + ' / ' + r1.jorCot + '</td><td style="text-align:right">' + r2.jorReales + ' / ' + r2.jorCot + '</td><td style="text-align:right">' + (r1.jorReales+r2.jorReales) + ' / ' + (r1.jorCot+r2.jorCot) + '</td></tr>';
-    html += '<tr><td>Coste SS cotizado</td><td class="am" style="text-align:right">' + fm(r1.costeSS) + ' €</td><td class="am" style="text-align:right">' + fm(r2.costeSS) + ' €</td><td class="am" style="text-align:right"><strong>' + fm(r1.costeSS+r2.costeSS) + ' €</strong></td></tr>';
+    html += '<tr><td>Jornadas reales / cotizadas</td><td style="text-align:right">'+r1.jorReales+' / '+r1.jorCot+'</td><td style="text-align:right">'+r2.jorReales+' / '+r2.jorCot+'</td><td style="text-align:right">'+(r1.jorReales+r2.jorReales)+' / '+(r1.jorCot+r2.jorCot)+'</td></tr>';
+    html += '<tr><td>Coste SS cotizado</td><td class="am" style="text-align:right">'+fm(r1.costeSS)+' €</td><td class="am" style="text-align:right">'+fm(r2.costeSS)+' €</td><td class="am" style="text-align:right"><strong>'+fm(r1.costeSS+r2.costeSS)+' €</strong></td></tr>';
 
-    html += '<tr style="background:var(--o0)"><td colspan="4"><strong>⛽ GASOIL (solo consumos)</strong></td></tr>';
-    html += '<tr><td>Litros consumidos</td><td class="am" style="text-align:right">' + fm(r1.litCons) + ' L</td><td class="am" style="text-align:right">' + fm(r2.litCons) + ' L</td><td class="am" style="text-align:right"><strong>' + fm(r1.litCons+r2.litCons) + ' L</strong></td></tr>';
-    html += '<tr><td>Coste gasoil (PMP)</td><td class="am" style="text-align:right">' + fm(r1.costeCons) + ' €</td><td class="am" style="text-align:right">' + fm(r2.costeCons) + ' €</td><td class="am" style="text-align:right"><strong>' + fm(r1.costeCons+r2.costeCons) + ' €</strong></td></tr>';
+    html += '<tr style="background:var(--o0)"><td colspan="4"><strong>⛽ GASOIL (consumos a PMP)</strong></td></tr>';
+    html += '<tr><td>Litros consumidos</td><td class="am" style="text-align:right">'+fm(r1.litCons)+' L</td><td class="am" style="text-align:right">'+fm(r2.litCons)+' L</td><td class="am" style="text-align:right"><strong>'+fm(r1.litCons+r2.litCons)+' L</strong></td></tr>';
+    html += '<tr><td>Coste gasoil</td><td class="am" style="text-align:right">'+fm(r1.costeCons)+' €</td><td class="am" style="text-align:right">'+fm(r2.costeCons)+' €</td><td class="am" style="text-align:right"><strong>'+fm(r1.costeCons+r2.costeCons)+' €</strong></td></tr>';
 
-    html += '<tr class="totr"><td><strong>COSTE TOTAL OPERATIVO</strong></td><td class="am" style="text-align:right"><strong>' + fm(tc1) + ' €</strong></td><td class="am" style="text-align:right"><strong>' + fm(tc2) + ' €</strong></td><td class="am" style="text-align:right"><strong style="font-size:1rem">' + fm(tc1+tc2) + ' €</strong></td></tr>';
-    html += '<tr><td><em>Proporción coste</em></td><td style="text-align:right"><em>' + fm(pctE1) + '%</em></td><td style="text-align:right"><em>' + fm(100-pctE1) + '%</em></td><td style="text-align:right"><em>100%</em></td></tr>';
+    html += '<tr class="totr"><td><strong>COSTE TOTAL</strong></td><td class="am" style="text-align:right"><strong>'+fm(tc1)+' €</strong></td><td class="am" style="text-align:right"><strong>'+fm(tc2)+' €</strong></td><td class="am" style="text-align:right"><strong style="font-size:1rem">'+fm(tc1+tc2)+' €</strong></td></tr>';
+    html += '<tr><td><em>Proporción</em></td><td style="text-align:right"><em>'+fm(pctE1)+'%</em></td><td style="text-align:right"><em>'+fm(100-pctE1)+'%</em></td><td style="text-align:right"><em>100%</em></td></tr>';
     html += '</tbody></table></div></div>';
   }
 
   }); // end tipos
 
-  out.innerHTML = html;
-  document.getElementById('pa').innerHTML = '<h2 style="font-family:Playfair Display,serif">🌿 GestiónAgro</h2><div style="font-size:12px;color:#666;margin-bottom:14px">' + fd(desde) + ' — ' + fd(hasta) + '</div>' + html;
+  document.getElementById('ro').innerHTML = html;
+  document.getElementById('pa').innerHTML = '<h2 style="font-family:Playfair Display,serif">🌿 GestiónAgro</h2><div style="font-size:12px;color:#666;margin-bottom:14px">'+fd(desde)+' — '+fd(hasta)+'</div>' + html;
 }
-
 function printR(){if(!document.getElementById('pa').innerHTML.trim())return alert('Genera primero');window.print()}
 
 // ──── Init ────
