@@ -1,0 +1,21 @@
+{
+  "name": "agrocampo",
+  "version": "1.0.0",
+  "description": "Control operativo de horas, pagos, seguridad social y gasoil para dos empresas agrícolas.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agricoladelafuente/agrocampo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/agricoladelafuente/agrocampo/issues"
+  },
+  "homepage": "https://github.com/agricoladelafuente/agrocampo#readme"
+}
