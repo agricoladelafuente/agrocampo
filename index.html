@@ -7,6 +7,7 @@
 <meta name="theme-color" content="#1a1f0e">
 <title>GestiónAgro</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+<link rel="manifest" href="data:application/json,{%22name%22:%22GestiónAgro%22,%22short_name%22:%22GestiónAgro%22,%22display%22:%22standalone%22,%22background_color%22:%22%231a1f0e%22,%22theme_color%22:%22%231a1f0e%22}">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--o9:#1a1f0e;--o8:#2d3518;--o7:#3f4b22;--o6:#55662f;--o5:#6b803b;--o4:#8a9f5a;--o3:#a8bb7a;--o1:#e2eac5;--o0:#f3f6e8;--g5:#c49a2a;--g4:#d4ae3e;--g1:#faf3d8;--r5:#c0392b;--r1:#fde8e5;--b5:#2980b9;--b1:#daeaf5;--bg:#f7f5f0;--sf:#fff;--sa:#fafaf6;--tx:#1a1a18;--t2:#5a5a52;--bd:#e5e2d8;--sh:0 1px 3px rgba(26,31,14,.06),0 4px 12px rgba(26,31,14,.04);--sh2:0 4px 12px rgba(26,31,14,.08),0 12px 36px rgba(26,31,14,.06);--rd:10px;--rs:6px;--sb:env(safe-area-inset-bottom,0px)}
@@ -29,91 +30,84 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-h
 .sft{padding:10px;border-top:1px solid rgba(255,255,255,.08)}
 .sind{display:flex;align-items:center;gap:6px;padding:8px 10px;border-radius:6px;font-size:.68rem;color:rgba(255,255,255,.4);background:rgba(255,255,255,.03)}
 .sind .dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-.dg{background:#27ae60;box-shadow:0 0 5px rgba(39,174,96,.4)}.dy{background:#f39c12}.dr{background:#c0392b}
+.dg{background:#27ae60;box-shadow:0 0 5px rgba(39,174,96,.4)}.dr{background:#c0392b}
 .sspin{width:10px;height:10px;border:2px solid rgba(255,255,255,.2);border-top-color:var(--g4);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .main{margin-left:248px;padding:28px 32px;max-width:1100px}
 .mh{display:none;position:fixed;top:0;left:0;right:0;height:52px;background:var(--o9);z-index:150;align-items:center;padding:0 14px;gap:8px}
 .mh h1{font-family:'Playfair Display',serif;font-size:1rem;color:var(--g4);font-weight:700}
 .ph{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:22px;gap:10px;flex-wrap:wrap}
-.ph h2{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:700;color:var(--o8)}
-.ph p{color:var(--t2);font-size:.8rem;margin-top:2px}
+.ph h2{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:700;color:var(--o8)}.ph p{color:var(--t2);font-size:.8rem;margin-top:2px}
 .card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rd);box-shadow:var(--sh);overflow:hidden;margin-bottom:16px}
-.cH{padding:13px 16px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center}
-.cH h3{font-size:.88rem;font-weight:600}.cB{padding:16px}
+.cH{padding:13px 16px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center}.cH h3{font-size:.88rem;font-weight:600}.cB{padding:16px}
 table{width:100%;border-collapse:collapse;font-size:.8rem}
 thead th{text-align:left;padding:8px 10px;background:var(--sa);color:var(--t2);font-weight:600;font-size:.66rem;text-transform:uppercase;letter-spacing:.05em;border-bottom:2px solid var(--bd);white-space:nowrap}
-tbody td{padding:9px 10px;border-bottom:1px solid var(--bd);vertical-align:middle}
-tbody tr:last-child td{border-bottom:none}tbody tr:hover{background:var(--o0)}
+tbody td{padding:9px 10px;border-bottom:1px solid var(--bd);vertical-align:middle}tbody tr:last-child td{border-bottom:none}tbody tr:hover{background:var(--o0)}
 .am{font-weight:600;font-variant-numeric:tabular-nums}.po{color:var(--o6)}.ne{color:var(--r5)}
 .fg{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:16px}
-.fi{display:flex;flex-direction:column;gap:3px}
-.fi label{font-size:.7rem;font-weight:600;color:var(--t2);text-transform:uppercase;letter-spacing:.04em}
+.fi{display:flex;flex-direction:column;gap:3px}.fi label{font-size:.7rem;font-weight:600;color:var(--t2);text-transform:uppercase;letter-spacing:.04em}
 .fi input,.fi select{padding:9px 11px;border:1px solid var(--bd);border-radius:var(--rs);font-family:inherit;font-size:16px;background:var(--sf);color:var(--tx);transition:.15s;-webkit-appearance:none}
 .fi select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%235a5a52' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px}
 .fi input:focus,.fi select:focus{outline:none;border-color:var(--o4);box-shadow:0 0 0 3px rgba(107,128,59,.12)}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:5px;padding:9px 16px;border:none;border-radius:var(--rs);font-family:inherit;font-size:.8rem;font-weight:600;cursor:pointer;transition:.15s;white-space:nowrap}
 .btn:active{transform:scale(.97)}.btn:disabled{opacity:.5;cursor:not-allowed}
-.bp{background:var(--o6);color:#fff}.bp:hover{background:var(--o7)}
-.bg{background:var(--g5);color:#fff}.bg:hover{background:#b08a22}
-.bo{background:0;border:1px solid var(--bd);color:var(--t2)}.bo:hover{background:var(--sa)}
-.bd{background:var(--r1);color:var(--r5);border:1px solid rgba(192,57,43,.15)}
-.bsm{padding:6px 10px;font-size:.72rem}
+.bp{background:var(--o6);color:#fff}.bp:hover{background:var(--o7)}.bg{background:var(--g5);color:#fff}.bo{background:0;border:1px solid var(--bd);color:var(--t2)}.bd{background:var(--r1);color:var(--r5);border:1px solid rgba(192,57,43,.15)}.bsm{padding:6px 10px;font-size:.72rem}
 .sr{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:18px}
-.sc{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rd);padding:13px 15px;box-shadow:var(--sh)}
-.sc .sl{font-size:.63rem;text-transform:uppercase;letter-spacing:.07em;color:var(--t2);margin-bottom:3px}
-.sc .sv{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:var(--o8)}
-.rf{display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap;margin-bottom:16px;padding:14px 16px;background:var(--o0);border-radius:var(--rd);border:1px solid var(--o1)}
-.rf .fi{min-width:130px;flex:1}
-.badge{display:inline-block;padding:2px 7px;border-radius:16px;font-size:.65rem;font-weight:600}
-.bdo{background:var(--o1);color:var(--o7)}.bdg{background:var(--g1);color:#8a6e10}
+.sc{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rd);padding:13px 15px;box-shadow:var(--sh)}.sc .sl{font-size:.63rem;text-transform:uppercase;letter-spacing:.07em;color:var(--t2);margin-bottom:3px}.sc .sv{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:var(--o8)}
+.rf{display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap;margin-bottom:16px;padding:14px 16px;background:var(--o0);border-radius:var(--rd);border:1px solid var(--o1)}.rf .fi{min-width:130px;flex:1}
+.badge{display:inline-block;padding:2px 7px;border-radius:16px;font-size:.65rem;font-weight:600}.bdo{background:var(--o1);color:var(--o7)}.bdg{background:var(--g1);color:#8a6e10}
 .empty{text-align:center;padding:32px 16px;color:var(--t2)}.empty .ei{font-size:1.8rem;margin-bottom:6px;opacity:.4}.empty p{font-size:.82rem}
-.ov{position:fixed;inset:0;background:rgba(26,31,14,.5);display:flex;align-items:flex-end;justify-content:center;z-index:1000;opacity:0;pointer-events:none;transition:.2s}
-.ov.open{opacity:1;pointer-events:all}
-.mo{background:var(--sf);border-radius:14px 14px 0 0;box-shadow:var(--sh2);width:100%;max-width:540px;max-height:90dvh;overflow-y:auto;transform:translateY(100%);transition:transform .3s;padding-bottom:var(--sb)}
-.ov.open .mo{transform:translateY(0)}
+.ov{position:fixed;inset:0;background:rgba(26,31,14,.5);display:flex;align-items:flex-end;justify-content:center;z-index:1000;opacity:0;pointer-events:none;transition:.2s}.ov.open{opacity:1;pointer-events:all}
+.mo{background:var(--sf);border-radius:14px 14px 0 0;box-shadow:var(--sh2);width:100%;max-width:540px;max-height:90dvh;overflow-y:auto;transform:translateY(100%);transition:transform .3s;padding-bottom:var(--sb)}.ov.open .mo{transform:translateY(0)}
 .moh{width:32px;height:4px;background:var(--bd);border-radius:2px;position:absolute;top:7px;left:50%;transform:translateX(-50%)}
-.mohd{padding:16px 18px 10px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:var(--sf);z-index:1}
-.mohd h3{font-size:.98rem;font-weight:700}
-.mox{background:none;border:none;font-size:1.3rem;color:var(--t2);cursor:pointer;padding:4px 8px}
-.mob{padding:14px 18px 20px}
-.wl{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
-.wi{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:var(--sa);border:1px solid var(--bd);border-radius:var(--rs)}
-.wi .wn{font-weight:600;font-size:.85rem}
+.mohd{padding:16px 18px 10px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:var(--sf);z-index:1}.mohd h3{font-size:.98rem;font-weight:700}
+.mox{background:none;border:none;font-size:1.3rem;color:var(--t2);cursor:pointer;padding:4px 8px}.mob{padding:14px 18px 20px}
+.wl{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}.wi{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:var(--sa);border:1px solid var(--bd);border-radius:var(--rs)}.wi .wn{font-weight:600;font-size:.85rem}
 .aw{display:flex;gap:7px}.aw input{flex:1}
-.cr{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--bd);gap:10px}
-.cr:last-child{border-bottom:none}.cr .cl{font-size:.85rem;font-weight:500;flex:1}
-.cr .cv{display:flex;align-items:center;gap:6px;flex-shrink:0}
-.cr input{width:90px;padding:7px 10px;border:1px solid var(--bd);border-radius:var(--rs);font-family:inherit;font-size:16px;text-align:right}
+.cr{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--bd);gap:10px}.cr:last-child{border-bottom:none}.cr .cl{font-size:.85rem;font-weight:500;flex:1}.cr .cv{display:flex;align-items:center;gap:6px;flex-shrink:0}.cr input{width:90px;padding:7px 10px;border:1px solid var(--bd);border-radius:var(--rs);font-family:inherit;font-size:16px;text-align:right}
 .tc{position:fixed;bottom:72px;left:50%;transform:translateX(-50%);z-index:2000;display:flex;flex-direction:column;gap:6px;width:calc(100% - 28px);max-width:360px}
 .toast{padding:11px 14px;border-radius:var(--rs);font-size:.8rem;font-weight:500;box-shadow:var(--sh2);animation:tI .3s ease,tO .3s ease 3s forwards;display:flex;align-items:center;gap:8px}
-.tok{background:#27ae60;color:#fff}.tw{background:#f39c12;color:#fff}.te{background:#c0392b;color:#fff}.ti{background:var(--b5);color:#fff}
-@keyframes tI{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
-@keyframes tO{from{opacity:1}to{opacity:0;transform:translateY(-6px)}}
-.totr td{font-weight:700!important;background:var(--o0)!important;border-top:2px solid var(--o3)!important}
-.ac{display:flex;gap:4px}
-.fab{display:none;position:fixed;right:16px;bottom:calc(68px + var(--sb));width:52px;height:52px;border-radius:50%;background:var(--o6);color:#fff;border:none;font-size:1.5rem;box-shadow:0 4px 14px rgba(85,102,47,.35);cursor:pointer;z-index:150;align-items:center;justify-content:center}
-.fab:active{transform:scale(.9)}
-.ri{padding:12px 14px;background:var(--o0);border-radius:var(--rs);margin:10px 0;font-size:.82rem;line-height:1.6}
-.ri strong{color:var(--o7)}
-.rs{background:var(--g1);border:2px solid var(--g4);border-radius:var(--rd);padding:16px;margin:12px 0}
-.rs h4{font-family:'Playfair Display',serif;color:var(--o8);margin-bottom:8px}
-.print-area{display:none}
-@media print{body *{visibility:hidden}.print-area,.print-area *{visibility:visible;display:block!important}.print-area{position:fixed;left:0;top:0;width:100%;padding:20px}}
+.tok{background:#27ae60;color:#fff}.tw{background:#f39c12;color:#fff}.te{background:#c0392b;color:#fff}
+@keyframes tI{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}@keyframes tO{from{opacity:1}to{opacity:0;transform:translateY(-6px)}}
+.totr td{font-weight:700!important;background:var(--o0)!important;border-top:2px solid var(--o3)!important}.ac{display:flex;gap:4px}
+.fab{display:none;position:fixed;right:16px;bottom:calc(68px + var(--sb));width:52px;height:52px;border-radius:50%;background:var(--o6);color:#fff;border:none;font-size:1.5rem;box-shadow:0 4px 14px rgba(85,102,47,.35);cursor:pointer;z-index:150;align-items:center;justify-content:center}.fab:active{transform:scale(.9)}
+.ri{padding:12px 14px;background:var(--o0);border-radius:var(--rs);margin:10px 0;font-size:.82rem;line-height:1.6}.ri strong{color:var(--o7)}
+.rs{background:var(--g1);border:2px solid var(--g4);border-radius:var(--rd);padding:16px;margin:12px 0}.rs h4{font-family:'Playfair Display',serif;color:var(--o8);margin-bottom:8px}
+.print-area{display:none}@media print{body *{visibility:hidden}.print-area,.print-area *{visibility:visible;display:block!important}.print-area{position:fixed;left:0;top:0;width:100%;padding:20px}}
+/* Login */
+.login-screen{position:fixed;inset:0;background:var(--o9);display:flex;align-items:center;justify-content:center;z-index:9999}
+.login-box{background:var(--sf);border-radius:var(--rd);padding:40px 32px;width:90%;max-width:380px;text-align:center;box-shadow:var(--sh2)}
+.login-box .lb-logo{font-size:3rem;margin-bottom:12px}
+.login-box h2{font-family:'Playfair Display',serif;color:var(--o8);margin-bottom:4px;font-size:1.4rem}
+.login-box p{font-size:.82rem;color:var(--t2);margin-bottom:24px}
+.login-box input{width:100%;padding:12px 16px;border:2px solid var(--bd);border-radius:var(--rs);font-size:16px;font-family:inherit;text-align:center;margin-bottom:14px}
+.login-box input:focus{outline:none;border-color:var(--o4);box-shadow:0 0 0 3px rgba(107,128,59,.12)}
+.login-box .login-err{color:var(--r5);font-size:.82rem;min-height:22px;margin-bottom:8px}
 @media(max-width:768px){
 .side{display:none}.mh{display:flex}.bnav{display:block}.fab{display:flex}
 .main{margin-left:0;padding:62px 12px calc(72px + var(--sb)) 12px}
 .ph h2{font-size:1.15rem}.ph>.btn{display:none}
 .sr{grid-template-columns:1fr 1fr;gap:6px}.sc{padding:10px 12px}.sc .sv{font-size:1.1rem}
-.fg{grid-template-columns:1fr;gap:10px}
-.rf{flex-direction:column;padding:12px;gap:8px}
-.hm{display:none!important}
-thead th{padding:6px 8px;font-size:.6rem}tbody td{padding:7px 8px;font-size:.76rem}
+.fg{grid-template-columns:1fr;gap:10px}.rf{flex-direction:column;padding:12px;gap:8px}
+.hm{display:none!important}thead th{padding:6px 8px;font-size:.6rem}tbody td{padding:7px 8px;font-size:.76rem}
 }
 @media(min-width:769px){.ov{align-items:center}.mo{border-radius:var(--rd)}.moh{display:none}.mo{transform:translateY(10px)}}
 </style>
 </head>
 <body>
+<!-- LOGIN -->
+<div class="login-screen" id="loginScreen">
+<div class="login-box">
+<div class="lb-logo">🌿</div>
+<h2>GestiónAgro</h2>
+<p>Introduce la contraseña para acceder</p>
+<input type="password" id="loginPwd" placeholder="Contraseña" autocomplete="off">
+<div class="login-err" id="loginErr"></div>
+<button class="btn bp" onclick="doLogin()" style="width:100%" id="loginBtn">Entrar</button>
+</div>
+</div>
+<!-- APP (oculta hasta login) -->
+<div id="appWrap" style="display:none">
 <div class="mh"><span style="font-size:1rem">🌿</span><h1>GestiónAgro</h1><div id="mhS" style="margin-left:auto"></div></div>
 <nav class="bnav"><div class="bnav-in">
 <button class="bnb act" onclick="go('horas')" data-s="horas"><span class="bi">⏱</span>Horas</button>
@@ -143,17 +137,16 @@ thead th{padding:6px 8px;font-size:.6rem}tbody td{padding:7px 8px;font-size:.76r
 <div class="sft"><div class="sind" id="sInd"><span class="dot dg"></span><span>Sheets</span></div></div>
 </nav>
 <main class="main">
-<div id="appContent">
-<!-- HORAS --><section id="sec-horas" class="sec"><div class="ph"><div><h2>⏱ Horas de Trabajo</h2><p>Registro por empresa y trabajador</p></div><button class="btn bp" onclick="oM('mo-horas')">+ Registro</button></div><div class="sr" id="st-h"></div><div class="card"><div class="cH"><h3>Todos los registros</h3><span class="badge bdo" id="ct-h">0</span></div><div class="cB" style="padding:0;overflow-x:auto"><table><thead><tr><th>Fecha</th><th>Empresa</th><th>Trabajador</th><th>Horas</th><th class="hm">€/h</th><th>Coste</th><th></th></tr></thead><tbody id="tb-h"></tbody></table></div></div></section>
-<!-- PAGOS --><section id="sec-pagos" class="sec" style="display:none"><div class="ph"><div><h2>💶 Pagos</h2><p>Efectivo y transferencias</p></div><button class="btn bp" onclick="oM('mo-pagos')">+ Pago</button></div><div class="sr" id="st-p"></div><div class="card"><div class="cH"><h3>Todos los pagos</h3><span class="badge bdo" id="ct-p">0</span></div><div class="cB" style="padding:0;overflow-x:auto"><table><thead><tr><th>Fecha</th><th>Empresa</th><th>Trabajador</th><th>Importe</th><th class="hm">Método</th><th></th></tr></thead><tbody id="tb-p"></tbody></table></div></div></section>
-<!-- SS --><section id="sec-ss" class="sec" style="display:none"><div class="ph"><div><h2>🏛 Seguridad Social</h2><p>Jornadas cotizadas</p></div><button class="btn bp" onclick="oM('mo-ss')">+ Cotización</button></div><div class="sr" id="st-s"></div><div class="card"><div class="cH"><h3>Cotizaciones</h3><span class="badge bdo" id="ct-s">0</span></div><div class="cB" style="padding:0;overflow-x:auto"><table><thead><tr><th>Mes</th><th>Empresa</th><th>Trabajador</th><th>Jornadas</th><th>Coste</th><th></th></tr></thead><tbody id="tb-s"></tbody></table></div></div></section>
-<!-- GASOIL --><section id="sec-gasoil" class="sec" style="display:none"><div class="ph"><div><h2>⛽ Gasoil</h2><p>Consumos y compras</p></div><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn bp" onclick="oM('mo-gc')">+ Consumo</button><button class="btn bg" onclick="oM('mo-gp')">+ Compra</button></div></div><div class="sr" id="st-g"></div><div class="card"><div class="cH"><h3>Movimientos</h3><span class="badge bdo" id="ct-g">0</span></div><div class="cB" style="padding:0;overflow-x:auto"><table><thead><tr><th>Fecha</th><th>Tipo</th><th>Empresa</th><th>Litros</th><th>€/L</th><th>Importe</th><th></th></tr></thead><tbody id="tb-g"></tbody></table></div></div></section>
-<!-- TRAB --><section id="sec-trab" class="sec" style="display:none"><div class="ph"><div><h2>👷 Trabajadores</h2><p>Alta y gestión</p></div></div><div class="card"><div class="cH"><h3>Dar de Alta</h3></div><div class="cB"><div class="aw"><input type="text" id="nwn" placeholder="Nombre" style="padding:9px 11px;border:1px solid var(--bd);border-radius:var(--rs);font-family:inherit;font-size:16px;flex:1"><button class="btn bp" onclick="addW()">Añadir</button></div></div></div><div class="card"><div class="cH"><h3>Plantilla</h3><span class="badge bdo" id="ct-w">0</span></div><div class="cB" style="padding:0"><div id="wl" style="padding:12px"></div></div></div></section>
-<!-- CONFIG --><section id="sec-config" class="sec" style="display:none"><div class="ph"><div><h2>⚙️ Configuración</h2><p>Tarifas</p></div></div><div class="card"><div class="cH"><h3>Tarifas</h3></div><div class="cB"><div class="cr"><span class="cl">Precio hora</span><div class="cv"><input type="number" id="c-ph" step="0.01" inputmode="decimal"><span>€/h</span></div></div><div class="cr"><span class="cl">Coste SS</span><div class="cv"><input type="number" id="c-ss" step="0.01" inputmode="decimal"><span>€/jorn.</span></div></div><div class="cr"><span class="cl">Horas/jornada</span><div class="cv"><input type="number" id="c-hj" step="0.1" inputmode="decimal"><span>h</span></div></div><div style="margin-top:14px;text-align:right"><button class="btn bp" onclick="saveCfg()">Guardar</button></div></div></div><div class="card"><div class="cH"><h3>Conexión</h3></div><div class="cB"><div class="cr"><span class="cl">Estado</span><div class="cv" id="cfg-conn"><span class="dot dg" style="width:8px;height:8px;border-radius:50%;display:inline-block"></span> OK</div></div><div style="display:flex;gap:8px;margin-top:12px"><button class="btn bo" onclick="testConn()">Probar</button><button class="btn bo" onclick="loadAll()">🔄 Recargar</button></div></div></div></section>
-<!-- INFORMES --><section id="sec-informes" class="sec" style="display:none"><div class="ph"><div><h2>📊 Informes</h2><p>Por período y empresa</p></div></div><div class="rf"><div class="fi"><label>Desde</label><input type="date" id="r-d"></div><div class="fi"><label>Hasta</label><input type="date" id="r-h"></div><div class="fi"><label>Informe</label><select id="r-t"><option value="1">1 — Horas</option><option value="2">2 — Pagos vs Coste</option><option value="3">3 — Seg. Social</option><option value="4">4 — Gasoil</option><option value="5">5 — Resumen</option><option value="all">Todos</option></select></div><button class="btn bg" onclick="genR()" style="flex:0">📊 Generar</button><button class="btn bo" onclick="printR()" style="flex:0">🖨</button></div><div id="ro"></div></section>
-</div>
+<section id="sec-horas" class="sec"><div class="ph"><div><h2>⏱ Horas de Trabajo</h2><p>Registro por empresa y trabajador</p></div><button class="btn bp" onclick="oM('mo-horas')">+ Registro</button></div><div class="sr" id="st-h"></div><div class="card"><div class="cH"><h3>Registros</h3><span class="badge bdo" id="ct-h">0</span></div><div class="cB" style="padding:0;overflow-x:auto"><table><thead><tr><th>Fecha</th><th>Empresa</th><th>Trabajador</th><th>Horas</th><th class="hm">€/h</th><th>Coste</th><th></th></tr></thead><tbody id="tb-h"></tbody></table></div></div></section>
+<section id="sec-pagos" class="sec" style="display:none"><div class="ph"><div><h2>💶 Pagos</h2><p>Efectivo y transferencias</p></div><button class="btn bp" onclick="oM('mo-pagos')">+ Pago</button></div><div class="sr" id="st-p"></div><div class="card"><div class="cH"><h3>Pagos</h3><span class="badge bdo" id="ct-p">0</span></div><div class="cB" style="padding:0;overflow-x:auto"><table><thead><tr><th>Fecha</th><th>Empresa</th><th>Trabajador</th><th>Importe</th><th class="hm">Método</th><th></th></tr></thead><tbody id="tb-p"></tbody></table></div></div></section>
+<section id="sec-ss" class="sec" style="display:none"><div class="ph"><div><h2>🏛 Seguridad Social</h2><p>Jornadas cotizadas</p></div><button class="btn bp" onclick="oM('mo-ss')">+ Cotización</button></div><div class="sr" id="st-s"></div><div class="card"><div class="cH"><h3>Cotizaciones</h3><span class="badge bdo" id="ct-s">0</span></div><div class="cB" style="padding:0;overflow-x:auto"><table><thead><tr><th>Mes</th><th>Empresa</th><th>Trabajador</th><th>Jornadas</th><th>Coste</th><th></th></tr></thead><tbody id="tb-s"></tbody></table></div></div></section>
+<section id="sec-gasoil" class="sec" style="display:none"><div class="ph"><div><h2>⛽ Gasoil</h2><p>Consumos y compras</p></div><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn bp" onclick="oM('mo-gc')">+ Consumo</button><button class="btn bg" onclick="oM('mo-gp')">+ Compra</button></div></div><div class="sr" id="st-g"></div><div class="card"><div class="cH"><h3>Movimientos</h3><span class="badge bdo" id="ct-g">0</span></div><div class="cB" style="padding:0;overflow-x:auto"><table><thead><tr><th>Fecha</th><th>Tipo</th><th>Empresa</th><th>Litros</th><th>€/L</th><th>Importe</th><th></th></tr></thead><tbody id="tb-g"></tbody></table></div></div></section>
+<section id="sec-trab" class="sec" style="display:none"><div class="ph"><div><h2>👷 Trabajadores</h2><p>Alta y gestión</p></div></div><div class="card"><div class="cH"><h3>Dar de Alta</h3></div><div class="cB"><div class="aw"><input type="text" id="nwn" placeholder="Nombre" style="padding:9px 11px;border:1px solid var(--bd);border-radius:var(--rs);font-family:inherit;font-size:16px;flex:1"><button class="btn bp" onclick="addW()">Añadir</button></div></div></div><div class="card"><div class="cH"><h3>Plantilla</h3><span class="badge bdo" id="ct-w">0</span></div><div class="cB" style="padding:0"><div id="wl" style="padding:12px"></div></div></div></section>
+<section id="sec-config" class="sec" style="display:none"><div class="ph"><div><h2>⚙️ Configuración</h2></div></div><div class="card"><div class="cH"><h3>Tarifas</h3></div><div class="cB"><div class="cr"><span class="cl">Precio hora</span><div class="cv"><input type="number" id="c-ph" step="0.01" inputmode="decimal"><span>€/h</span></div></div><div class="cr"><span class="cl">Coste SS</span><div class="cv"><input type="number" id="c-ss" step="0.01" inputmode="decimal"><span>€/jorn.</span></div></div><div class="cr"><span class="cl">Horas/jornada</span><div class="cv"><input type="number" id="c-hj" step="0.1" inputmode="decimal"><span>h</span></div></div><div style="margin-top:14px;text-align:right"><button class="btn bp" onclick="saveCfg()">Guardar</button></div></div></div><div class="card"><div class="cH"><h3>Conexión</h3></div><div class="cB"><div style="display:flex;gap:8px"><button class="btn bo" onclick="testConn()">Probar conexión</button><button class="btn bo" onclick="loadAll()">🔄 Recargar</button><button class="btn bd bsm" onclick="logout()">🔒 Cerrar sesión</button></div></div></div></section>
+<section id="sec-informes" class="sec" style="display:none"><div class="ph"><div><h2>📊 Informes</h2></div></div><div class="rf"><div class="fi"><label>Desde</label><input type="date" id="r-d"></div><div class="fi"><label>Hasta</label><input type="date" id="r-h"></div><div class="fi"><label>Informe</label><select id="r-t"><option value="1">1 — Horas</option><option value="2">2 — Pagos vs Coste</option><option value="3">3 — Seg. Social</option><option value="4">4 — Gasoil</option><option value="5">5 — Resumen</option><option value="all">Todos</option></select></div><button class="btn bg" onclick="genR()" style="flex:0">📊 Generar</button><button class="btn bo" onclick="printR()" style="flex:0">🖨</button></div><div id="ro"></div></section>
 </main>
 </div>
+</div><!-- appWrap -->
 <!-- MODALS -->
 <div class="ov" id="mo-horas"><div class="mo"><div class="moh"></div><div class="mohd"><h3>Registrar Horas</h3><button class="mox" onclick="cM('mo-horas')">&times;</button></div><div class="mob"><div class="fg"><div class="fi"><label>Fecha</label><input type="date" id="hf"></div><div class="fi"><label>Empresa</label><select id="he"><option value="">—</option><option value="E1">EVA PÉREZ DEL CASTILLO</option><option value="E2">FCO. JOSÉ DE LA FUENTE RUZ</option></select></div><div class="fi"><label>Trabajador</label><select id="ht"><option value="">—</option></select></div><div class="fi"><label>Horas</label><input type="number" id="hh" step="0.5" min="0" inputmode="decimal"></div></div><p style="font-size:.78rem;color:var(--t2);margin-bottom:10px">Precio/hora: <strong id="hpl">10,10</strong> €</p><button class="btn bp" onclick="addH()" style="width:100%" id="btnH">Guardar</button></div></div></div>
 <div class="ov" id="mo-pagos"><div class="mo"><div class="moh"></div><div class="mohd"><h3>Registrar Pago</h3><button class="mox" onclick="cM('mo-pagos')">&times;</button></div><div class="mob"><div class="fg"><div class="fi"><label>Fecha</label><input type="date" id="pf"></div><div class="fi"><label>Empresa</label><select id="pe"><option value="">—</option><option value="E1">EVA PÉREZ</option><option value="E2">FCO. JOSÉ DE LA FUENTE</option></select></div><div class="fi"><label>Trabajador</label><select id="pt"><option value="">—</option></select></div><div class="fi"><label>Importe (€)</label><input type="number" id="pi" step="0.01" min="0" inputmode="decimal"></div><div class="fi"><label>Método</label><select id="pm"><option>Efectivo</option><option>Transferencia (Nómina)</option></select></div></div><button class="btn bp" onclick="addP()" style="width:100%" id="btnP">Guardar</button></div></div></div>
@@ -163,90 +156,56 @@ thead th{padding:6px 8px;font-size:.6rem}tbody td{padding:7px 8px;font-size:.76r
 <div class="tc" id="tc"></div>
 <div class="print-area" id="pa"></div>
 <script>
-var URL_API='https://script.google.com/macros/s/AKfycbxXBFaWI7HakbH5tZt7H7MbULnIk43zqeXBjCx5K0p17As5_zfD4EAh3oudGeD0_U9o/exec';
+// ═══════════════════════════════════════════════════════════
+// GestiónAgro v8 — SIN TOKEN — Contraseña en servidor
+// La URL del Apps Script se obtiene del servidor tras login
+// ═══════════════════════════════════════════════════════════
+var API='https://script.google.com/macros/s/AKfycbxgZx7vFiFOmLBPXxeNe224-XiPbYW5KEwdTR49_G7zGVk_uQBuIbKBkBKgUJsQMWY/exec';
+var PWD=''; // se rellena tras login, se guarda en sessionStorage
 var CFG=JSON.parse(localStorage.getItem('ga_cfg')||'{"precioHora":10.10,"costeSS":18.17,"horasJornada":6.5}');
 var EN={E1:'EVA PÉREZ DEL CASTILLO',E2:'FCO. JOSÉ DE LA FUENTE RUZ'};
 var ES={E1:'EVA PÉREZ',E2:'FCO. JOSÉ'};
-// D.xxx = general, D.xxx_E1 / D.xxx_E2 = por empresa (leídos de hojas separadas del Sheet)
 var D={horas:[],pagos:[],ss:[],gasoil:[],trabajadores:[],horas_E1:[],horas_E2:[],pagos_E1:[],pagos_E2:[],ss_E1:[],ss_E2:[],gasoil_E1:[],gasoil_E2:[]};
 var cur='horas',jc=0;
 
-function jsonp(p){return new Promise(function(ok,ko){if(!URL_API)return ko('Sin URL');var cb='_g'+(jc++)+'_'+Date.now();var to=setTimeout(function(){cl();ko('Timeout')},20000);function cl(){clearTimeout(to);try{delete window[cb]}catch(e){}var el=document.getElementById(cb);if(el)el.remove()}window[cb]=function(d){cl();if(d&&d.error)ko(d.error);else ok(d)};p.callback=cb;var q=Object.keys(p).map(function(k){return k+'='+encodeURIComponent(p[k])}).join('&');var s=document.createElement('script');s.id=cb;s.src=URL_API+'?'+q;s.onerror=function(){cl();ko('Red')};document.body.appendChild(s)})}
+// ── JSONP con pwd en cada request ──
+function jsonp(p){p.pwd=PWD;return new Promise(function(ok,ko){var cb='_g'+(jc++)+'_'+Date.now();var to=setTimeout(function(){cl();ko('Timeout')},20000);function cl(){clearTimeout(to);try{delete window[cb]}catch(e){}var el=document.getElementById(cb);if(el)el.remove()}window[cb]=function(d){cl();if(d&&d.error){if(d.error==='No autorizado'){logout();ko('Sesión expirada')}else ko(d.error)}else ok(d)};p.callback=cb;var q=Object.keys(p).map(function(k){return k+'='+encodeURIComponent(p[k])}).join('&');var s=document.createElement('script');s.id=cb;s.src=API+'?'+q;s.onerror=function(){cl();ko('Red')};document.body.appendChild(s)})}
+
+// ── Login ──
+function doLogin(){
+  var pwd=document.getElementById('loginPwd').value;
+  if(!pwd){document.getElementById('loginErr').textContent='Introduce la contraseña';return}
+  document.getElementById('loginBtn').disabled=true;document.getElementById('loginBtn').textContent='Verificando...';document.getElementById('loginErr').textContent='';
+  PWD=pwd;
+  jsonp({action:'login'}).then(function(r){
+    if(r.ok){sessionStorage.setItem('ga_pwd',pwd);document.getElementById('loginScreen').style.display='none';document.getElementById('appWrap').style.display='';loadAll()}
+  }).catch(function(e){document.getElementById('loginErr').textContent='❌ '+e;PWD=''}).finally(function(){document.getElementById('loginBtn').disabled=false;document.getElementById('loginBtn').textContent='Entrar'})
+}
+function logout(){PWD='';sessionStorage.removeItem('ga_pwd');document.getElementById('loginScreen').style.display='';document.getElementById('appWrap').style.display='none';document.getElementById('loginPwd').value='';document.getElementById('loginErr').textContent=''}
+
+// ── Helpers ──
 function syncing(on){var si=document.getElementById('sInd'),ms=document.getElementById('mhS');if(on){si.innerHTML='<div class="sspin"></div><span>Sync...</span>';ms.innerHTML='<div class="sspin"></div>'}else{si.innerHTML='<span class="dot dg"></span><span>Sheets ✓</span>';ms.innerHTML=''}}
 function syncErr(){document.getElementById('sInd').innerHTML='<span class="dot dr"></span><span>Error</span>';document.getElementById('mhS').innerHTML=''}
 function fm(n){return Number(n).toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2})}
 function fd(d){if(!d)return'—';var p=String(d).split('-');return p.length===3?p[2]+'/'+p[1]+'/'+p[0]:String(d)}
 function gid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
-function toast(m,t){t=t||'ok';var c=document.getElementById('tc'),el=document.createElement('div');el.className='toast t'+t;el.innerHTML='<span>'+({ok:'✅',w:'⚠️',e:'❌',i:'ℹ️'}[t]||'')+'</span> '+m;c.appendChild(el);setTimeout(function(){el.remove()},3500)}
-function norm(arr){return(arr||[]).map(function(r){var o={};Object.keys(r).forEach(function(k){var v=r[k];if(['horas','importe','dias','litros','precio'].indexOf(k)>=0)v=Number(v)||0;else if(v instanceof Date||String(v).match(/^\w{3} \w{3}/))v=String(v);else v=String(v||'').trim();o[k]=v});return o})}
-function cleanTxt(v){return String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().trim()}
-function mapEmp(v){var x=cleanTxt(v);if(x==='E1'||x==='E2')return x;if(x.indexOf('EVA PEREZ')>=0)return'E1';if(x.indexOf('FCO JOSE')>=0||x.indexOf('FRANCISCO JOSE')>=0||x.indexOf('DE LA FUENTE')>=0)return'E2';return String(v||'').trim()}
-function normId(v){if(v===undefined||v===null)return gid();return String(v).trim()}
-function isISODate(v){return /^\d{4}-\d{2}-\d{2}$/.test(String(v||''))}
-function isYearMonth(v){return /^\d{4}-\d{2}$/.test(String(v||''))}
-function isFuelType(v){var x=cleanTxt(v);return x==='CONSUMO'||x==='COMPRA'||x==='EXISTENCIAS'||x==='EXISTENCIAS INICIALES'}
-function mapFuelType(v){var x=cleanTxt(v);if(x==='COMPRA')return'compra';if(x==='EXISTENCIAS'||x==='EXISTENCIAS INICIALES')return'existencias';return'consumo'}
-function normalizeStoreRows(store,arr,forcedEmp){
-  return norm(arr).map(function(r){
-    var o=Object.assign({},r);
-    o.id=normId(o.id);
-    if(store==='trabajadores'){o.name=String(o.name||'').trim().toUpperCase();return o}
-    if(store==='ss'){o.emp=forcedEmp||mapEmp(o.emp);if(!isYearMonth(o.mes)&&isISODate(o.mes))o.mes=String(o.mes).slice(0,7);o.mes=String(o.mes||'').trim();o.trab=String(o.trab||'').trim();o.dias=Number(o.dias)||0;return o}
-    if(store==='gasoil'){
-      var rawTipo=String(o.tipo||'').trim(),rawFecha=String(o.fecha||'').trim();
-      if(isISODate(rawTipo)&&isFuelType(rawFecha)){o.tipo=rawFecha;o.fecha=rawTipo}
-      o.tipo=mapFuelType(o.tipo);o.fecha=String(o.fecha||'').trim();o.emp=forcedEmp||mapEmp(o.emp);o.litros=Number(o.litros)||0;o.precio=Number(o.precio)||0;return o
-    }
-    o.emp=forcedEmp||mapEmp(o.emp);o.fecha=String(o.fecha||'').trim();o.trab=String(o.trab||'').trim();
-    if(store==='horas')o.horas=Number(o.horas)||0;
-    if(store==='pagos')o.importe=Number(o.importe)||0;
-    return o
-  }).filter(function(r){
-    if(store==='trabajadores')return !!r.name;
-    if(store==='ss')return !!r.mes&&!!r.emp&&!!r.trab;
-    if(store==='gasoil')return !!r.fecha&&!!r.emp&&!!r.tipo;
-    return !!r.fecha&&!!r.emp&&!!r.trab
-  })
-}
-function dedupeById(arr){var seen={};return(arr||[]).filter(function(r){if(!r||!r.id)return false;if(seen[r.id])return false;seen[r.id]=1;return true})}
-function splitByEmp(store,d){
-  var base=normalizeStoreRows(store,d[store]);
-  var e1=normalizeStoreRows(store,d[store+'_E1'],'E1');
-  var e2=normalizeStoreRows(store,d[store+'_E2'],'E2');
-  if(!e1.length)e1=base.filter(function(r){return r.emp==='E1'});
-  if(!e2.length)e2=base.filter(function(r){return r.emp==='E2'});
-  if(!base.length&& (e1.length||e2.length))base=e1.concat(e2);
-  return{base:dedupeById(base),e1:dedupeById(e1),e2:dedupeById(e2)}
-}
+function toast(m,t){t=t||'ok';var c=document.getElementById('tc'),el=document.createElement('div');el.className='toast t'+t;el.innerHTML='<span>'+({ok:'✅',w:'⚠️',e:'❌'}[t]||'')+'</span> '+m;c.appendChild(el);setTimeout(function(){el.remove()},3500)}
+function norm(arr){return(arr||[]).map(function(r){var o={};Object.keys(r).forEach(function(k){var v=r[k];if(['horas','importe','dias','litros','precio'].indexOf(k)>=0)v=Number(v)||0;else v=String(v||'').trim();o[k]=v});return o})}
 
-async function loadAll(){
-  syncing(true);
-  try{
-    var res=await jsonp({action:'getAllByEmp'});
-    var d=res.data||{};
-    var h=splitByEmp('horas',d),p=splitByEmp('pagos',d),s=splitByEmp('ss',d),g=splitByEmp('gasoil',d);
-    D.horas=h.base;D.horas_E1=h.e1;D.horas_E2=h.e2;
-    D.pagos=p.base;D.pagos_E1=p.e1;D.pagos_E2=p.e2;
-    D.ss=s.base;D.ss_E1=s.e1;D.ss_E2=s.e2;
-    D.gasoil=g.base;D.gasoil_E1=g.e1;D.gasoil_E2=g.e2;
-    D.trabajadores=normalizeStoreRows('trabajadores',d.trabajadores);
-    console.log('Datos:',{h:D.horas.length,h1:D.horas_E1.length,h2:D.horas_E2.length,p:D.pagos.length,g:D.gasoil.length,g1:D.gasoil_E1.length,g2:D.gasoil_E2.length});
-    syncing(false);ren(cur);toast('Datos cargados');
-  }catch(err){syncErr();toast('Error: '+err,'e')}
-}
-function reloadData(){loadAll()}
+// ── Data ──
+async function loadAll(){syncing(true);try{var res=await jsonp({action:'getAllByEmp'});var d=res.data||{};D.horas=norm(d.horas);D.pagos=norm(d.pagos);D.ss=norm(d.ss);D.gasoil=norm(d.gasoil);D.trabajadores=norm(d.trabajadores);D.horas_E1=norm(d.horas_E1);D.horas_E2=norm(d.horas_E2);D.pagos_E1=norm(d.pagos_E1);D.pagos_E2=norm(d.pagos_E2);D.ss_E1=norm(d.ss_E1);D.ss_E2=norm(d.ss_E2);D.gasoil_E1=norm(d.gasoil_E1);D.gasoil_E2=norm(d.gasoil_E2);syncing(false);ren(cur);toast('Datos cargados')}catch(err){syncErr();toast('Error: '+err,'e')}}
 async function testConn(){syncing(true);try{await jsonp({action:'ping'});toast('OK ✓');syncing(false)}catch(e){syncErr();toast('Error: '+e,'e')}}
-
-async function rAdd(store,rec){syncing(true);try{await jsonp({action:'add',store:store,data:JSON.stringify(rec)});D[store].push(rec);if(rec.emp&&store!=='trabajadores'){D[store+'_'+rec.emp].push(rec)}syncing(false);return true}catch(err){syncErr();toast('Error: '+err,'e');return false}}
+async function rAdd(store,rec){syncing(true);try{await jsonp({action:'add',store:store,data:JSON.stringify(rec)});D[store].push(rec);if(rec.emp&&store!=='trabajadores')D[store+'_'+rec.emp].push(rec);syncing(false);return true}catch(err){syncErr();toast('Error: '+err,'e');return false}}
 async function rDel(store,id){syncing(true);try{await jsonp({action:'delete',store:store,id:id});D[store]=D[store].filter(function(r){return r.id!==id});['E1','E2'].forEach(function(ek){if(D[store+'_'+ek])D[store+'_'+ek]=D[store+'_'+ek].filter(function(r){return r.id!==id})});syncing(false);return true}catch(err){syncErr();toast('Error: '+err,'e');return false}}
 
+// ── Nav ──
 function go(s){cur=s;document.querySelectorAll('.sec').forEach(function(x){x.style.display='none'});var el=document.getElementById('sec-'+s);if(el)el.style.display='';document.querySelectorAll('.snb,.bnb').forEach(function(b){b.classList.remove('act')});document.querySelectorAll('[data-s="'+s+'"]').forEach(function(b){b.classList.add('act')});document.getElementById('fab').style.display=['horas','pagos','ss','gasoil'].indexOf(s)>=0?'flex':'none';ren(s)}
 function fabA(){var mm={horas:'mo-horas',pagos:'mo-pagos',ss:'mo-ss',gasoil:'mo-gc'};if(mm[cur])oM(mm[cur])}
 function oM(id){document.getElementById(id).classList.add('open');popW()}
 function cM(id){document.getElementById(id).classList.remove('open')}
 function popW(){var w=(D.trabajadores||[]).slice().sort(function(a,b){return(a.name||'').localeCompare(b.name||'')});var opts='<option value="">—</option>'+w.map(function(x){return'<option value="'+x.name+'">'+x.name+'</option>'}).join('');['ht','pt','st2'].forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML=opts})}
 
-// CRUD
+// ── CRUD ──
 async function addH(){var r={id:gid(),fecha:document.getElementById('hf').value,emp:document.getElementById('he').value,trab:document.getElementById('ht').value,horas:parseFloat(document.getElementById('hh').value)||0};if(!r.fecha||!r.emp||!r.trab||!r.horas)return alert('Completa todos');document.getElementById('btnH').disabled=true;if(await rAdd('horas',r)){cM('mo-horas');document.getElementById('hf').value='';document.getElementById('hh').value='';document.getElementById('he').selectedIndex=0;document.getElementById('ht').selectedIndex=0;ren('horas');toast('OK')}document.getElementById('btnH').disabled=false}
 async function addP(){var r={id:gid(),fecha:document.getElementById('pf').value,emp:document.getElementById('pe').value,trab:document.getElementById('pt').value,importe:parseFloat(document.getElementById('pi').value)||0,metodo:document.getElementById('pm').value};if(!r.fecha||!r.emp||!r.trab||!r.importe)return alert('Completa todos');document.getElementById('btnP').disabled=true;if(await rAdd('pagos',r)){cM('mo-pagos');document.getElementById('pf').value='';document.getElementById('pi').value='';document.getElementById('pe').selectedIndex=0;document.getElementById('pt').selectedIndex=0;ren('pagos');toast('OK')}document.getElementById('btnP').disabled=false}
 async function addSS(){var r={id:gid(),mes:document.getElementById('sm').value,emp:document.getElementById('se').value,trab:document.getElementById('st2').value,dias:parseInt(document.getElementById('sd').value)||0};if(!r.mes||!r.emp||!r.trab||!r.dias)return alert('Completa todos');document.getElementById('btnS').disabled=true;if(await rAdd('ss',r)){cM('mo-ss');document.getElementById('sd').value='';document.getElementById('se').selectedIndex=0;document.getElementById('st2').selectedIndex=0;ren('ss');toast('OK')}document.getElementById('btnS').disabled=false}
@@ -257,174 +216,44 @@ async function del(s,id){if(!confirm('¿Eliminar?'))return;if(await rDel(s,id)){
 
 function ren(s){var fn={horas:renH,pagos:renP,ss:renS,gasoil:renG,trab:renW,config:loadCfgUI,informes:function(){}};if(fn[s])fn[s]()}
 
-// PMP por empresa — usa la hoja de empresa directamente
-function calcPMP(empGasoil){
-  var movs=empGasoil.slice().sort(function(a,b){var c=a.fecha.localeCompare(b.fecha);if(c)return c;if(a.tipo!=='consumo'&&b.tipo==='consumo')return-1;if(a.tipo==='consumo'&&b.tipo!=='consumo')return 1;return 0});
-  var stock=0,pmp=0,result=[];
-  for(var i=0;i<movs.length;i++){var m=movs[i];if(m.tipo==='compra'||m.tipo==='existencias'){var va=stock*pmp+m.litros*m.precio;stock+=m.litros;pmp=stock>0?va/stock:m.precio;result.push({id:m.id,pmp:pmp})}else{result.push({id:m.id,pmp:pmp});stock-=m.litros;if(stock<0)stock=0}}
-  return{list:result,stock:stock,pmp:pmp}
-}
+// ── PMP ──
+function calcPMP(empGasoil){var movs=empGasoil.slice().sort(function(a,b){var c=a.fecha.localeCompare(b.fecha);if(c)return c;if(a.tipo!=='consumo'&&b.tipo==='consumo')return-1;if(a.tipo==='consumo'&&b.tipo!=='consumo')return 1;return 0});var stock=0,pmp=0,result=[];for(var i=0;i<movs.length;i++){var m=movs[i];if(m.tipo==='compra'||m.tipo==='existencias'){var va=stock*pmp+m.litros*m.precio;stock+=m.litros;pmp=stock>0?va/stock:m.precio;result.push({id:m.id,pmp:pmp})}else{result.push({id:m.id,pmp:pmp});stock-=m.litros;if(stock<0)stock=0}}return{list:result,stock:stock,pmp:pmp}}
 
-// DASHBOARDS (leen de hojas empresa)
-function renH(){
-  var all=D.horas||[],e1=D.horas_E1||[],e2=D.horas_E2||[];
-  var tb=document.getElementById('tb-h');document.getElementById('ct-h').textContent=all.length;
-  var h1=e1.reduce(function(s,r){return s+r.horas},0),h2=e2.reduce(function(s,r){return s+r.horas},0);
-  document.getElementById('st-h').innerHTML='<div class="sc"><div class="sl">E.Pérez horas</div><div class="sv">'+fm(h1)+'</div></div><div class="sc"><div class="sl">E.Pérez coste</div><div class="sv">'+fm(h1*CFG.precioHora)+'€</div></div><div class="sc"><div class="sl">F.José horas</div><div class="sv">'+fm(h2)+'</div></div><div class="sc"><div class="sl">F.José coste</div><div class="sv">'+fm(h2*CFG.precioHora)+'€</div></div>';
-  if(!all.length){tb.innerHTML='<tr><td colspan="7"><div class="empty"><div class="ei">⏱</div><p>Sin registros</p></div></td></tr>';return}
-  tb.innerHTML=all.slice().sort(function(a,b){return(b.fecha||'').localeCompare(a.fecha||'')}).map(function(r){return'<tr><td>'+fd(r.fecha)+'</td><td>'+(ES[r.emp]||r.emp)+'</td><td>'+r.trab+'</td><td class="am">'+fm(r.horas)+'</td><td class="hm">'+fm(CFG.precioHora)+'€</td><td class="am po">'+fm(r.horas*CFG.precioHora)+'€</td><td class="ac"><button class="btn bd bsm" onclick="del(\'horas\',\''+r.id+'\')">✕</button></td></tr>'}).join('')}
-
-function renP(){
-  var all=D.pagos||[],e1=D.pagos_E1||[],e2=D.pagos_E2||[];
-  var tb=document.getElementById('tb-p');document.getElementById('ct-p').textContent=all.length;
-  var p1=e1.reduce(function(s,r){return s+r.importe},0),p2=e2.reduce(function(s,r){return s+r.importe},0);
-  document.getElementById('st-p').innerHTML='<div class="sc"><div class="sl">E.Pérez</div><div class="sv">'+fm(p1)+'€</div></div><div class="sc"><div class="sl">F.José</div><div class="sv">'+fm(p2)+'€</div></div><div class="sc"><div class="sl">Total</div><div class="sv">'+fm(p1+p2)+'€</div></div>';
-  if(!all.length){tb.innerHTML='<tr><td colspan="6"><div class="empty"><div class="ei">💶</div><p>Sin pagos</p></div></td></tr>';return}
-  tb.innerHTML=all.slice().sort(function(a,b){return(b.fecha||'').localeCompare(a.fecha||'')}).map(function(r){return'<tr><td>'+fd(r.fecha)+'</td><td>'+(ES[r.emp]||r.emp)+'</td><td>'+r.trab+'</td><td class="am ne">'+fm(r.importe)+'€</td><td class="hm"><span class="badge '+(r.metodo==='Efectivo'?'bdg':'bdo')+'">'+(r.metodo||'')+'</span></td><td class="ac"><button class="btn bd bsm" onclick="del(\'pagos\',\''+r.id+'\')">✕</button></td></tr>'}).join('')}
-
-function renS(){
-  var all=D.ss||[],e1=D.ss_E1||[],e2=D.ss_E2||[];
-  var tb=document.getElementById('tb-s');document.getElementById('ct-s').textContent=all.length;
-  var d1=e1.reduce(function(s,r){return s+r.dias},0),d2=e2.reduce(function(s,r){return s+r.dias},0);
-  document.getElementById('st-s').innerHTML='<div class="sc"><div class="sl">E.Pérez jorn.</div><div class="sv">'+d1+'</div></div><div class="sc"><div class="sl">E.Pérez coste</div><div class="sv">'+fm(d1*CFG.costeSS)+'€</div></div><div class="sc"><div class="sl">F.José jorn.</div><div class="sv">'+d2+'</div></div><div class="sc"><div class="sl">F.José coste</div><div class="sv">'+fm(d2*CFG.costeSS)+'€</div></div>';
-  if(!all.length){tb.innerHTML='<tr><td colspan="6"><div class="empty"><div class="ei">🏛</div><p>Sin cotizaciones</p></div></td></tr>';return}
-  tb.innerHTML=all.slice().sort(function(a,b){return(b.mes||'').localeCompare(a.mes||'')}).map(function(r){return'<tr><td>'+r.mes+'</td><td>'+(ES[r.emp]||r.emp)+'</td><td>'+r.trab+'</td><td class="am">'+r.dias+'</td><td class="am ne">'+fm(r.dias*CFG.costeSS)+'€</td><td class="ac"><button class="btn bd bsm" onclick="del(\'ss\',\''+r.id+'\')">✕</button></td></tr>'}).join('')}
-
-function renG(){
-  var all=D.gasoil||[],e1=D.gasoil_E1||[],e2=D.gasoil_E2||[];
-  var tb=document.getElementById('tb-g');document.getElementById('ct-g').textContent=all.length;
-  var pmp1=calcPMP(e1),pmp2=calcPMP(e2);
-  var pmpMap={};pmp1.list.forEach(function(x){pmpMap[x.id]=x.pmp});pmp2.list.forEach(function(x){pmpMap[x.id]=x.pmp});
-  document.getElementById('st-g').innerHTML='<div class="sc"><div class="sl">Stock E.Pérez</div><div class="sv">'+fm(pmp1.stock)+'L</div></div><div class="sc"><div class="sl">PMP E.Pérez</div><div class="sv">'+fm(pmp1.pmp)+'€</div></div><div class="sc"><div class="sl">Stock F.José</div><div class="sv">'+fm(pmp2.stock)+'L</div></div><div class="sc"><div class="sl">PMP F.José</div><div class="sv">'+fm(pmp2.pmp)+'€</div></div>';
-  if(!all.length){tb.innerHTML='<tr><td colspan="7"><div class="empty"><div class="ei">⛽</div><p>Sin movimientos</p></div></td></tr>';return}
-  tb.innerHTML=all.slice().sort(function(a,b){return(b.fecha||'').localeCompare(a.fecha||'')}).map(function(r){
-    var isC=r.tipo!=='consumo';
-    var p=isC?r.precio:(pmpMap[r.id]||r.precio||0);
-    var tipoLbl=r.tipo==='existencias'?'Exist.':r.tipo==='compra'?'Compra':'Consumo';
-    return `<tr><td>${fd(r.fecha)}</td><td><span class="badge ${(isC?'bdo':'bdg')}">${tipoLbl}</span></td><td>${(ES[r.emp]||r.emp)}</td><td class="am ${(isC?'po':'ne')}">${(isC?'+':'−')}${fm(r.litros)}</td><td>${(p?fm(p)+'€':'—')}</td><td class="am">${(p?fm(r.litros*p)+'€':'—')}</td><td class="ac"><button class="btn bd bsm" onclick="del('gasoil','${r.id}')">✕</button></td></tr>`
-  }).join('')
-}
-
+// ── Renders (from company sheets) ──
+function renH(){var all=D.horas||[],e1=D.horas_E1||[],e2=D.horas_E2||[];var tb=document.getElementById('tb-h');document.getElementById('ct-h').textContent=all.length;var h1=e1.reduce(function(s,r){return s+r.horas},0),h2=e2.reduce(function(s,r){return s+r.horas},0);document.getElementById('st-h').innerHTML='<div class="sc"><div class="sl">E.Pérez horas</div><div class="sv">'+fm(h1)+'</div></div><div class="sc"><div class="sl">E.Pérez coste</div><div class="sv">'+fm(h1*CFG.precioHora)+'€</div></div><div class="sc"><div class="sl">F.José horas</div><div class="sv">'+fm(h2)+'</div></div><div class="sc"><div class="sl">F.José coste</div><div class="sv">'+fm(h2*CFG.precioHora)+'€</div></div>';if(!all.length){tb.innerHTML='<tr><td colspan="7"><div class="empty"><div class="ei">⏱</div><p>Sin registros</p></div></td></tr>';return}tb.innerHTML=all.slice().sort(function(a,b){return(b.fecha||'').localeCompare(a.fecha||'')}).map(function(r){return'<tr><td>'+fd(r.fecha)+'</td><td>'+(ES[r.emp]||r.emp)+'</td><td>'+r.trab+'</td><td class="am">'+fm(r.horas)+'</td><td class="hm">'+fm(CFG.precioHora)+'€</td><td class="am po">'+fm(r.horas*CFG.precioHora)+'€</td><td class="ac"><button class="btn bd bsm" onclick="del(\'horas\',\''+r.id+'\')">✕</button></td></tr>'}).join('')}
+function renP(){var all=D.pagos||[],e1=D.pagos_E1||[],e2=D.pagos_E2||[];var tb=document.getElementById('tb-p');document.getElementById('ct-p').textContent=all.length;var p1=e1.reduce(function(s,r){return s+r.importe},0),p2=e2.reduce(function(s,r){return s+r.importe},0);document.getElementById('st-p').innerHTML='<div class="sc"><div class="sl">E.Pérez</div><div class="sv">'+fm(p1)+'€</div></div><div class="sc"><div class="sl">F.José</div><div class="sv">'+fm(p2)+'€</div></div><div class="sc"><div class="sl">Total</div><div class="sv">'+fm(p1+p2)+'€</div></div>';if(!all.length){tb.innerHTML='<tr><td colspan="6"><div class="empty"><div class="ei">💶</div><p>Sin pagos</p></div></td></tr>';return}tb.innerHTML=all.slice().sort(function(a,b){return(b.fecha||'').localeCompare(a.fecha||'')}).map(function(r){return'<tr><td>'+fd(r.fecha)+'</td><td>'+(ES[r.emp]||r.emp)+'</td><td>'+r.trab+'</td><td class="am ne">'+fm(r.importe)+'€</td><td class="hm"><span class="badge '+(r.metodo==='Efectivo'?'bdg':'bdo')+'">'+(r.metodo||'')+'</span></td><td class="ac"><button class="btn bd bsm" onclick="del(\'pagos\',\''+r.id+'\')">✕</button></td></tr>'}).join('')}
+function renS(){var all=D.ss||[],e1=D.ss_E1||[],e2=D.ss_E2||[];var tb=document.getElementById('tb-s');document.getElementById('ct-s').textContent=all.length;var d1=e1.reduce(function(s,r){return s+r.dias},0),d2=e2.reduce(function(s,r){return s+r.dias},0);document.getElementById('st-s').innerHTML='<div class="sc"><div class="sl">E.Pérez jorn.</div><div class="sv">'+d1+'</div></div><div class="sc"><div class="sl">E.Pérez coste</div><div class="sv">'+fm(d1*CFG.costeSS)+'€</div></div><div class="sc"><div class="sl">F.José jorn.</div><div class="sv">'+d2+'</div></div><div class="sc"><div class="sl">F.José coste</div><div class="sv">'+fm(d2*CFG.costeSS)+'€</div></div>';if(!all.length){tb.innerHTML='<tr><td colspan="6"><div class="empty"><div class="ei">🏛</div><p>Sin cotizaciones</p></div></td></tr>';return}tb.innerHTML=all.slice().sort(function(a,b){return(b.mes||'').localeCompare(a.mes||'')}).map(function(r){return'<tr><td>'+r.mes+'</td><td>'+(ES[r.emp]||r.emp)+'</td><td>'+r.trab+'</td><td class="am">'+r.dias+'</td><td class="am ne">'+fm(r.dias*CFG.costeSS)+'€</td><td class="ac"><button class="btn bd bsm" onclick="del(\'ss\',\''+r.id+'\')">✕</button></td></tr>'}).join('')}
+function renG(){var all=D.gasoil||[],e1=D.gasoil_E1||[],e2=D.gasoil_E2||[];var tb=document.getElementById('tb-g');document.getElementById('ct-g').textContent=all.length;var pmp1=calcPMP(e1),pmp2=calcPMP(e2);var pmpMap={};pmp1.list.forEach(function(x){pmpMap[x.id]=x.pmp});pmp2.list.forEach(function(x){pmpMap[x.id]=x.pmp});document.getElementById('st-g').innerHTML='<div class="sc"><div class="sl">Stock E.Pérez</div><div class="sv">'+fm(pmp1.stock)+'L</div></div><div class="sc"><div class="sl">PMP E.Pérez</div><div class="sv">'+fm(pmp1.pmp)+'€</div></div><div class="sc"><div class="sl">Stock F.José</div><div class="sv">'+fm(pmp2.stock)+'L</div></div><div class="sc"><div class="sl">PMP F.José</div><div class="sv">'+fm(pmp2.pmp)+'€</div></div>';if(!all.length){tb.innerHTML='<tr><td colspan="7"><div class="empty"><div class="ei">⛽</div><p>Sin movimientos</p></div></td></tr>';return}tb.innerHTML=all.slice().sort(function(a,b){return(b.fecha||'').localeCompare(a.fecha||'')}).map(function(r){var isC=r.tipo!=='consumo';var p=isC?r.precio:(pmpMap[r.id]||0);return'<tr><td>'+fd(r.fecha)+'</td><td><span class="badge '+(isC?'bdo':'bdg')+'">'+(r.tipo==='existencias'?'Exist.':r.tipo==='compra'?'Compra':'Consumo')+'</span></td><td>'+(ES[r.emp]||r.emp)+'</td><td class="am '+(isC?'po':'ne')+'">'+(isC?'+':'−')+fm(r.litros)+'</td><td>'+(p?fm(p)+'€':'—')+'</td><td class="am">'+(p?fm(r.litros*p)+'€':'—')+'</td><td class="ac"><button class="btn bd bsm" onclick="del(\'gasoil\',\''+r.id+'\')">✕</button></td></tr>'}).join('')}
 function renW(){var w=(D.trabajadores||[]).sort(function(a,b){return(a.name||'').localeCompare(b.name||'')});document.getElementById('ct-w').textContent=w.length;var c=document.getElementById('wl');if(!w.length){c.innerHTML='<div class="empty"><div class="ei">👷</div><p>Sin trabajadores</p></div>';return}c.innerHTML='<div class="wl">'+w.map(function(x){return'<div class="wi"><span class="wn">'+x.name+'</span><button class="btn bd bsm" onclick="del(\'trabajadores\',\''+x.id+'\')">✕</button></div>'}).join('')+'</div>'}
 function loadCfgUI(){document.getElementById('c-ph').value=CFG.precioHora;document.getElementById('c-ss').value=CFG.costeSS;document.getElementById('c-hj').value=CFG.horasJornada;document.getElementById('hpl').textContent=fm(CFG.precioHora);document.getElementById('scl').textContent=fm(CFG.costeSS)}
 function saveCfg(){CFG.precioHora=parseFloat(document.getElementById('c-ph').value)||10.10;CFG.costeSS=parseFloat(document.getElementById('c-ss').value)||18.17;CFG.horasJornada=parseFloat(document.getElementById('c-hj').value)||6.5;localStorage.setItem('ga_cfg',JSON.stringify(CFG));document.getElementById('hpl').textContent=fm(CFG.precioHora);document.getElementById('scl').textContent=fm(CFG.costeSS);toast('Guardado')}
 
-// ═══ INFORMES — leen directamente de hojas empresa ═══
-function genR(){
-  var desde=document.getElementById('r-d').value,hasta=document.getElementById('r-h').value,tipo=document.getElementById('r-t').value;
-  if(!desde||!hasta)return alert('Selecciona fechas');if(desde>hasta)return alert('"Desde" < "Hasta"');
-  var html='',tipos=tipo==='all'?['1','2','3','4','5']:[tipo];
-  function inR(d){return d>=desde&&d<=hasta}
-  function inRM(m){return(m+'-01')>=desde&&(m+'-01')<=hasta}
-
-  // Datos por empresa filtrados por período — directamente de hojas empresa
-  var h1=D.horas_E1.filter(function(r){return inR(r.fecha)}), h2=D.horas_E2.filter(function(r){return inR(r.fecha)});
-  var p1=D.pagos_E1.filter(function(r){return inR(r.fecha)}), p2=D.pagos_E2.filter(function(r){return inR(r.fecha)});
-  var s1=D.ss_E1.filter(function(r){return inRM(r.mes)}), s2=D.ss_E2.filter(function(r){return inRM(r.mes)});
-  var g1=D.gasoil_E1.filter(function(r){return inR(r.fecha)}), g2=D.gasoil_E2.filter(function(r){return inR(r.fecha)});
-
-  // PMP: con todo el histórico de cada empresa
-  var pmpCalc1=calcPMP(D.gasoil_E1), pmpCalc2=calcPMP(D.gasoil_E2);
-  var pmpById={};pmpCalc1.list.forEach(function(x){pmpById[x.id]=x.pmp});pmpCalc2.list.forEach(function(x){pmpById[x.id]=x.pmp});
-
-  // Precálculos
-  function calc(hArr,pArr,sArr,gArr){
-    var tH=hArr.reduce(function(a,r){return a+r.horas},0);
-    var pEf=pArr.filter(function(r){return r.metodo==='Efectivo'}).reduce(function(a,r){return a+r.importe},0);
-    var pTr=pArr.filter(function(r){return r.metodo!=='Efectivo'}).reduce(function(a,r){return a+r.importe},0);
-    var dC=sArr.reduce(function(a,r){return a+r.dias},0);
-    var cons=gArr.filter(function(r){return r.tipo==='consumo'});
-    var litC=cons.reduce(function(a,r){return a+r.litros},0);
-    var eurC=cons.reduce(function(a,r){return a+r.litros*(pmpById[r.id]||r.precio||0)},0);
-    return{horas:tH,costeH:tH*CFG.precioHora,pagosEf:pEf,pagosTr:pTr,totalPag:pEf+pTr,jorReales:Math.round(tH/CFG.horasJornada),jorCot:dC,costeSS:dC*CFG.costeSS,litCons:litC,costeCons:eurC}
-  }
-  var R1=calc(h1,p1,s1,g1), R2=calc(h2,p2,s2,g2);
-  console.log('R1:',R1,'R2:',R2);
-
-  html+='<div style="margin-bottom:18px;padding:14px 16px;background:var(--o9);border-radius:var(--rd);color:#fff"><div style="font-family:Playfair Display,serif;font-size:1.15rem;color:var(--g4)">🌿 GestiónAgro — Informe</div><div style="font-size:.76rem;color:rgba(255,255,255,.55);margin-top:3px">'+fd(desde)+' — '+fd(hasta)+' | '+new Date().toLocaleDateString('es-ES')+'</div></div>';
-
-  tipos.forEach(function(t){
-  if(t==='1'){
-    html+='<div class="card"><div class="cH" style="background:var(--o0)"><h3>📋 INFORME 1 — HORAS DE TRABAJO</h3></div><div class="cB">';
-    [{name:EN.E1,short:ES.E1,data:h1,r:R1},{name:EN.E2,short:ES.E2,data:h2,r:R2}].forEach(function(e){
-      if(!e.data.length)return;var byT={};e.data.forEach(function(r){byT[r.trab]=(byT[r.trab]||0)+r.horas});
-      html+='<h4 style="margin:16px 0 8px;color:var(--o7)">'+e.name+'</h4><table><thead><tr><th>Trabajador</th><th style="text-align:right">Horas</th><th style="text-align:right">€/h</th><th style="text-align:right">Coste</th></tr></thead><tbody>';
-      Object.keys(byT).sort().forEach(function(tr){html+='<tr><td>'+tr+'</td><td class="am" style="text-align:right">'+fm(byT[tr])+'</td><td style="text-align:right">'+fm(CFG.precioHora)+'</td><td class="am" style="text-align:right">'+fm(byT[tr]*CFG.precioHora)+' €</td></tr>'});
-      html+='<tr class="totr"><td><strong>Total '+e.short+'</strong></td><td class="am" style="text-align:right"><strong>'+fm(e.r.horas)+'</strong></td><td></td><td class="am" style="text-align:right"><strong>'+fm(e.r.costeH)+' €</strong></td></tr></tbody></table>'});
-    html+='<div class="rs" style="margin-top:14px"><h4>TOTAL</h4>'+fm(R1.horas+R2.horas)+' h — '+fm(R1.costeH+R2.costeH)+' €</div></div></div>'
-  }
-  if(t==='2'){
-    html+='<div class="card"><div class="cH" style="background:var(--o0)"><h3>💶 INFORME 2 — PAGOS VS COSTE</h3></div><div class="cB">';
-    [{name:EN.E1,short:ES.E1,data:p1,r:R1},{name:EN.E2,short:ES.E2,data:p2,r:R2}].forEach(function(e){
-      var byT={};e.data.forEach(function(p){if(!byT[p.trab])byT[p.trab]={ef:0,tr:0};if(p.metodo==='Efectivo')byT[p.trab].ef+=p.importe;else byT[p.trab].tr+=p.importe});
-      var saldo=e.r.totalPag-e.r.costeH;
-      html+='<h4 style="margin:16px 0 8px;color:var(--o7)">'+e.name+'</h4><table><thead><tr><th>Trabajador</th><th style="text-align:right">Efectivo</th><th style="text-align:right">Transf.</th><th style="text-align:right">Total</th></tr></thead><tbody>';
-      Object.keys(byT).sort().forEach(function(tr){var d=byT[tr];html+='<tr><td>'+tr+'</td><td class="am" style="text-align:right">'+fm(d.ef)+' €</td><td class="am" style="text-align:right">'+fm(d.tr)+' €</td><td class="am" style="text-align:right">'+fm(d.ef+d.tr)+' €</td></tr>'});
-      html+='<tr class="totr"><td><strong>Total '+e.short+'</strong></td><td class="am" style="text-align:right"><strong>'+fm(e.r.pagosEf)+' €</strong></td><td class="am" style="text-align:right"><strong>'+fm(e.r.pagosTr)+' €</strong></td><td class="am" style="text-align:right"><strong>'+fm(e.r.totalPag)+' €</strong></td></tr></tbody></table>';
-      html+='<div class="ri" style="margin-top:8px">Coste: '+fm(e.r.horas)+'h × '+fm(CFG.precioHora)+' = <strong>'+fm(e.r.costeH)+' €</strong> | Pagado: <strong>'+fm(e.r.totalPag)+' €</strong><br><strong style="color:'+(saldo>=0?'#27ae60':'#c0392b')+'">Saldo: '+(saldo>=0?'+':'')+fm(saldo)+' €</strong></div>'});
-    var sG=(R1.totalPag+R2.totalPag)-(R1.costeH+R2.costeH);
-    html+='<div class="rs" style="margin-top:14px"><h4>GLOBAL</h4>Coste: '+fm(R1.costeH+R2.costeH)+' € | Pagado: '+fm(R1.totalPag+R2.totalPag)+' € | <strong style="color:'+(sG>=0?'#27ae60':'#c0392b')+'">Saldo: '+(sG>=0?'+':'')+fm(sG)+' €</strong></div></div></div>'
-  }
-  if(t==='3'){
-    html+='<div class="card"><div class="cH" style="background:var(--o0)"><h3>🏛 INFORME 3 — SEGURIDAD SOCIAL</h3></div><div class="cB">';
-    [{name:EN.E1,short:ES.E1,hd:h1,sd:s1,r:R1},{name:EN.E2,short:ES.E2,hd:h2,sd:s2,r:R2}].forEach(function(e){
-      var cReal=e.r.jorReales*CFG.costeSS;
-      var byTH={},byTS={};e.hd.forEach(function(x){byTH[x.trab]=(byTH[x.trab]||0)+x.horas});e.sd.forEach(function(x){byTS[x.trab]=(byTS[x.trab]||0)+x.dias});
-      var allTr=Object.keys(byTH).concat(Object.keys(byTS)).filter(function(v,i,a){return a.indexOf(v)===i}).sort();
-      html+='<h4 style="margin:16px 0 8px;color:var(--o7)">'+e.name+'</h4><table><thead><tr><th>Trabajador</th><th style="text-align:right">Horas</th><th style="text-align:right">Días real</th><th style="text-align:right">Cotiz.</th><th style="text-align:right">Desv.</th><th style="text-align:right">C.Real</th><th style="text-align:right">C.Cotiz.</th></tr></thead><tbody>';
-      allTr.forEach(function(tr){var h=byTH[tr]||0,dr=Math.round(h/CFG.horasJornada),dc=byTS[tr]||0,dv=dr-dc;html+='<tr><td>'+tr+'</td><td class="am" style="text-align:right">'+fm(h)+'</td><td style="text-align:right">'+dr+'</td><td style="text-align:right">'+dc+'</td><td style="text-align:right;color:'+(dv<=0?'#27ae60':'#c0392b')+'"><strong>'+dv+'</strong></td><td class="am" style="text-align:right">'+fm(dr*CFG.costeSS)+' €</td><td class="am" style="text-align:right">'+fm(dc*CFG.costeSS)+' €</td></tr>'});
-      html+='<tr class="totr"><td><strong>Total '+e.short+'</strong></td><td class="am" style="text-align:right"><strong>'+fm(e.r.horas)+'</strong></td><td style="text-align:right"><strong>'+e.r.jorReales+'</strong></td><td style="text-align:right"><strong>'+e.r.jorCot+'</strong></td><td style="text-align:right"><strong style="color:'+((e.r.jorReales-e.r.jorCot)<=0?'#27ae60':'#c0392b')+'">'+(e.r.jorReales-e.r.jorCot)+'</strong></td><td class="am" style="text-align:right"><strong>'+fm(cReal)+' €</strong></td><td class="am" style="text-align:right"><strong>'+fm(e.r.costeSS)+' €</strong></td></tr></tbody></table>'});
-    // Compensación
-    var tR=R1.jorReales*CFG.costeSS+R2.jorReales*CFG.costeSS,tC=R1.costeSS+R2.costeSS;
-    if(tR>0){var pc1=R1.jorReales*CFG.costeSS/tR*100,deb1=tC*(pc1/100),dif=deb1-R1.costeSS;
-      html+='<div class="rs" style="margin-top:14px"><h4>Compensación</h4><table><thead><tr><th></th><th style="text-align:right">% real</th><th style="text-align:right">Cotizado</th><th style="text-align:right">Debería</th><th style="text-align:right">Dif.</th></tr></thead><tbody>';
-      html+='<tr><td>'+ES.E1+'</td><td style="text-align:right">'+fm(pc1)+'%</td><td style="text-align:right">'+fm(R1.costeSS)+' €</td><td style="text-align:right">'+fm(deb1)+' €</td><td style="text-align:right;color:'+(dif>0.01?'#c0392b':'#27ae60')+'">'+fm(dif)+' €</td></tr>';
-      html+='<tr><td>'+ES.E2+'</td><td style="text-align:right">'+fm(100-pc1)+'%</td><td style="text-align:right">'+fm(R2.costeSS)+' €</td><td style="text-align:right">'+fm(tC-deb1)+' €</td><td style="text-align:right;color:'+(-dif>0.01?'#c0392b':'#27ae60')+'">'+fm(-dif)+' €</td></tr></tbody></table>';
-      if(Math.abs(dif)>0.01)html+='<strong style="color:#c0392b">'+(dif>0?ES.E1+' compensa a '+ES.E2:ES.E2+' compensa a '+ES.E1)+': '+fm(Math.abs(dif))+' €</strong>';else html+='<strong style="color:#27ae60">Compensadas</strong>';html+='</div>'}
-    html+='</div></div>'
-  }
-  if(t==='4'){
-    html+='<div class="card"><div class="cH" style="background:var(--o0)"><h3>⛽ INFORME 4 — GASOIL (PMP)</h3></div><div class="cB">';
-    [{name:EN.E1,short:ES.E1,data:g1,allData:D.gasoil_E1,r:R1,pmpC:pmpCalc1},{name:EN.E2,short:ES.E2,data:g2,allData:D.gasoil_E2,r:R2,pmpC:pmpCalc2}].forEach(function(e){
-      var compras=e.data.filter(function(r){return r.tipo!=='consumo'}),consumos=e.data.filter(function(r){return r.tipo==='consumo'});
-      var litComp=compras.reduce(function(a,r){return a+r.litros},0),eurComp=compras.reduce(function(a,r){return a+r.litros*r.precio},0);
-      html+='<h4 style="margin:16px 0 8px;color:var(--o7)">'+e.name+' — PMP: '+fm(e.pmpC.pmp)+' €/L | Stock: '+fm(e.pmpC.stock)+' L</h4>';
-      if(compras.length){html+='<p style="font-size:.76rem;font-weight:600;color:var(--t2);margin:6px 0 4px">Compras/Existencias:</p><table><thead><tr><th>Fecha</th><th>Tipo</th><th style="text-align:right">Litros</th><th style="text-align:right">€/L</th><th style="text-align:right">Importe</th></tr></thead><tbody>';compras.sort(function(a,b){return a.fecha.localeCompare(b.fecha)}).forEach(function(r){html+='<tr><td>'+fd(r.fecha)+'</td><td>'+(r.tipo==='existencias'?'Exist.':'Compra')+'</td><td class="am" style="text-align:right">'+fm(r.litros)+'</td><td style="text-align:right">'+fm(r.precio)+' €</td><td class="am" style="text-align:right">'+fm(r.litros*r.precio)+' €</td></tr>'});html+='<tr class="totr"><td colspan="2"><strong>Total</strong></td><td class="am" style="text-align:right"><strong>'+fm(litComp)+' L</strong></td><td></td><td class="am" style="text-align:right"><strong>'+fm(eurComp)+' €</strong></td></tr></tbody></table>'}
-      if(consumos.length){html+='<p style=\"font-size:.76rem;font-weight:600;color:var(--t2);margin:10px 0 4px\">Consumos (PMP '+e.short+'):</p><table><thead><tr><th>Fecha</th><th style=\"text-align:right\">Litros</th><th style=\"text-align:right\">PMP</th><th style=\"text-align:right\">Coste</th></tr></thead><tbody>';consumos.sort(function(a,b){return a.fecha.localeCompare(b.fecha)}).forEach(function(c){var p=pmpById[c.id]||c.precio||0;html+='<tr><td>'+fd(c.fecha)+'</td><td class=\"am\" style=\"text-align:right\">'+fm(c.litros)+'</td><td style=\"text-align:right\">'+fm(p)+' €</td><td class=\"am ne\" style=\"text-align:right\">'+fm(c.litros*p)+' €</td></tr>'});html+='<tr class=\"totr\"><td><strong>Total</strong></td><td class=\"am\" style=\"text-align:right\"><strong>'+fm(e.r.litCons)+' L</strong></td><td></td><td class=\"am ne\" style=\"text-align:right\"><strong>'+fm(e.r.costeCons)+' €</strong></td></tr></tbody></table>'}});
-    html+='<div class="rs" style="margin-top:14px"><h4>Stock Global</h4><table><thead><tr><th></th><th style="text-align:right">Litros</th><th style="text-align:right">PMP</th><th style="text-align:right">Valor</th></tr></thead><tbody>';
-    html+='<tr><td>'+ES.E1+'</td><td class="am" style="text-align:right">'+fm(pmpCalc1.stock)+'</td><td style="text-align:right">'+fm(pmpCalc1.pmp)+' €</td><td class="am" style="text-align:right">'+fm(pmpCalc1.stock*pmpCalc1.pmp)+' €</td></tr>';
-    html+='<tr><td>'+ES.E2+'</td><td class="am" style="text-align:right">'+fm(pmpCalc2.stock)+'</td><td style="text-align:right">'+fm(pmpCalc2.pmp)+' €</td><td class="am" style="text-align:right">'+fm(pmpCalc2.stock*pmpCalc2.pmp)+' €</td></tr>';
-    html+='<tr class="totr"><td><strong>TOTAL</strong></td><td class="am" style="text-align:right"><strong>'+fm(pmpCalc1.stock+pmpCalc2.stock)+'</strong></td><td></td><td class="am" style="text-align:right"><strong>'+fm(pmpCalc1.stock*pmpCalc1.pmp+pmpCalc2.stock*pmpCalc2.pmp)+' €</strong></td></tr></tbody></table></div></div></div>'
-  }
-  if(t==='5'){
-    var s1x=R1.totalPag-R1.costeH,s2x=R2.totalPag-R2.costeH,tc1=R1.costeH+R1.costeSS+R1.costeCons,tc2=R2.costeH+R2.costeSS+R2.costeCons;
-    var pc=(tc1+tc2)>0?(tc1/(tc1+tc2)*100):50;
-    html+='<div class="card"><div class="cH" style="background:var(--g1)"><h3>📊 INFORME 5 — RESUMEN COMPARATIVO</h3></div><div class="cB"><table><thead><tr><th>Concepto</th><th style="text-align:right">'+ES.E1+'</th><th style="text-align:right">'+ES.E2+'</th><th style="text-align:right">TOTAL</th></tr></thead><tbody>';
-    html+='<tr style="background:var(--o0)"><td colspan="4"><strong>⏱ HORAS</strong></td></tr>';
-    html+='<tr><td>Horas</td><td class="am" style="text-align:right">'+fm(R1.horas)+' h</td><td class="am" style="text-align:right">'+fm(R2.horas)+' h</td><td class="am" style="text-align:right"><strong>'+fm(R1.horas+R2.horas)+' h</strong></td></tr>';
-    html+='<tr><td>Coste</td><td class="am" style="text-align:right">'+fm(R1.costeH)+' €</td><td class="am" style="text-align:right">'+fm(R2.costeH)+' €</td><td class="am" style="text-align:right"><strong>'+fm(R1.costeH+R2.costeH)+' €</strong></td></tr>';
-    html+='<tr style="background:var(--o0)"><td colspan="4"><strong>💶 PAGOS</strong></td></tr>';
-    html+='<tr><td>Efectivo</td><td class="am" style="text-align:right">'+fm(R1.pagosEf)+' €</td><td class="am" style="text-align:right">'+fm(R2.pagosEf)+' €</td><td class="am" style="text-align:right">'+fm(R1.pagosEf+R2.pagosEf)+' €</td></tr>';
-    html+='<tr><td>Transferencia</td><td class="am" style="text-align:right">'+fm(R1.pagosTr)+' €</td><td class="am" style="text-align:right">'+fm(R2.pagosTr)+' €</td><td class="am" style="text-align:right">'+fm(R1.pagosTr+R2.pagosTr)+' €</td></tr>';
-    html+='<tr><td>Total pagado</td><td class="am" style="text-align:right"><strong>'+fm(R1.totalPag)+' €</strong></td><td class="am" style="text-align:right"><strong>'+fm(R2.totalPag)+' €</strong></td><td class="am" style="text-align:right"><strong>'+fm(R1.totalPag+R2.totalPag)+' €</strong></td></tr>';
-    html+='<tr><td>Saldo</td><td style="text-align:right;color:'+(s1x>=0?'#27ae60':'#c0392b')+'">'+(s1x>=0?'+':'')+fm(s1x)+' €</td><td style="text-align:right;color:'+(s2x>=0?'#27ae60':'#c0392b')+'">'+(s2x>=0?'+':'')+fm(s2x)+' €</td><td style="text-align:right;color:'+((s1x+s2x)>=0?'#27ae60':'#c0392b')+'">'+(s1x+s2x>=0?'+':'')+fm(s1x+s2x)+' €</td></tr>';
-    html+='<tr style="background:var(--o0)"><td colspan="4"><strong>🏛 SEG. SOCIAL</strong></td></tr>';
-    html+='<tr><td>Jornadas real/cotiz.</td><td style="text-align:right">'+R1.jorReales+'/'+R1.jorCot+'</td><td style="text-align:right">'+R2.jorReales+'/'+R2.jorCot+'</td><td style="text-align:right">'+(R1.jorReales+R2.jorReales)+'/'+(R1.jorCot+R2.jorCot)+'</td></tr>';
-    html+='<tr><td>Coste SS</td><td class="am" style="text-align:right">'+fm(R1.costeSS)+' €</td><td class="am" style="text-align:right">'+fm(R2.costeSS)+' €</td><td class="am" style="text-align:right"><strong>'+fm(R1.costeSS+R2.costeSS)+' €</strong></td></tr>';
-    html+='<tr style="background:var(--o0)"><td colspan="4"><strong>⛽ GASOIL</strong></td></tr>';
-    html+='<tr><td>Litros consumidos</td><td class="am" style="text-align:right">'+fm(R1.litCons)+' L</td><td class="am" style="text-align:right">'+fm(R2.litCons)+' L</td><td class="am" style="text-align:right"><strong>'+fm(R1.litCons+R2.litCons)+' L</strong></td></tr>';
-    html+='<tr><td>Coste gasoil</td><td class="am" style="text-align:right">'+fm(R1.costeCons)+' €</td><td class="am" style="text-align:right">'+fm(R2.costeCons)+' €</td><td class="am" style="text-align:right"><strong>'+fm(R1.costeCons+R2.costeCons)+' €</strong></td></tr>';
-    html+='<tr class="totr"><td><strong>COSTE TOTAL</strong></td><td class="am" style="text-align:right"><strong>'+fm(tc1)+' €</strong></td><td class="am" style="text-align:right"><strong>'+fm(tc2)+' €</strong></td><td class="am" style="text-align:right"><strong style="font-size:1rem">'+fm(tc1+tc2)+' €</strong></td></tr>';
-    html+='<tr><td><em>Proporción</em></td><td style="text-align:right"><em>'+fm(pc)+'%</em></td><td style="text-align:right"><em>'+fm(100-pc)+'%</em></td><td style="text-align:right"><em>100%</em></td></tr>';
-    html+='</tbody></table></div></div>'
-  }
-  });
-  document.getElementById('ro').innerHTML=html;
-  document.getElementById('pa').innerHTML='<h2 style="font-family:Playfair Display,serif">🌿 GestiónAgro</h2><div style="font-size:12px;color:#666;margin-bottom:14px">'+fd(desde)+' — '+fd(hasta)+'</div>'+html;
-}
+// ═══ INFORMES — datos de hojas empresa ═══
+function genR(){var desde=document.getElementById('r-d').value,hasta=document.getElementById('r-h').value,tipo=document.getElementById('r-t').value;if(!desde||!hasta)return alert('Selecciona fechas');if(desde>hasta)return alert('"Desde" < "Hasta"');var html='',tipos=tipo==='all'?['1','2','3','4','5']:[tipo];function inR(d){return d>=desde&&d<=hasta}function inRM(m){return(m+'-01')>=desde&&(m+'-01')<=hasta}
+var h1=D.horas_E1.filter(function(r){return inR(r.fecha)}),h2=D.horas_E2.filter(function(r){return inR(r.fecha)});var p1=D.pagos_E1.filter(function(r){return inR(r.fecha)}),p2=D.pagos_E2.filter(function(r){return inR(r.fecha)});var s1=D.ss_E1.filter(function(r){return inRM(r.mes)}),s2=D.ss_E2.filter(function(r){return inRM(r.mes)});var g1=D.gasoil_E1.filter(function(r){return inR(r.fecha)}),g2=D.gasoil_E2.filter(function(r){return inR(r.fecha)});
+var pmpCalc1=calcPMP(D.gasoil_E1),pmpCalc2=calcPMP(D.gasoil_E2);var pmpById={};pmpCalc1.list.forEach(function(x){pmpById[x.id]=x.pmp});pmpCalc2.list.forEach(function(x){pmpById[x.id]=x.pmp});
+function calc(hA,pA,sA,gA){var tH=hA.reduce(function(a,r){return a+r.horas},0);var pEf=pA.filter(function(r){return r.metodo==='Efectivo'}).reduce(function(a,r){return a+r.importe},0);var pTr=pA.filter(function(r){return r.metodo!=='Efectivo'}).reduce(function(a,r){return a+r.importe},0);var dC=sA.reduce(function(a,r){return a+r.dias},0);var cons=gA.filter(function(r){return r.tipo==='consumo'});var litC=cons.reduce(function(a,r){return a+r.litros},0);var eurC=cons.reduce(function(a,r){return a+r.litros*(pmpById[r.id]||0)},0);return{horas:tH,costeH:tH*CFG.precioHora,pagosEf:pEf,pagosTr:pTr,totalPag:pEf+pTr,jorReales:Math.round(tH/CFG.horasJornada),jorCot:dC,costeSS:dC*CFG.costeSS,litCons:litC,costeCons:eurC}}
+var R1=calc(h1,p1,s1,g1),R2=calc(h2,p2,s2,g2);
+html+='<div style="margin-bottom:18px;padding:14px 16px;background:var(--o9);border-radius:var(--rd);color:#fff"><div style="font-family:Playfair Display,serif;font-size:1.15rem;color:var(--g4)">🌿 GestiónAgro — Informe</div><div style="font-size:.76rem;color:rgba(255,255,255,.55);margin-top:3px">'+fd(desde)+' — '+fd(hasta)+' | '+new Date().toLocaleDateString('es-ES')+'</div></div>';
+tipos.forEach(function(t){
+if(t==='1'){html+='<div class="card"><div class="cH" style="background:var(--o0)"><h3>📋 INFORME 1 — HORAS</h3></div><div class="cB">';[{n:EN.E1,s:ES.E1,d:h1,r:R1},{n:EN.E2,s:ES.E2,d:h2,r:R2}].forEach(function(e){if(!e.d.length)return;var byT={};e.d.forEach(function(r){byT[r.trab]=(byT[r.trab]||0)+r.horas});html+='<h4 style="margin:16px 0 8px;color:var(--o7)">'+e.n+'</h4><table><thead><tr><th>Trabajador</th><th style="text-align:right">Horas</th><th style="text-align:right">€/h</th><th style="text-align:right">Coste</th></tr></thead><tbody>';Object.keys(byT).sort().forEach(function(tr){html+='<tr><td>'+tr+'</td><td class="am" style="text-align:right">'+fm(byT[tr])+'</td><td style="text-align:right">'+fm(CFG.precioHora)+'</td><td class="am" style="text-align:right">'+fm(byT[tr]*CFG.precioHora)+' €</td></tr>'});html+='<tr class="totr"><td><strong>Total '+e.s+'</strong></td><td class="am" style="text-align:right"><strong>'+fm(e.r.horas)+'</strong></td><td></td><td class="am" style="text-align:right"><strong>'+fm(e.r.costeH)+' €</strong></td></tr></tbody></table>'});html+='<div class="rs"><h4>TOTAL</h4>'+fm(R1.horas+R2.horas)+' h — '+fm(R1.costeH+R2.costeH)+' €</div></div></div>'}
+if(t==='2'){html+='<div class="card"><div class="cH" style="background:var(--o0)"><h3>💶 INFORME 2 — PAGOS VS COSTE</h3></div><div class="cB">';[{n:EN.E1,s:ES.E1,d:p1,r:R1},{n:EN.E2,s:ES.E2,d:p2,r:R2}].forEach(function(e){var byT={};e.d.forEach(function(p){if(!byT[p.trab])byT[p.trab]={ef:0,tr:0};if(p.metodo==='Efectivo')byT[p.trab].ef+=p.importe;else byT[p.trab].tr+=p.importe});var saldo=e.r.totalPag-e.r.costeH;html+='<h4 style="margin:16px 0 8px;color:var(--o7)">'+e.n+'</h4><table><thead><tr><th>Trabajador</th><th style="text-align:right">Efectivo</th><th style="text-align:right">Transf.</th><th style="text-align:right">Total</th></tr></thead><tbody>';Object.keys(byT).sort().forEach(function(tr){var d=byT[tr];html+='<tr><td>'+tr+'</td><td class="am" style="text-align:right">'+fm(d.ef)+' €</td><td class="am" style="text-align:right">'+fm(d.tr)+' €</td><td class="am" style="text-align:right">'+fm(d.ef+d.tr)+' €</td></tr>'});html+='<tr class="totr"><td><strong>Total '+e.s+'</strong></td><td class="am" style="text-align:right"><strong>'+fm(e.r.pagosEf)+' €</strong></td><td class="am" style="text-align:right"><strong>'+fm(e.r.pagosTr)+' €</strong></td><td class="am" style="text-align:right"><strong>'+fm(e.r.totalPag)+' €</strong></td></tr></tbody></table><div class="ri" style="margin-top:8px">Coste: '+fm(e.r.horas)+'h × '+fm(CFG.precioHora)+' = <strong>'+fm(e.r.costeH)+' €</strong> | Pagado: <strong>'+fm(e.r.totalPag)+' €</strong><br><strong style="color:'+(saldo>=0?'#27ae60':'#c0392b')+'">Saldo: '+(saldo>=0?'+':'')+fm(saldo)+' €</strong></div>'});var sG=(R1.totalPag+R2.totalPag)-(R1.costeH+R2.costeH);html+='<div class="rs"><h4>GLOBAL</h4>Coste: '+fm(R1.costeH+R2.costeH)+' € | Pagado: '+fm(R1.totalPag+R2.totalPag)+' € | <strong style="color:'+(sG>=0?'#27ae60':'#c0392b')+'">Saldo: '+(sG>=0?'+':'')+fm(sG)+' €</strong></div></div></div>'}
+if(t==='3'){html+='<div class="card"><div class="cH" style="background:var(--o0)"><h3>🏛 INFORME 3 — SEG. SOCIAL</h3></div><div class="cB">';[{n:EN.E1,s:ES.E1,hd:h1,sd:s1,r:R1},{n:EN.E2,s:ES.E2,hd:h2,sd:s2,r:R2}].forEach(function(e){var cReal=e.r.jorReales*CFG.costeSS;var byTH={},byTS={};e.hd.forEach(function(x){byTH[x.trab]=(byTH[x.trab]||0)+x.horas});e.sd.forEach(function(x){byTS[x.trab]=(byTS[x.trab]||0)+x.dias});var allTr=Object.keys(byTH).concat(Object.keys(byTS)).filter(function(v,i,a){return a.indexOf(v)===i}).sort();html+='<h4 style="margin:16px 0 8px;color:var(--o7)">'+e.n+'</h4><table><thead><tr><th>Trab.</th><th style="text-align:right">Horas</th><th style="text-align:right">Días real</th><th style="text-align:right">Cotiz.</th><th style="text-align:right">Desv.</th><th style="text-align:right">C.Real</th><th style="text-align:right">C.Cotiz.</th></tr></thead><tbody>';allTr.forEach(function(tr){var h=byTH[tr]||0,dr=Math.round(h/CFG.horasJornada),dc=byTS[tr]||0,dv=dr-dc;html+='<tr><td>'+tr+'</td><td class="am" style="text-align:right">'+fm(h)+'</td><td style="text-align:right">'+dr+'</td><td style="text-align:right">'+dc+'</td><td style="text-align:right;color:'+(dv<=0?'#27ae60':'#c0392b')+'"><strong>'+dv+'</strong></td><td class="am" style="text-align:right">'+fm(dr*CFG.costeSS)+' €</td><td class="am" style="text-align:right">'+fm(dc*CFG.costeSS)+' €</td></tr>'});html+='<tr class="totr"><td><strong>'+e.s+'</strong></td><td class="am" style="text-align:right"><strong>'+fm(e.r.horas)+'</strong></td><td style="text-align:right"><strong>'+e.r.jorReales+'</strong></td><td style="text-align:right"><strong>'+e.r.jorCot+'</strong></td><td style="text-align:right"><strong style="color:'+((e.r.jorReales-e.r.jorCot)<=0?'#27ae60':'#c0392b')+'">'+(e.r.jorReales-e.r.jorCot)+'</strong></td><td class="am" style="text-align:right"><strong>'+fm(cReal)+' €</strong></td><td class="am" style="text-align:right"><strong>'+fm(e.r.costeSS)+' €</strong></td></tr></tbody></table>'});var tR=R1.jorReales*CFG.costeSS+R2.jorReales*CFG.costeSS,tC=R1.costeSS+R2.costeSS;if(tR>0){var pc1=R1.jorReales*CFG.costeSS/tR*100,deb1=tC*(pc1/100),dif=deb1-R1.costeSS;html+='<div class="rs"><h4>Compensación</h4><table><thead><tr><th></th><th style="text-align:right">% real</th><th style="text-align:right">Cotizado</th><th style="text-align:right">Debería</th><th style="text-align:right">Dif.</th></tr></thead><tbody><tr><td>'+ES.E1+'</td><td style="text-align:right">'+fm(pc1)+'%</td><td style="text-align:right">'+fm(R1.costeSS)+' €</td><td style="text-align:right">'+fm(deb1)+' €</td><td style="text-align:right;color:'+(dif>0.01?'#c0392b':'#27ae60')+'">'+fm(dif)+' €</td></tr><tr><td>'+ES.E2+'</td><td style="text-align:right">'+fm(100-pc1)+'%</td><td style="text-align:right">'+fm(R2.costeSS)+' €</td><td style="text-align:right">'+fm(tC-deb1)+' €</td><td style="text-align:right;color:'+(-dif>0.01?'#c0392b':'#27ae60')+'">'+fm(-dif)+' €</td></tr></tbody></table>';if(Math.abs(dif)>0.01)html+='<strong style="color:#c0392b">'+(dif>0?ES.E1+' compensa a '+ES.E2:ES.E2+' compensa a '+ES.E1)+': '+fm(Math.abs(dif))+' €</strong>';else html+='<strong style="color:#27ae60">Compensadas</strong>';html+='</div>'}html+='</div></div>'}
+if(t==='4'){html+='<div class="card"><div class="cH" style="background:var(--o0)"><h3>⛽ INFORME 4 — GASOIL (PMP)</h3></div><div class="cB">';[{n:EN.E1,s:ES.E1,d:g1,r:R1,pc:pmpCalc1},{n:EN.E2,s:ES.E2,d:g2,r:R2,pc:pmpCalc2}].forEach(function(e){var compras=e.d.filter(function(r){return r.tipo!=='consumo'}),consumos=e.d.filter(function(r){return r.tipo==='consumo'});var litComp=compras.reduce(function(a,r){return a+r.litros},0),eurComp=compras.reduce(function(a,r){return a+r.litros*r.precio},0);html+='<h4 style="margin:16px 0 8px;color:var(--o7)">'+e.n+' — PMP: '+fm(e.pc.pmp)+' €/L | Stock: '+fm(e.pc.stock)+' L</h4>';if(compras.length){html+='<p style="font-size:.76rem;font-weight:600;color:var(--t2);margin:6px 0 4px">Compras:</p><table><thead><tr><th>Fecha</th><th>Tipo</th><th style="text-align:right">Litros</th><th style="text-align:right">€/L</th><th style="text-align:right">Importe</th></tr></thead><tbody>';compras.sort(function(a,b){return a.fecha.localeCompare(b.fecha)}).forEach(function(r){html+='<tr><td>'+fd(r.fecha)+'</td><td>'+(r.tipo==='existencias'?'Exist.':'Compra')+'</td><td class="am" style="text-align:right">'+fm(r.litros)+'</td><td style="text-align:right">'+fm(r.precio)+' €</td><td class="am" style="text-align:right">'+fm(r.litros*r.precio)+' €</td></tr>'});html+='<tr class="totr"><td colspan="2"><strong>Total</strong></td><td class="am" style="text-align:right"><strong>'+fm(litComp)+' L</strong></td><td></td><td class="am" style="text-align:right"><strong>'+fm(eurComp)+' €</strong></td></tr></tbody></table>'}if(consumos.length){html+='<p style="font-size:.76rem;font-weight:600;color:var(--t2);margin:10px 0 4px">Consumos (PMP '+e.s+'):</p><table><thead><tr><th>Fecha</th><th style="text-align:right">Litros</th><th style="text-align:right">PMP</th><th style="text-align:right">Coste</th></tr></thead><tbody>';consumos.sort(function(a,b){return a.fecha.localeCompare(b.fecha)}).forEach(function(c){var p=pmpById[c.id]||0;html+='<tr><td>'+fd(c.fecha)+'</td><td class="am" style="text-align:right">'+fm(c.litros)+'</td><td style="text-align:right">'+fm(p)+' €</td><td class="am ne" style="text-align:right">'+fm(c.litros*p)+' €</td></tr>'});html+='<tr class="totr"><td><strong>Total</strong></td><td class="am" style="text-align:right"><strong>'+fm(e.r.litCons)+' L</strong></td><td></td><td class="am ne" style="text-align:right"><strong>'+fm(e.r.costeCons)+' €</strong></td></tr></tbody></table>'}});html+='<div class="rs"><h4>Stock Global</h4><table><thead><tr><th></th><th style="text-align:right">Litros</th><th style="text-align:right">PMP</th><th style="text-align:right">Valor</th></tr></thead><tbody><tr><td>'+ES.E1+'</td><td class="am" style="text-align:right">'+fm(pmpCalc1.stock)+'</td><td style="text-align:right">'+fm(pmpCalc1.pmp)+' €</td><td class="am" style="text-align:right">'+fm(pmpCalc1.stock*pmpCalc1.pmp)+' €</td></tr><tr><td>'+ES.E2+'</td><td class="am" style="text-align:right">'+fm(pmpCalc2.stock)+'</td><td style="text-align:right">'+fm(pmpCalc2.pmp)+' €</td><td class="am" style="text-align:right">'+fm(pmpCalc2.stock*pmpCalc2.pmp)+' €</td></tr><tr class="totr"><td><strong>TOTAL</strong></td><td class="am" style="text-align:right"><strong>'+fm(pmpCalc1.stock+pmpCalc2.stock)+'</strong></td><td></td><td class="am" style="text-align:right"><strong>'+fm(pmpCalc1.stock*pmpCalc1.pmp+pmpCalc2.stock*pmpCalc2.pmp)+' €</strong></td></tr></tbody></table></div></div></div>'}
+if(t==='5'){var s1x=R1.totalPag-R1.costeH,s2x=R2.totalPag-R2.costeH,tc1=R1.costeH+R1.costeSS+R1.costeCons,tc2=R2.costeH+R2.costeSS+R2.costeCons,pc=(tc1+tc2)>0?(tc1/(tc1+tc2)*100):50;html+='<div class="card"><div class="cH" style="background:var(--g1)"><h3>📊 INFORME 5 — RESUMEN</h3></div><div class="cB"><table><thead><tr><th>Concepto</th><th style="text-align:right">'+ES.E1+'</th><th style="text-align:right">'+ES.E2+'</th><th style="text-align:right">TOTAL</th></tr></thead><tbody><tr style="background:var(--o0)"><td colspan="4"><strong>⏱ HORAS</strong></td></tr><tr><td>Horas</td><td class="am" style="text-align:right">'+fm(R1.horas)+' h</td><td class="am" style="text-align:right">'+fm(R2.horas)+' h</td><td class="am" style="text-align:right"><strong>'+fm(R1.horas+R2.horas)+' h</strong></td></tr><tr><td>Coste</td><td class="am" style="text-align:right">'+fm(R1.costeH)+' €</td><td class="am" style="text-align:right">'+fm(R2.costeH)+' €</td><td class="am" style="text-align:right"><strong>'+fm(R1.costeH+R2.costeH)+' €</strong></td></tr><tr style="background:var(--o0)"><td colspan="4"><strong>💶 PAGOS</strong></td></tr><tr><td>Efectivo</td><td class="am" style="text-align:right">'+fm(R1.pagosEf)+' €</td><td class="am" style="text-align:right">'+fm(R2.pagosEf)+' €</td><td class="am" style="text-align:right">'+fm(R1.pagosEf+R2.pagosEf)+' €</td></tr><tr><td>Transferencia</td><td class="am" style="text-align:right">'+fm(R1.pagosTr)+' €</td><td class="am" style="text-align:right">'+fm(R2.pagosTr)+' €</td><td class="am" style="text-align:right">'+fm(R1.pagosTr+R2.pagosTr)+' €</td></tr><tr><td>Total pagado</td><td class="am" style="text-align:right"><strong>'+fm(R1.totalPag)+' €</strong></td><td class="am" style="text-align:right"><strong>'+fm(R2.totalPag)+' €</strong></td><td class="am" style="text-align:right"><strong>'+fm(R1.totalPag+R2.totalPag)+' €</strong></td></tr><tr><td>Saldo</td><td style="text-align:right;color:'+(s1x>=0?'#27ae60':'#c0392b')+'">'+(s1x>=0?'+':'')+fm(s1x)+' €</td><td style="text-align:right;color:'+(s2x>=0?'#27ae60':'#c0392b')+'">'+(s2x>=0?'+':'')+fm(s2x)+' €</td><td style="text-align:right;color:'+((s1x+s2x)>=0?'#27ae60':'#c0392b')+'">'+(s1x+s2x>=0?'+':'')+fm(s1x+s2x)+' €</td></tr><tr style="background:var(--o0)"><td colspan="4"><strong>🏛 SEG. SOCIAL</strong></td></tr><tr><td>Jornadas real/cotiz.</td><td style="text-align:right">'+R1.jorReales+'/'+R1.jorCot+'</td><td style="text-align:right">'+R2.jorReales+'/'+R2.jorCot+'</td><td style="text-align:right">'+(R1.jorReales+R2.jorReales)+'/'+(R1.jorCot+R2.jorCot)+'</td></tr><tr><td>Coste SS</td><td class="am" style="text-align:right">'+fm(R1.costeSS)+' €</td><td class="am" style="text-align:right">'+fm(R2.costeSS)+' €</td><td class="am" style="text-align:right"><strong>'+fm(R1.costeSS+R2.costeSS)+' €</strong></td></tr><tr style="background:var(--o0)"><td colspan="4"><strong>⛽ GASOIL</strong></td></tr><tr><td>Litros consumidos</td><td class="am" style="text-align:right">'+fm(R1.litCons)+' L</td><td class="am" style="text-align:right">'+fm(R2.litCons)+' L</td><td class="am" style="text-align:right"><strong>'+fm(R1.litCons+R2.litCons)+' L</strong></td></tr><tr><td>Coste gasoil</td><td class="am" style="text-align:right">'+fm(R1.costeCons)+' €</td><td class="am" style="text-align:right">'+fm(R2.costeCons)+' €</td><td class="am" style="text-align:right"><strong>'+fm(R1.costeCons+R2.costeCons)+' €</strong></td></tr><tr class="totr"><td><strong>COSTE TOTAL</strong></td><td class="am" style="text-align:right"><strong>'+fm(tc1)+' €</strong></td><td class="am" style="text-align:right"><strong>'+fm(tc2)+' €</strong></td><td class="am" style="text-align:right"><strong style="font-size:1rem">'+fm(tc1+tc2)+' €</strong></td></tr><tr><td><em>Proporción</em></td><td style="text-align:right"><em>'+fm(pc)+'%</em></td><td style="text-align:right"><em>'+fm(100-pc)+'%</em></td><td style="text-align:right"><em>100%</em></td></tr></tbody></table></div></div>'}
+});document.getElementById('ro').innerHTML=html;document.getElementById('pa').innerHTML='<h2 style="font-family:Playfair Display,serif">🌿 GestiónAgro</h2><div style="font-size:12px;color:#666;margin-bottom:14px">'+fd(desde)+' — '+fd(hasta)+'</div>'+html}
 function printR(){if(!document.getElementById('pa').innerHTML.trim())return alert('Genera primero');window.print()}
 
-document.addEventListener('DOMContentLoaded',function(){var now=new Date(),y=now.getFullYear(),m=String(now.getMonth()+1).padStart(2,'0');document.getElementById('r-d').value=y+'-'+m+'-01';document.getElementById('r-h').value=now.toISOString().split('T')[0];loadCfgUI();loadAll()});
+// ── Init ──
+document.addEventListener('DOMContentLoaded',function(){
+  var now=new Date(),y=now.getFullYear(),m=String(now.getMonth()+1).padStart(2,'0');
+  document.getElementById('r-d').value=y+'-'+m+'-01';document.getElementById('r-h').value=now.toISOString().split('T')[0];
+  // Enter key en login
+  document.getElementById('loginPwd').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin()});
+  // Recuperar sesión
+  var saved=sessionStorage.getItem('ga_pwd');
+  if(saved){PWD=saved;document.getElementById('loginScreen').style.display='none';document.getElementById('appWrap').style.display='';loadCfgUI();loadAll()}
+});
 document.querySelectorAll('.ov').forEach(function(o){o.addEventListener('click',function(e){if(e.target===o)o.classList.remove('open')})});
 </script>
 </body>
