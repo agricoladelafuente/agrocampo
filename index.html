@@ -157,11 +157,12 @@ tbody td{padding:9px 10px;border-bottom:1px solid var(--bd);vertical-align:middl
 <div class="print-area" id="pa"></div>
 <script>
 // ═══════════════════════════════════════════════════════════
-// GestiónAgro v8 — SIN TOKEN — Contraseña en servidor
-// La URL del Apps Script se obtiene del servidor tras login
+// GestiónAgro v8 — Autenticación local con hash SHA256
+// Contraseña validada en el navegador (sin envío al servidor)
 // ═══════════════════════════════════════════════════════════
 var API='https://script.google.com/macros/s/AKfycbwlVgHSlxP2yxPo5jsw5WuguJHAVydjs-ztsx3T22-uD3E9YxVuVRefDqpWCn90wpXu/exec';
 var PWD=''; // se rellena tras login, se guarda en sessionStorage
+var PWD_HASH='bda2c12b1f6ce251b0174c3471d386c613c6c5f03e482852bbb9700e79deab87'; // SHA256 de tu contraseña
 var CFG=JSON.parse(localStorage.getItem('ga_cfg')||'{"precioHora":10.10,"costeSS":18.17,"horasJornada":6.5}');
 var EN={E1:'EVA PÉREZ DEL CASTILLO',E2:'FCO. JOSÉ DE LA FUENTE RUZ'};
 var ES={E1:'EVA PÉREZ',E2:'FCO. JOSÉ'};
@@ -171,15 +172,33 @@ var cur='horas',jc=0;
 // ── JSONP con pwd en cada request ──
 function jsonp(p,retries){p.pwd=PWD;retries=retries||0;return new Promise(function(ok,ko){var cb='_g'+(jc++)+'_'+Date.now();var to=setTimeout(function(){cl();if(retries<2){jsonp(p,retries+1).then(ok).catch(ko)}else{ko('Sin respuesta del servidor. Reintenta.')}},30000);function cl(){clearTimeout(to);try{delete window[cb]}catch(e){}var el=document.getElementById(cb);if(el)el.remove()}window[cb]=function(d){cl();if(d&&d.error){if(d.error==='No autorizado'){logout();ko('Sesión expirada')}else ko(d.error)}else ok(d)};p.callback=cb;var q=Object.keys(p).map(function(k){return k+'='+encodeURIComponent(p[k])}).join('&');var s=document.createElement('script');s.id=cb;s.src=API+'?'+q;s.onerror=function(){cl();if(retries<2){setTimeout(function(){jsonp(p,retries+1).then(ok).catch(ko)},1000)}else{ko('Error de red. Comprueba tu conexión.')}};document.body.appendChild(s)})}
 
+// ── SHA256 (── copiar del navegador para obtener hash ──)
+async function sha256(str){var buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(str));var arr=Array.from(new Uint8Array(buf));return arr.map(function(x){return('0'+x.toString(16)).slice(-2)}).join('')}
+
 // ── Login ──
-function doLogin(){
+async function doLogin(){
   var pwd=document.getElementById('loginPwd').value;
   if(!pwd){document.getElementById('loginErr').textContent='Introduce la contraseña';return}
   document.getElementById('loginBtn').disabled=true;document.getElementById('loginBtn').textContent='Verificando...';document.getElementById('loginErr').textContent='';
-  PWD=pwd;
-  jsonp({action:'login'}).then(function(r){
-    if(r.ok){sessionStorage.setItem('ga_pwd',pwd);document.getElementById('loginScreen').style.display='none';document.getElementById('appWrap').style.display='';loadAll()}
-  }).catch(function(e){document.getElementById('loginErr').textContent='❌ '+e;PWD=''}).finally(function(){document.getElementById('loginBtn').disabled=false;document.getElementById('loginBtn').textContent='Entrar'})
+  try{
+    var hash=await sha256(pwd);
+    if(hash===PWD_HASH){
+      PWD=pwd;
+      sessionStorage.setItem('ga_pwd',pwd);
+      document.getElementById('loginScreen').style.display='none';
+      document.getElementById('appWrap').style.display='';
+      loadAll();
+    }else{
+      document.getElementById('loginErr').textContent='❌ Contraseña incorrecta';
+      PWD='';
+    }
+  }catch(e){
+    document.getElementById('loginErr').textContent='❌ Error: '+e;
+    PWD='';
+  }finally{
+    document.getElementById('loginBtn').disabled=false;
+    document.getElementById('loginBtn').textContent='Entrar';
+  }
 }
 function logout(){PWD='';sessionStorage.removeItem('ga_pwd');document.getElementById('loginScreen').style.display='';document.getElementById('appWrap').style.display='none';document.getElementById('loginPwd').value='';document.getElementById('loginErr').textContent=''}
 
