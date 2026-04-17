@@ -160,7 +160,7 @@ tbody td{padding:9px 10px;border-bottom:1px solid var(--bd);vertical-align:middl
 // GestiónAgro v8 — SIN TOKEN — Contraseña en servidor
 // La URL del Apps Script se obtiene del servidor tras login
 // ═══════════════════════════════════════════════════════════
-var API='https://script.google.com/macros/s/AKfycbxgZx7vFiFOmLBPXxeNe224-XiPbYW5KEwdTR49_G7zGVk_uQBuIbKBkBKgUJsQMWY/exec';
+var API='https://script.google.com/macros/s/AKfycbxaq0FVCszAq8D9p6Bi4oDC6PHtdTFVawCtbi8xX8aW_T5x11vXN2MY_BWiXBWJiXVK/exec';
 var PWD=''; // se rellena tras login, se guarda en sessionStorage
 var CFG=JSON.parse(localStorage.getItem('ga_cfg')||'{"precioHora":10.10,"costeSS":18.17,"horasJornada":6.5}');
 var EN={E1:'EVA PÉREZ DEL CASTILLO',E2:'FCO. JOSÉ DE LA FUENTE RUZ'};
@@ -169,7 +169,7 @@ var D={horas:[],pagos:[],ss:[],gasoil:[],trabajadores:[],horas_E1:[],horas_E2:[]
 var cur='horas',jc=0;
 
 // ── JSONP con pwd en cada request ──
-function jsonp(p){p.pwd=PWD;return new Promise(function(ok,ko){var cb='_g'+(jc++)+'_'+Date.now();var to=setTimeout(function(){cl();ko('Timeout')},20000);function cl(){clearTimeout(to);try{delete window[cb]}catch(e){}var el=document.getElementById(cb);if(el)el.remove()}window[cb]=function(d){cl();if(d&&d.error){if(d.error==='No autorizado'){logout();ko('Sesión expirada')}else ko(d.error)}else ok(d)};p.callback=cb;var q=Object.keys(p).map(function(k){return k+'='+encodeURIComponent(p[k])}).join('&');var s=document.createElement('script');s.id=cb;s.src=API+'?'+q;s.onerror=function(){cl();ko('Red')};document.body.appendChild(s)})}
+function jsonp(p,retries){p.pwd=PWD;retries=retries||0;return new Promise(function(ok,ko){var cb='_g'+(jc++)+'_'+Date.now();var to=setTimeout(function(){cl();if(retries<2){jsonp(p,retries+1).then(ok).catch(ko)}else{ko('Sin respuesta del servidor. Reintenta.')}},30000);function cl(){clearTimeout(to);try{delete window[cb]}catch(e){}var el=document.getElementById(cb);if(el)el.remove()}window[cb]=function(d){cl();if(d&&d.error){if(d.error==='No autorizado'){logout();ko('Sesión expirada')}else ko(d.error)}else ok(d)};p.callback=cb;var q=Object.keys(p).map(function(k){return k+'='+encodeURIComponent(p[k])}).join('&');var s=document.createElement('script');s.id=cb;s.src=API+'?'+q;s.onerror=function(){cl();if(retries<2){setTimeout(function(){jsonp(p,retries+1).then(ok).catch(ko)},1000)}else{ko('Error de red. Comprueba tu conexión.')}};document.body.appendChild(s)})}
 
 // ── Login ──
 function doLogin(){
@@ -187,10 +187,10 @@ function logout(){PWD='';sessionStorage.removeItem('ga_pwd');document.getElement
 function syncing(on){var si=document.getElementById('sInd'),ms=document.getElementById('mhS');if(on){si.innerHTML='<div class="sspin"></div><span>Sync...</span>';ms.innerHTML='<div class="sspin"></div>'}else{si.innerHTML='<span class="dot dg"></span><span>Sheets ✓</span>';ms.innerHTML=''}}
 function syncErr(){document.getElementById('sInd').innerHTML='<span class="dot dr"></span><span>Error</span>';document.getElementById('mhS').innerHTML=''}
 function fm(n){return Number(n).toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2})}
-function fd(d){if(!d)return'—';var p=String(d).split('-');return p.length===3?p[2]+'/'+p[1]+'/'+p[0]:String(d)}
+function fd(d){if(!d)return'—';d=String(d).split('T')[0];var p=d.split('-');return p.length===3?p[2]+'/'+p[1]+'/'+p[0]:d}
 function gid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
 function toast(m,t){t=t||'ok';var c=document.getElementById('tc'),el=document.createElement('div');el.className='toast t'+t;el.innerHTML='<span>'+({ok:'✅',w:'⚠️',e:'❌'}[t]||'')+'</span> '+m;c.appendChild(el);setTimeout(function(){el.remove()},3500)}
-function norm(arr){return(arr||[]).map(function(r){var o={};Object.keys(r).forEach(function(k){var v=r[k];if(['horas','importe','dias','litros','precio'].indexOf(k)>=0)v=Number(v)||0;else v=String(v||'').trim();o[k]=v});return o})}
+function norm(arr){return(arr||[]).map(function(r){var o={};Object.keys(r).forEach(function(k){var v=r[k];if(['horas','importe','dias','litros','precio'].indexOf(k)>=0)v=Number(v)||0;else{v=String(v||'').trim();if(k==='fecha'||k==='mes')v=v.split('T')[0]}o[k]=v});return o})}
 
 // ── Data ──
 async function loadAll(){syncing(true);try{var res=await jsonp({action:'getAllByEmp'});var d=res.data||{};D.horas=norm(d.horas);D.pagos=norm(d.pagos);D.ss=norm(d.ss);D.gasoil=norm(d.gasoil);D.trabajadores=norm(d.trabajadores);D.horas_E1=norm(d.horas_E1);D.horas_E2=norm(d.horas_E2);D.pagos_E1=norm(d.pagos_E1);D.pagos_E2=norm(d.pagos_E2);D.ss_E1=norm(d.ss_E1);D.ss_E2=norm(d.ss_E2);D.gasoil_E1=norm(d.gasoil_E1);D.gasoil_E2=norm(d.gasoil_E2);syncing(false);ren(cur);toast('Datos cargados')}catch(err){syncErr();toast('Error: '+err,'e')}}
