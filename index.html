@@ -160,7 +160,7 @@ tbody td{padding:9px 10px;border-bottom:1px solid var(--bd);vertical-align:middl
 // GestiónAgro v8 — SIN TOKEN — Contraseña en servidor
 // La URL del Apps Script se obtiene del servidor tras login
 // ═══════════════════════════════════════════════════════════
-var API='https://script.google.com/macros/s/AKfycbxaq0FVCszAq8D9p6Bi4oDC6PHtdTFVawCtbi8xX8aW_T5x11vXN2MY_BWiXBWJiXVK/exec';
+var API='https://script.google.com/macros/s/AKfycbyMvJbm9qQ5Dlyh5MXrPHHSd0Lzztva4Nb7mWY94b67D2Xr3-taL709E4o5rIHn9XFx/exec';
 var PWD=''; // se rellena tras login, se guarda en sessionStorage
 var CFG=JSON.parse(localStorage.getItem('ga_cfg')||'{"precioHora":10.10,"costeSS":18.17,"horasJornada":6.5}');
 var EN={E1:'EVA PÉREZ DEL CASTILLO',E2:'FCO. JOSÉ DE LA FUENTE RUZ'};
@@ -187,13 +187,29 @@ function logout(){PWD='';sessionStorage.removeItem('ga_pwd');document.getElement
 function syncing(on){var si=document.getElementById('sInd'),ms=document.getElementById('mhS');if(on){si.innerHTML='<div class="sspin"></div><span>Sync...</span>';ms.innerHTML='<div class="sspin"></div>'}else{si.innerHTML='<span class="dot dg"></span><span>Sheets ✓</span>';ms.innerHTML=''}}
 function syncErr(){document.getElementById('sInd').innerHTML='<span class="dot dr"></span><span>Error</span>';document.getElementById('mhS').innerHTML=''}
 function fm(n){return Number(n).toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2})}
-function fd(d){if(!d)return'—';d=String(d).split('T')[0];var p=d.split('-');return p.length===3?p[2]+'/'+p[1]+'/'+p[0]:d}
+// Normaliza cualquier fecha a yyyy-MM-dd
+function nf(v){
+  v=String(v||'').trim();if(!v)return'';
+  v=v.split('T')[0]; // quitar hora ISO
+  // ya es yyyy-MM-dd
+  if(/^\d{4}-\d{2}-\d{2}$/.test(v))return v;
+  // dd/MM/yyyy o dd-MM-yyyy
+  var m=v.match(/^(\d{1,2})[\/\-\.](\d{1,2})[\/\-\.](\d{4})$/);
+  if(m)return m[3]+'-'+('0'+m[2]).slice(-2)+'-'+('0'+m[1]).slice(-2);
+  // yyyy/MM/dd
+  var m2=v.match(/^(\d{4})[\/\-\.](\d{1,2})[\/\-\.](\d{1,2})$/);
+  if(m2)return m2[1]+'-'+('0'+m2[2]).slice(-2)+'-'+('0'+m2[3]).slice(-2);
+  // intentar Date parse
+  var d=new Date(v);if(!isNaN(d.getTime()))return d.toISOString().split('T')[0];
+  return v;
+}
+function fd(d){d=nf(d);if(!d)return'—';var p=d.split('-');return p.length===3?p[2]+'/'+p[1]+'/'+p[0]:d}
 function gid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
 function toast(m,t){t=t||'ok';var c=document.getElementById('tc'),el=document.createElement('div');el.className='toast t'+t;el.innerHTML='<span>'+({ok:'✅',w:'⚠️',e:'❌'}[t]||'')+'</span> '+m;c.appendChild(el);setTimeout(function(){el.remove()},3500)}
-function norm(arr){return(arr||[]).map(function(r){var o={};Object.keys(r).forEach(function(k){var v=r[k];if(['horas','importe','dias','litros','precio'].indexOf(k)>=0)v=Number(v)||0;else{v=String(v||'').trim();if(k==='fecha'||k==='mes')v=v.split('T')[0]}o[k]=v});return o})}
+function norm(arr){return(arr||[]).map(function(r){var o={};Object.keys(r).forEach(function(k){var v=r[k];if(['horas','importe','dias','litros','precio'].indexOf(k)>=0){v=String(v||'').replace(',','.');v=Number(v)||0}else{v=String(v||'').trim();if(k==='fecha')v=nf(v);if(k==='mes'){v=v.split('T')[0];if(/^\d{1,2}[\/\-]\d{4}$/.test(v)){var pp=v.split(/[\/\-]/);v=pp[1]+'-'+('0'+pp[0]).slice(-2)}}}o[k]=v});return o})}
 
 // ── Data ──
-async function loadAll(){syncing(true);try{var res=await jsonp({action:'getAllByEmp'});var d=res.data||{};D.horas=norm(d.horas);D.pagos=norm(d.pagos);D.ss=norm(d.ss);D.gasoil=norm(d.gasoil);D.trabajadores=norm(d.trabajadores);D.horas_E1=norm(d.horas_E1);D.horas_E2=norm(d.horas_E2);D.pagos_E1=norm(d.pagos_E1);D.pagos_E2=norm(d.pagos_E2);D.ss_E1=norm(d.ss_E1);D.ss_E2=norm(d.ss_E2);D.gasoil_E1=norm(d.gasoil_E1);D.gasoil_E2=norm(d.gasoil_E2);syncing(false);ren(cur);toast('Datos cargados')}catch(err){syncErr();toast('Error: '+err,'e')}}
+async function loadAll(){syncing(true);try{var res=await jsonp({action:'getAllByEmp'});var d=res.data||{};if(d.horas&&d.horas[0])console.log('RAW horas[0]:',JSON.stringify(d.horas[0]));if(d.gasoil&&d.gasoil[0])console.log('RAW gasoil[0]:',JSON.stringify(d.gasoil[0]));D.horas=norm(d.horas);D.pagos=norm(d.pagos);D.ss=norm(d.ss);D.gasoil=norm(d.gasoil);D.trabajadores=norm(d.trabajadores);D.horas_E1=norm(d.horas_E1);D.horas_E2=norm(d.horas_E2);D.pagos_E1=norm(d.pagos_E1);D.pagos_E2=norm(d.pagos_E2);D.ss_E1=norm(d.ss_E1);D.ss_E2=norm(d.ss_E2);D.gasoil_E1=norm(d.gasoil_E1);D.gasoil_E2=norm(d.gasoil_E2);if(D.horas[0])console.log('NORM horas[0]:',JSON.stringify(D.horas[0]));if(D.gasoil[0])console.log('NORM gasoil[0]:',JSON.stringify(D.gasoil[0]));syncing(false);ren(cur);toast('Datos cargados')}catch(err){syncErr();toast('Error: '+err,'e')}}
 async function testConn(){syncing(true);try{await jsonp({action:'ping'});toast('OK ✓');syncing(false)}catch(e){syncErr();toast('Error: '+e,'e')}}
 async function rAdd(store,rec){syncing(true);try{await jsonp({action:'add',store:store,data:JSON.stringify(rec)});D[store].push(rec);if(rec.emp&&store!=='trabajadores')D[store+'_'+rec.emp].push(rec);syncing(false);return true}catch(err){syncErr();toast('Error: '+err,'e');return false}}
 async function rDel(store,id){syncing(true);try{await jsonp({action:'delete',store:store,id:id});D[store]=D[store].filter(function(r){return r.id!==id});['E1','E2'].forEach(function(ek){if(D[store+'_'+ek])D[store+'_'+ek]=D[store+'_'+ek].filter(function(r){return r.id!==id})});syncing(false);return true}catch(err){syncErr();toast('Error: '+err,'e');return false}}
