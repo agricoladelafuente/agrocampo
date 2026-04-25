@@ -74,15 +74,6 @@ tbody td{padding:9px 10px;border-bottom:1px solid var(--bd);vertical-align:middl
 .ri{padding:12px 14px;background:var(--o0);border-radius:var(--rs);margin:10px 0;font-size:.82rem;line-height:1.6}.ri strong{color:var(--o7)}
 .rs{background:var(--g1);border:2px solid var(--g4);border-radius:var(--rd);padding:16px;margin:12px 0}.rs h4{font-family:'Playfair Display',serif;color:var(--o8);margin-bottom:8px}
 .print-area{display:none}@media print{body *{visibility:hidden}.print-area,.print-area *{visibility:visible;display:block!important}.print-area{position:fixed;left:0;top:0;width:100%;padding:20px}}
-/* Login */
-.login-screen{position:fixed;inset:0;background:var(--o9);display:flex;align-items:center;justify-content:center;z-index:9999}
-.login-box{background:var(--sf);border-radius:var(--rd);padding:40px 32px;width:90%;max-width:380px;text-align:center;box-shadow:var(--sh2)}
-.login-box .lb-logo{font-size:3rem;margin-bottom:12px}
-.login-box h2{font-family:'Playfair Display',serif;color:var(--o8);margin-bottom:4px;font-size:1.4rem}
-.login-box p{font-size:.82rem;color:var(--t2);margin-bottom:24px}
-.login-box input{width:100%;padding:12px 16px;border:2px solid var(--bd);border-radius:var(--rs);font-size:16px;font-family:inherit;text-align:center;margin-bottom:14px}
-.login-box input:focus{outline:none;border-color:var(--o4);box-shadow:0 0 0 3px rgba(107,128,59,.12)}
-.login-box .login-err{color:var(--r5);font-size:.82rem;min-height:22px;margin-bottom:8px}
 @media(max-width:768px){
 .side{display:none}.mh{display:flex}.bnav{display:block}.fab{display:flex}
 .main{margin-left:0;padding:62px 12px calc(72px + var(--sb)) 12px}
@@ -95,19 +86,8 @@ tbody td{padding:9px 10px;border-bottom:1px solid var(--bd);vertical-align:middl
 </style>
 </head>
 <body>
-<!-- LOGIN -->
-<div class="login-screen" id="loginScreen">
-<div class="login-box">
-<div class="lb-logo">🌿</div>
-<h2>GestiónAgro</h2>
-<p>Introduce la contraseña para acceder</p>
-<input type="password" id="loginPwd" placeholder="Contraseña" autocomplete="off">
-<div class="login-err" id="loginErr"></div>
-<button class="btn bp" onclick="doLogin()" style="width:100%" id="loginBtn">Entrar</button>
-</div>
-</div>
-<!-- APP (oculta hasta login) -->
-<div id="appWrap" style="display:none">
+<!-- APP -->
+<div id="appWrap">
 <div class="mh"><span style="font-size:1rem">🌿</span><h1>GestiónAgro</h1><div id="mhS" style="margin-left:auto"></div></div>
 <nav class="bnav"><div class="bnav-in">
 <button class="bnb act" onclick="go('horas')" data-s="horas"><span class="bi">⏱</span>Horas</button>
@@ -142,7 +122,7 @@ tbody td{padding:9px 10px;border-bottom:1px solid var(--bd);vertical-align:middl
 <section id="sec-ss" class="sec" style="display:none"><div class="ph"><div><h2>🏛 Seguridad Social</h2><p>Jornadas cotizadas</p></div><button class="btn bp" onclick="oM('mo-ss')">+ Cotización</button></div><div class="sr" id="st-s"></div><div class="card"><div class="cH"><h3>Cotizaciones</h3><span class="badge bdo" id="ct-s">0</span></div><div class="cB" style="padding:0;overflow-x:auto"><table><thead><tr><th>Mes</th><th>Empresa</th><th>Trabajador</th><th>Jornadas</th><th>Coste</th><th></th></tr></thead><tbody id="tb-s"></tbody></table></div></div></section>
 <section id="sec-gasoil" class="sec" style="display:none"><div class="ph"><div><h2>⛽ Gasoil</h2><p>Consumos y compras</p></div><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn bp" onclick="oM('mo-gc')">+ Consumo</button><button class="btn bg" onclick="oM('mo-gp')">+ Compra</button></div></div><div class="sr" id="st-g"></div><div class="card"><div class="cH"><h3>Movimientos</h3><span class="badge bdo" id="ct-g">0</span></div><div class="cB" style="padding:0;overflow-x:auto"><table><thead><tr><th>Fecha</th><th>Tipo</th><th>Empresa</th><th>Litros</th><th>€/L</th><th>Importe</th><th></th></tr></thead><tbody id="tb-g"></tbody></table></div></div></section>
 <section id="sec-trab" class="sec" style="display:none"><div class="ph"><div><h2>👷 Trabajadores</h2><p>Alta y gestión</p></div></div><div class="card"><div class="cH"><h3>Dar de Alta</h3></div><div class="cB"><div class="aw"><input type="text" id="nwn" placeholder="Nombre" style="padding:9px 11px;border:1px solid var(--bd);border-radius:var(--rs);font-family:inherit;font-size:16px;flex:1"><button class="btn bp" onclick="addW()">Añadir</button></div></div></div><div class="card"><div class="cH"><h3>Plantilla</h3><span class="badge bdo" id="ct-w">0</span></div><div class="cB" style="padding:0"><div id="wl" style="padding:12px"></div></div></div></section>
-<section id="sec-config" class="sec" style="display:none"><div class="ph"><div><h2>⚙️ Configuración</h2></div></div><div class="card"><div class="cH"><h3>Tarifas</h3></div><div class="cB"><div class="cr"><span class="cl">Precio hora</span><div class="cv"><input type="number" id="c-ph" step="0.01" inputmode="decimal"><span>€/h</span></div></div><div class="cr"><span class="cl">Coste SS</span><div class="cv"><input type="number" id="c-ss" step="0.01" inputmode="decimal"><span>€/jorn.</span></div></div><div class="cr"><span class="cl">Horas/jornada</span><div class="cv"><input type="number" id="c-hj" step="0.1" inputmode="decimal"><span>h</span></div></div><div style="margin-top:14px;text-align:right"><button class="btn bp" onclick="saveCfg()">Guardar</button></div></div></div><div class="card"><div class="cH"><h3>Conexión</h3></div><div class="cB"><div style="display:flex;gap:8px"><button class="btn bo" onclick="testConn()">Probar conexión</button><button class="btn bo" onclick="loadAll()">🔄 Recargar</button><button class="btn bd bsm" onclick="logout()">🔒 Cerrar sesión</button></div></div></div></section>
+<section id="sec-config" class="sec" style="display:none"><div class="ph"><div><h2>⚙️ Configuración</h2></div></div><div class="card"><div class="cH"><h3>Tarifas</h3></div><div class="cB"><div class="cr"><span class="cl">Precio hora</span><div class="cv"><input type="number" id="c-ph" step="0.01" inputmode="decimal"><span>€/h</span></div></div><div class="cr"><span class="cl">Coste SS</span><div class="cv"><input type="number" id="c-ss" step="0.01" inputmode="decimal"><span>€/jorn.</span></div></div><div class="cr"><span class="cl">Horas/jornada</span><div class="cv"><input type="number" id="c-hj" step="0.1" inputmode="decimal"><span>h</span></div></div><div style="margin-top:14px;text-align:right"><button class="btn bp" onclick="saveCfg()">Guardar</button></div></div></div><div class="card"><div class="cH"><h3>Conexión</h3></div><div class="cB"><div style="display:flex;gap:8px"><button class="btn bo" onclick="testConn()">Probar conexión</button><button class="btn bo" onclick="loadAll()">🔄 Recargar</button></div></div></div></section>
 <section id="sec-informes" class="sec" style="display:none"><div class="ph"><div><h2>📊 Informes</h2></div></div><div class="rf"><div class="fi"><label>Desde</label><input type="date" id="r-d"></div><div class="fi"><label>Hasta</label><input type="date" id="r-h"></div><div class="fi"><label>Informe</label><select id="r-t"><option value="1">1 — Horas</option><option value="2">2 — Pagos vs Coste</option><option value="3">3 — Seg. Social</option><option value="4">4 — Gasoil</option><option value="5">5 — Resumen</option><option value="all">Todos</option></select></div><button class="btn bg" onclick="genR()" style="flex:0">📊 Generar</button><button class="btn bo" onclick="printR()" style="flex:0">🖨</button></div><div id="ro"></div></section>
 </main>
 </div>
@@ -157,50 +137,17 @@ tbody td{padding:9px 10px;border-bottom:1px solid var(--bd);vertical-align:middl
 <div class="print-area" id="pa"></div>
 <script>
 // ═══════════════════════════════════════════════════════════
-// GestiónAgro v8 — Autenticación local con hash SHA256
-// Contraseña validada en el navegador (sin envío al servidor)
+// GestiónAgro v8
 // ═══════════════════════════════════════════════════════════
-var API='https://script.google.com/macros/s/AKfycbwlVgHSlxP2yxPo5jsw5WuguJHAVydjs-ztsx3T22-uD3E9YxVuVRefDqpWCn90wpXu/exec';
-var PWD=''; // se rellena tras login, se guarda en sessionStorage
-var PWD_HASH='141184a49f9c22d37658b2d517faa65932cab01e672b08c666275266b2e11483'; // SHA256 de tu contraseña
+var API='https://script.google.com/macros/s/AKfycbzgcOnZ6gcwOd-BnfZ1WpB1dxXD4HaEB-bNnhg1t9JVnZWm2NeNYEv7Td2kxEekSv2M/exec';
 var CFG=JSON.parse(localStorage.getItem('ga_cfg')||'{"precioHora":10.10,"costeSS":18.17,"horasJornada":6.5}');
 var EN={E1:'EVA PÉREZ DEL CASTILLO',E2:'FCO. JOSÉ DE LA FUENTE RUZ'};
 var ES={E1:'EVA PÉREZ',E2:'FCO. JOSÉ'};
 var D={horas:[],pagos:[],ss:[],gasoil:[],trabajadores:[],horas_E1:[],horas_E2:[],pagos_E1:[],pagos_E2:[],ss_E1:[],ss_E2:[],gasoil_E1:[],gasoil_E2:[]};
 var cur='horas',jc=0;
 
-// ── JSONP con pwd en cada request ──
-function jsonp(p,retries){p.pwd=PWD;retries=retries||0;return new Promise(function(ok,ko){var cb='_g'+(jc++)+'_'+Date.now();var to=setTimeout(function(){cl();if(retries<2){jsonp(p,retries+1).then(ok).catch(ko)}else{ko('Sin respuesta del servidor. Reintenta.')}},30000);function cl(){clearTimeout(to);try{delete window[cb]}catch(e){}var el=document.getElementById(cb);if(el)el.remove()}window[cb]=function(d){cl();if(d&&d.error){if(d.error==='No autorizado'){logout();ko('Sesión expirada')}else ko(d.error)}else ok(d)};p.callback=cb;var q=Object.keys(p).map(function(k){return k+'='+encodeURIComponent(p[k])}).join('&');var s=document.createElement('script');s.id=cb;s.src=API+'?'+q;s.onerror=function(){cl();if(retries<2){setTimeout(function(){jsonp(p,retries+1).then(ok).catch(ko)},1000)}else{ko('Error de red. Comprueba tu conexión.')}};document.body.appendChild(s)})}
-
-// ── SHA256 (── copiar del navegador para obtener hash ──)
-async function sha256(str){var buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(str));var arr=Array.from(new Uint8Array(buf));return arr.map(function(x){return('0'+x.toString(16)).slice(-2)}).join('')}
-
-// ── Login ──
-async function doLogin(){
-  var pwd=document.getElementById('loginPwd').value;
-  if(!pwd){document.getElementById('loginErr').textContent='Introduce la contraseña';return}
-  document.getElementById('loginBtn').disabled=true;document.getElementById('loginBtn').textContent='Verificando...';document.getElementById('loginErr').textContent='';
-  try{
-    var hash=await sha256(pwd);
-    if(hash===PWD_HASH){
-      PWD=pwd;
-      sessionStorage.setItem('ga_pwd',pwd);
-      document.getElementById('loginScreen').style.display='none';
-      document.getElementById('appWrap').style.display='';
-      loadAll();
-    }else{
-      document.getElementById('loginErr').textContent='❌ Contraseña incorrecta';
-      PWD='';
-    }
-  }catch(e){
-    document.getElementById('loginErr').textContent='❌ Error: '+e;
-    PWD='';
-  }finally{
-    document.getElementById('loginBtn').disabled=false;
-    document.getElementById('loginBtn').textContent='Entrar';
-  }
-}
-function logout(){PWD='';sessionStorage.removeItem('ga_pwd');document.getElementById('loginScreen').style.display='';document.getElementById('appWrap').style.display='none';document.getElementById('loginPwd').value='';document.getElementById('loginErr').textContent=''}
+// ── JSONP ──
+function jsonp(p,retries){retries=retries||0;return new Promise(function(ok,ko){var cb='_g'+(jc++)+'_'+Date.now();var to=setTimeout(function(){cl();if(retries<2){jsonp(p,retries+1).then(ok).catch(ko)}else{ko('Sin respuesta del servidor. Reintenta.')}},30000);function cl(){clearTimeout(to);try{delete window[cb]}catch(e){}var el=document.getElementById(cb);if(el)el.remove()}window[cb]=function(d){cl();if(d&&d.error)ko(d.error);else ok(d)};p.callback=cb;var q=Object.keys(p).map(function(k){return k+'='+encodeURIComponent(p[k])}).join('&');var s=document.createElement('script');s.id=cb;s.src=API+'?'+q;s.onerror=function(){cl();if(retries<2){setTimeout(function(){jsonp(p,retries+1).then(ok).catch(ko)},1000)}else{ko('Error de red. Comprueba tu conexión.')}};document.body.appendChild(s)})}
 
 // ── Helpers ──
 function syncing(on){var si=document.getElementById('sInd'),ms=document.getElementById('mhS');if(on){si.innerHTML='<div class="sspin"></div><span>Sync...</span>';ms.innerHTML='<div class="sspin"></div>'}else{si.innerHTML='<span class="dot dg"></span><span>Sheets ✓</span>';ms.innerHTML=''}}
@@ -255,7 +202,7 @@ function ren(s){var fn={horas:renH,pagos:renP,ss:renS,gasoil:renG,trab:renW,conf
 function calcPMP(empGasoil){var movs=empGasoil.slice().sort(function(a,b){var c=a.fecha.localeCompare(b.fecha);if(c)return c;if(a.tipo!=='consumo'&&b.tipo==='consumo')return-1;if(a.tipo==='consumo'&&b.tipo!=='consumo')return 1;return 0});var stock=0,pmp=0,result=[];for(var i=0;i<movs.length;i++){var m=movs[i];if(m.tipo==='compra'||m.tipo==='existencias'){var va=stock*pmp+m.litros*m.precio;stock+=m.litros;pmp=stock>0?va/stock:m.precio;result.push({id:m.id,pmp:pmp})}else{result.push({id:m.id,pmp:pmp});stock-=m.litros;if(stock<0)stock=0}}return{list:result,stock:stock,pmp:pmp}}
 
 // ── Renders (from company sheets) ──
-function renH(){var all=D.horas||[],e1=D.horas_E1||[],e2=D.horas_E2||[];var tb=document.getElementById('tb-h');document.getElementById('ct-h').textContent=all.length;var h1=e1.reduce(function(s,r){return s+r.horas},0),h2=e2.reduce(function(s,r){return s+r.horas},0);document.getElementById('st-h').innerHTML='<div class="sc"><div class="sl">E.Pérez horas</div><div class="sv">'+fm(h1)+'</div></div><div class="sc"><div class="sl">E.Pérez coste</div><div class="sv">'+fm(h1*CFG.precioHora)+'€</div></div><div class="sc"><div class="sl">F.José horas</div><div class="sv">'+fm(h2)+'</div></div><div class="sc"><div class="sl">F.José coste</div><div class="sv">'+fm(h2*CFG.precioHora)+'€</div></div>';if(!all.length){tb.innerHTML='<tr><td colspan="7"><div class="empty"><div class="ei">⏱</div><p>Sin registros</p></div></td></tr>';return}tb.innerHTML=all.slice().sort(function(a,b){return(b.fecha||'').localeCompare(a.fecha||'')}).map(function(r){return'<tr><td>'+fd(r.fecha)+'</td><td>'+(ES[r.emp]||r.emp)+'</td><td>'+r.trab+'</td><td class="am">'+fm(r.horas)+'</td><td class="hm">'+fm(CFG.precioHora)+'€</td><td class="am po">'+fm(r.horas*CFG.precioHora)+'€</td><td class="ac"><button class="btn bd bsm" onclick="del(\'horas\',\''+r.id+'\')">✕</button></td></tr>'}).join('')}
+function renH(){var all=D.horas||[],e1=D.horas_E1||[],e2=D.horas_E2||[];console.log('renH: all='+all.length+' e1='+e1.length+' e2='+e2.length);if(e1.length)console.log('E1[0]:',JSON.stringify(e1[0]));if(e2.length)console.log('E2[0]:',JSON.stringify(e2[0]));var tb=document.getElementById('tb-h');document.getElementById('ct-h').textContent=all.length;var h1=e1.reduce(function(s,r){return s+r.horas},0),h2=e2.reduce(function(s,r){return s+r.horas},0);console.log('h1='+h1+' h2='+h2);document.getElementById('st-h').innerHTML='<div class="sc"><div class="sl">E.Pérez horas</div><div class="sv">'+fm(h1)+'</div></div><div class="sc"><div class="sl">E.Pérez coste</div><div class="sv">'+fm(h1*CFG.precioHora)+'€</div></div><div class="sc"><div class="sl">F.José horas</div><div class="sv">'+fm(h2)+'</div></div><div class="sc"><div class="sl">F.José coste</div><div class="sv">'+fm(h2*CFG.precioHora)+'€</div></div>';if(!all.length){tb.innerHTML='<tr><td colspan="7"><div class="empty"><div class="ei">⏱</div><p>Sin registros</p></div></td></tr>';return}tb.innerHTML=all.slice().sort(function(a,b){return(b.fecha||'').localeCompare(a.fecha||'')}).map(function(r){return'<tr><td>'+fd(r.fecha)+'</td><td>'+(ES[r.emp]||r.emp)+'</td><td>'+r.trab+'</td><td class="am">'+fm(r.horas)+'</td><td class="hm">'+fm(CFG.precioHora)+'€</td><td class="am po">'+fm(r.horas*CFG.precioHora)+'€</td><td class="ac"><button class="btn bd bsm" onclick="del(\'horas\',\''+r.id+'\')">✕</button></td></tr>'}).join('')}
 function renP(){var all=D.pagos||[],e1=D.pagos_E1||[],e2=D.pagos_E2||[];var tb=document.getElementById('tb-p');document.getElementById('ct-p').textContent=all.length;var p1=e1.reduce(function(s,r){return s+r.importe},0),p2=e2.reduce(function(s,r){return s+r.importe},0);document.getElementById('st-p').innerHTML='<div class="sc"><div class="sl">E.Pérez</div><div class="sv">'+fm(p1)+'€</div></div><div class="sc"><div class="sl">F.José</div><div class="sv">'+fm(p2)+'€</div></div><div class="sc"><div class="sl">Total</div><div class="sv">'+fm(p1+p2)+'€</div></div>';if(!all.length){tb.innerHTML='<tr><td colspan="6"><div class="empty"><div class="ei">💶</div><p>Sin pagos</p></div></td></tr>';return}tb.innerHTML=all.slice().sort(function(a,b){return(b.fecha||'').localeCompare(a.fecha||'')}).map(function(r){return'<tr><td>'+fd(r.fecha)+'</td><td>'+(ES[r.emp]||r.emp)+'</td><td>'+r.trab+'</td><td class="am ne">'+fm(r.importe)+'€</td><td class="hm"><span class="badge '+(r.metodo==='Efectivo'?'bdg':'bdo')+'">'+(r.metodo||'')+'</span></td><td class="ac"><button class="btn bd bsm" onclick="del(\'pagos\',\''+r.id+'\')">✕</button></td></tr>'}).join('')}
 function renS(){var all=D.ss||[],e1=D.ss_E1||[],e2=D.ss_E2||[];var tb=document.getElementById('tb-s');document.getElementById('ct-s').textContent=all.length;var d1=e1.reduce(function(s,r){return s+r.dias},0),d2=e2.reduce(function(s,r){return s+r.dias},0);document.getElementById('st-s').innerHTML='<div class="sc"><div class="sl">E.Pérez jorn.</div><div class="sv">'+d1+'</div></div><div class="sc"><div class="sl">E.Pérez coste</div><div class="sv">'+fm(d1*CFG.costeSS)+'€</div></div><div class="sc"><div class="sl">F.José jorn.</div><div class="sv">'+d2+'</div></div><div class="sc"><div class="sl">F.José coste</div><div class="sv">'+fm(d2*CFG.costeSS)+'€</div></div>';if(!all.length){tb.innerHTML='<tr><td colspan="6"><div class="empty"><div class="ei">🏛</div><p>Sin cotizaciones</p></div></td></tr>';return}tb.innerHTML=all.slice().sort(function(a,b){return(b.mes||'').localeCompare(a.mes||'')}).map(function(r){return'<tr><td>'+r.mes+'</td><td>'+(ES[r.emp]||r.emp)+'</td><td>'+r.trab+'</td><td class="am">'+r.dias+'</td><td class="am ne">'+fm(r.dias*CFG.costeSS)+'€</td><td class="ac"><button class="btn bd bsm" onclick="del(\'ss\',\''+r.id+'\')">✕</button></td></tr>'}).join('')}
 function renG(){var all=D.gasoil||[],e1=D.gasoil_E1||[],e2=D.gasoil_E2||[];var tb=document.getElementById('tb-g');document.getElementById('ct-g').textContent=all.length;var pmp1=calcPMP(e1),pmp2=calcPMP(e2);var pmpMap={};pmp1.list.forEach(function(x){pmpMap[x.id]=x.pmp});pmp2.list.forEach(function(x){pmpMap[x.id]=x.pmp});document.getElementById('st-g').innerHTML='<div class="sc"><div class="sl">Stock E.Pérez</div><div class="sv">'+fm(pmp1.stock)+'L</div></div><div class="sc"><div class="sl">PMP E.Pérez</div><div class="sv">'+fm(pmp1.pmp)+'€</div></div><div class="sc"><div class="sl">Stock F.José</div><div class="sv">'+fm(pmp2.stock)+'L</div></div><div class="sc"><div class="sl">PMP F.José</div><div class="sv">'+fm(pmp2.pmp)+'€</div></div>';if(!all.length){tb.innerHTML='<tr><td colspan="7"><div class="empty"><div class="ei">⛽</div><p>Sin movimientos</p></div></td></tr>';return}tb.innerHTML=all.slice().sort(function(a,b){return(b.fecha||'').localeCompare(a.fecha||'')}).map(function(r){var isC=r.tipo!=='consumo';var p=isC?r.precio:(pmpMap[r.id]||0);return'<tr><td>'+fd(r.fecha)+'</td><td><span class="badge '+(isC?'bdo':'bdg')+'">'+(r.tipo==='existencias'?'Exist.':r.tipo==='compra'?'Compra':'Consumo')+'</span></td><td>'+(ES[r.emp]||r.emp)+'</td><td class="am '+(isC?'po':'ne')+'">'+(isC?'+':'−')+fm(r.litros)+'</td><td>'+(p?fm(p)+'€':'—')+'</td><td class="am">'+(p?fm(r.litros*p)+'€':'—')+'</td><td class="ac"><button class="btn bd bsm" onclick="del(\'gasoil\',\''+r.id+'\')">✕</button></td></tr>'}).join('')}
@@ -283,11 +230,7 @@ function printR(){if(!document.getElementById('pa').innerHTML.trim())return aler
 document.addEventListener('DOMContentLoaded',function(){
   var now=new Date(),y=now.getFullYear(),m=String(now.getMonth()+1).padStart(2,'0');
   document.getElementById('r-d').value=y+'-'+m+'-01';document.getElementById('r-h').value=now.toISOString().split('T')[0];
-  // Enter key en login
-  document.getElementById('loginPwd').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin()});
-  // Recuperar sesión
-  var saved=sessionStorage.getItem('ga_pwd');
-  if(saved){PWD=saved;document.getElementById('loginScreen').style.display='none';document.getElementById('appWrap').style.display='';loadCfgUI();loadAll()}
+  loadCfgUI();loadAll();
 });
 document.querySelectorAll('.ov').forEach(function(o){o.addEventListener('click',function(e){if(e.target===o)o.classList.remove('open')})});
 </script>
