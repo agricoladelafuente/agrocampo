@@ -83,11 +83,28 @@ tbody td{padding:9px 10px;border-bottom:1px solid var(--bd);vertical-align:middl
 .hm{display:none!important}thead th{padding:6px 8px;font-size:.6rem}tbody td{padding:7px 8px;font-size:.76rem}
 }
 @media(min-width:769px){.ov{align-items:center}.mo{border-radius:var(--rd)}.moh{display:none}.mo{transform:translateY(10px)}}
+.login-scr{position:fixed;inset:0;background:var(--o9);display:flex;align-items:center;justify-content:center;z-index:9999}
+.login-bx{background:var(--sf);border-radius:var(--rd);padding:40px 32px;width:90%;max-width:380px;text-align:center;box-shadow:var(--sh2)}
+.login-bx .lb-lg{font-size:3rem;margin-bottom:12px}
+.login-bx h2{font-family:'Playfair Display',serif;color:var(--o8);margin-bottom:4px;font-size:1.4rem}
+.login-bx p{font-size:.82rem;color:var(--t2);margin-bottom:24px}
+.login-bx input{width:100%;padding:12px 16px;border:2px solid var(--bd);border-radius:var(--rs);font-size:16px;font-family:inherit;text-align:center;margin-bottom:14px}
+.login-bx input:focus{outline:none;border-color:var(--o4);box-shadow:0 0 0 3px rgba(107,128,59,.12)}
+.login-bx .lg-err{color:var(--r5);font-size:.82rem;min-height:22px;margin-bottom:8px}
 </style>
 </head>
 <body>
-<!-- APP -->
-<div id="appWrap">
+<div class="login-scr" id="lgScr">
+<div class="login-bx">
+<div class="lb-lg">🌿</div>
+<h2>GestiónAgro</h2>
+<p>Introduce la contraseña para acceder</p>
+<input type="password" id="lgPwd" placeholder="Contraseña" autocomplete="off">
+<div class="lg-err" id="lgErr"></div>
+<button class="btn bp" onclick="doLogin()" style="width:100%" id="lgBtn">Entrar</button>
+</div>
+</div>
+<div id="appWrap" style="display:none">
 <div class="mh"><span style="font-size:1rem">🌿</span><h1>GestiónAgro</h1><div id="mhS" style="margin-left:auto"></div></div>
 <nav class="bnav"><div class="bnav-in">
 <button class="bnb act" onclick="go('horas')" data-s="horas"><span class="bi">⏱</span>Horas</button>
@@ -122,7 +139,7 @@ tbody td{padding:9px 10px;border-bottom:1px solid var(--bd);vertical-align:middl
 <section id="sec-ss" class="sec" style="display:none"><div class="ph"><div><h2>🏛 Seguridad Social</h2><p>Jornadas cotizadas</p></div><button class="btn bp" onclick="oM('mo-ss')">+ Cotización</button></div><div class="sr" id="st-s"></div><div class="card"><div class="cH"><h3>Cotizaciones</h3><span class="badge bdo" id="ct-s">0</span></div><div class="cB" style="padding:0;overflow-x:auto"><table><thead><tr><th>Mes</th><th>Empresa</th><th>Trabajador</th><th>Jornadas</th><th>Coste</th><th></th></tr></thead><tbody id="tb-s"></tbody></table></div></div></section>
 <section id="sec-gasoil" class="sec" style="display:none"><div class="ph"><div><h2>⛽ Gasoil</h2><p>Consumos y compras</p></div><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn bp" onclick="oM('mo-gc')">+ Consumo</button><button class="btn bg" onclick="oM('mo-gp')">+ Compra</button></div></div><div class="sr" id="st-g"></div><div class="card"><div class="cH"><h3>Movimientos</h3><span class="badge bdo" id="ct-g">0</span></div><div class="cB" style="padding:0;overflow-x:auto"><table><thead><tr><th>Fecha</th><th>Tipo</th><th>Empresa</th><th>Litros</th><th>€/L</th><th>Importe</th><th></th></tr></thead><tbody id="tb-g"></tbody></table></div></div></section>
 <section id="sec-trab" class="sec" style="display:none"><div class="ph"><div><h2>👷 Trabajadores</h2><p>Alta y gestión</p></div></div><div class="card"><div class="cH"><h3>Dar de Alta</h3></div><div class="cB"><div class="aw"><input type="text" id="nwn" placeholder="Nombre" style="padding:9px 11px;border:1px solid var(--bd);border-radius:var(--rs);font-family:inherit;font-size:16px;flex:1"><button class="btn bp" onclick="addW()">Añadir</button></div></div></div><div class="card"><div class="cH"><h3>Plantilla</h3><span class="badge bdo" id="ct-w">0</span></div><div class="cB" style="padding:0"><div id="wl" style="padding:12px"></div></div></div></section>
-<section id="sec-config" class="sec" style="display:none"><div class="ph"><div><h2>⚙️ Configuración</h2></div></div><div class="card"><div class="cH"><h3>Tarifas</h3></div><div class="cB"><div class="cr"><span class="cl">Precio hora</span><div class="cv"><input type="number" id="c-ph" step="0.01" inputmode="decimal"><span>€/h</span></div></div><div class="cr"><span class="cl">Coste SS</span><div class="cv"><input type="number" id="c-ss" step="0.01" inputmode="decimal"><span>€/jorn.</span></div></div><div class="cr"><span class="cl">Horas/jornada</span><div class="cv"><input type="number" id="c-hj" step="0.1" inputmode="decimal"><span>h</span></div></div><div style="margin-top:14px;text-align:right"><button class="btn bp" onclick="saveCfg()">Guardar</button></div></div></div><div class="card"><div class="cH"><h3>Conexión</h3></div><div class="cB"><div style="display:flex;gap:8px"><button class="btn bo" onclick="testConn()">Probar conexión</button><button class="btn bo" onclick="loadAll()">🔄 Recargar</button></div></div></div></section>
+<section id="sec-config" class="sec" style="display:none"><div class="ph"><div><h2>⚙️ Configuración</h2></div></div><div class="card"><div class="cH"><h3>Tarifas</h3></div><div class="cB"><div class="cr"><span class="cl">Precio hora</span><div class="cv"><input type="number" id="c-ph" step="0.01" inputmode="decimal"><span>€/h</span></div></div><div class="cr"><span class="cl">Coste SS</span><div class="cv"><input type="number" id="c-ss" step="0.01" inputmode="decimal"><span>€/jorn.</span></div></div><div class="cr"><span class="cl">Horas/jornada</span><div class="cv"><input type="number" id="c-hj" step="0.1" inputmode="decimal"><span>h</span></div></div><div style="margin-top:14px;text-align:right"><button class="btn bp" onclick="saveCfg()">Guardar</button></div></div></div><div class="card"><div class="cH"><h3>Conexión</h3></div><div class="cB"><div style="display:flex;gap:8px"><button class="btn bo" onclick="testConn()">Probar conexión</button><button class="btn bo" onclick="loadAll()">🔄 Recargar</button><button class="btn bd bsm" onclick="doLogout()">🔒 Cerrar sesión</button></div></div></div></section>
 <section id="sec-informes" class="sec" style="display:none"><div class="ph"><div><h2>📊 Informes</h2></div></div><div class="rf"><div class="fi"><label>Desde</label><input type="date" id="r-d"></div><div class="fi"><label>Hasta</label><input type="date" id="r-h"></div><div class="fi"><label>Informe</label><select id="r-t"><option value="1">1 — Horas</option><option value="2">2 — Pagos vs Coste</option><option value="3">3 — Seg. Social</option><option value="4">4 — Gasoil</option><option value="5">5 — Resumen</option><option value="all">Todos</option></select></div><button class="btn bg" onclick="genR()" style="flex:0">📊 Generar</button><button class="btn bo" onclick="printR()" style="flex:0">🖨</button></div><div id="ro"></div></section>
 </main>
 </div>
@@ -139,7 +156,8 @@ tbody td{padding:9px 10px;border-bottom:1px solid var(--bd);vertical-align:middl
 // ═══════════════════════════════════════════════════════════
 // GestiónAgro v8
 // ═══════════════════════════════════════════════════════════
-var API='https://script.google.com/macros/s/AKfycbzgcOnZ6gcwOd-BnfZ1WpB1dxXD4HaEB-bNnhg1t9JVnZWm2NeNYEv7Td2kxEekSv2M/exec';
+var API='https://script.google.com/macros/s/AKfycbyzRZz6kF1OvWsSrzbv-yIkdQ-BSlBk7uZwPPMAn2aJpzW3ry5Od5SYR8mpEoIG1I6n/exec';
+var PWD='';
 var CFG=JSON.parse(localStorage.getItem('ga_cfg')||'{"precioHora":10.10,"costeSS":18.17,"horasJornada":6.5}');
 var EN={E1:'EVA PÉREZ DEL CASTILLO',E2:'FCO. JOSÉ DE LA FUENTE RUZ'};
 var ES={E1:'EVA PÉREZ',E2:'FCO. JOSÉ'};
@@ -147,7 +165,19 @@ var D={horas:[],pagos:[],ss:[],gasoil:[],trabajadores:[],horas_E1:[],horas_E2:[]
 var cur='horas',jc=0;
 
 // ── JSONP ──
-function jsonp(p,retries){retries=retries||0;return new Promise(function(ok,ko){var cb='_g'+(jc++)+'_'+Date.now();var to=setTimeout(function(){cl();if(retries<2){jsonp(p,retries+1).then(ok).catch(ko)}else{ko('Sin respuesta del servidor. Reintenta.')}},30000);function cl(){clearTimeout(to);try{delete window[cb]}catch(e){}var el=document.getElementById(cb);if(el)el.remove()}window[cb]=function(d){cl();if(d&&d.error)ko(d.error);else ok(d)};p.callback=cb;var q=Object.keys(p).map(function(k){return k+'='+encodeURIComponent(p[k])}).join('&');var s=document.createElement('script');s.id=cb;s.src=API+'?'+q;s.onerror=function(){cl();if(retries<2){setTimeout(function(){jsonp(p,retries+1).then(ok).catch(ko)},1000)}else{ko('Error de red. Comprueba tu conexión.')}};document.body.appendChild(s)})}
+function jsonp(p,retries){p.pwd=PWD;retries=retries||0;return new Promise(function(ok,ko){var cb='_g'+(jc++)+'_'+Date.now();var to=setTimeout(function(){cl();if(retries<2){jsonp(p,retries+1).then(ok).catch(ko)}else{ko('Sin respuesta del servidor. Reintenta.')}},30000);function cl(){clearTimeout(to);try{delete window[cb]}catch(e){}var el=document.getElementById(cb);if(el)el.remove()}window[cb]=function(d){cl();if(d&&d.error){if(d.error==='No autorizado'){doLogout();ko('Sesión expirada')}else ko(d.error)}else ok(d)};p.callback=cb;var q=Object.keys(p).map(function(k){return k+'='+encodeURIComponent(p[k])}).join('&');var s=document.createElement('script');s.id=cb;s.src=API+'?'+q;s.onerror=function(){cl();if(retries<2){setTimeout(function(){jsonp(p,retries+1).then(ok).catch(ko)},1000)}else{ko('Error de red. Comprueba tu conexión.')}};document.body.appendChild(s)})}
+
+// ── Login ──
+function doLogin(){
+  var pwd=document.getElementById('lgPwd').value;
+  if(!pwd){document.getElementById('lgErr').textContent='Introduce la contraseña';return}
+  document.getElementById('lgBtn').disabled=true;document.getElementById('lgBtn').textContent='Verificando...';document.getElementById('lgErr').textContent='';
+  PWD=pwd;
+  jsonp({action:'login'}).then(function(r){
+    if(r.ok){sessionStorage.setItem('ga_pwd',pwd);document.getElementById('lgScr').style.display='none';document.getElementById('appWrap').style.display='';loadCfgUI();loadAll()}
+  }).catch(function(e){document.getElementById('lgErr').textContent='❌ '+e;PWD=''}).finally(function(){document.getElementById('lgBtn').disabled=false;document.getElementById('lgBtn').textContent='Entrar'})
+}
+function doLogout(){PWD='';sessionStorage.removeItem('ga_pwd');document.getElementById('lgScr').style.display='';document.getElementById('appWrap').style.display='none';document.getElementById('lgPwd').value='';document.getElementById('lgErr').textContent=''}
 
 // ── Helpers ──
 function syncing(on){var si=document.getElementById('sInd'),ms=document.getElementById('mhS');if(on){si.innerHTML='<div class="sspin"></div><span>Sync...</span>';ms.innerHTML='<div class="sspin"></div>'}else{si.innerHTML='<span class="dot dg"></span><span>Sheets ✓</span>';ms.innerHTML=''}}
@@ -230,7 +260,9 @@ function printR(){if(!document.getElementById('pa').innerHTML.trim())return aler
 document.addEventListener('DOMContentLoaded',function(){
   var now=new Date(),y=now.getFullYear(),m=String(now.getMonth()+1).padStart(2,'0');
   document.getElementById('r-d').value=y+'-'+m+'-01';document.getElementById('r-h').value=now.toISOString().split('T')[0];
-  loadCfgUI();loadAll();
+  document.getElementById('lgPwd').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin()});
+  var saved=sessionStorage.getItem('ga_pwd');
+  if(saved){PWD=saved;document.getElementById('lgScr').style.display='none';document.getElementById('appWrap').style.display='';loadCfgUI();loadAll()}
 });
 document.querySelectorAll('.ov').forEach(function(o){o.addEventListener('click',function(e){if(e.target===o)o.classList.remove('open')})});
 </script>
